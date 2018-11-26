@@ -17,10 +17,10 @@ mix.options({
  |
  */
 
-mix.js('resources/assets/js/Main.js', 'public/js')
-    .js('resources/assets/js/About.js', 'public/js')
-    .js('resources/assets/js/Search.js', 'public/js')
-    .js('resources/assets/js/Test.js', 'public/js')
+mix.js('resources/assets/js/Main.js', 'public/js/Main.js')
+    .js('resources/assets/js/About.js', 'public/js/About.js')
+    .js('resources/assets/js/Search.js', 'public/js/Search.js')
+    .js('resources/assets/js/Test.js', 'public/js/Test.js')
     .webpackConfig({
         resolve: {
             alias: {
@@ -28,7 +28,7 @@ mix.js('resources/assets/js/Main.js', 'public/js')
             }
         }
     })
-    .sass('resources/assets/sass/app.scss', 'public/css').extract(['vue','vuetify']);
+    .sass('resources/assets/sass/app.scss', 'public/css/app.css').extract(['vue','vuetify']);
 
 
 if (mix.inProduction()) {

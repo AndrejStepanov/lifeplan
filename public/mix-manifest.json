@@ -1,8 +1,9 @@
 {
-    "/js/vendor.js": "/js/vendor.js",
+    "/js/Main.js": "/js/Main.js",
+    "/css/app.css": "/css/app.css",
     "/js/Test.js": "/js/Test.js",
     "/js/Search.js": "/js/Search.js",
-    "/js/Main.js": "/js/Main.js",
     "/js/About.js": "/js/About.js",
+    "/js/vendor.js": "/js/vendor.js",
     "/js/manifest.js": "/js/manifest.js"
 }
