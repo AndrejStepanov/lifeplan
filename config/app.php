@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'LifePlan'),
+    'name' => env('APP_NAME', 'ForwardForms'),
 
     /*
     |--------------------------------------------------------------------------
