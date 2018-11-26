@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'custom',
+        'guard' => 'web',
         'passwords' => 'users',
     ],
 
@@ -45,11 +45,6 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
-
-        'custom' => [
-            'driver' => 'konsomGuard',
-            'provider' => 'KonsomAuthProvider',
-        ],
     ],
 
     /*
@@ -72,12 +67,9 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\User::class,
         ],
-        'KonsomAuthProvider' => [
-            'driver' => 'KonsomAuthProvider',
-            'model' => App\Models\User::class,
-        ],
+
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

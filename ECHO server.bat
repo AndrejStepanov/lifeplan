@@ -1,1 +1,0 @@
-start laravel-echo-server start

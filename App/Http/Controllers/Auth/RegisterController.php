@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
+use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\Request;
-use App\Providers\KonsomHasher;
 
-class RegisterController extends Controller{
+class RegisterController extends Controller
+{
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -29,37 +28,16 @@ class RegisterController extends Controller{
      *
      * @var string
      */
-    protected $redirectTo = '/sucsess';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()    {
+    public function __construct()
+    {
         $this->middleware('guest');
-    }
-
-    
-    /**
-     * Handle a registration request for the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function register(Request $request)    {
-        $data=$request->all();
-        $this->validator($data)->validate();
-        if (count(User::where('login', $data['login'])->first())>0)
-            return error('Ошибка при регистрации','Пользователь с таким логином уже существует!');
-         if (count(User::where('name', $data['name'])->first())>0)
-            return error('Ошибка при регистрации','Пользователь с таким именем уже существует!');
-
-        event(new Registered($user = $this->create($data)));
-
-        $this->guard()->login($user);
-
-        return $this->registered($request, $user) ?: redirect($this->redirectPath());
     }
 
     /**
@@ -68,11 +46,12 @@ class RegisterController extends Controller{
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)    {
+    protected function validator(array $data)
+    {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'login' => 'required|string|max:255',
-            'password' => 'required|string|confirmed',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
     }
 
@@ -80,14 +59,14 @@ class RegisterController extends Controller{
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\Models\User
+     * @return \App\User
      */
-    protected function create(array $data)    {
-        $hasher = new KonsomHasher();
+    protected function create(array $data)
+    {
         return User::create([
             'name' => $data['name'],
-            'login' => $data['login'],
-            'password' => $hasher->make($data['password']),
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
         ]);
     }
 }
