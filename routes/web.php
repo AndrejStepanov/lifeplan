@@ -11,6 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () { return view('welcome')->with('app_js', 'Main');}); // Главная страница
+Route::get('/about', function () { return view('welcome')->with('app_js', 'About');}); // О себе
+Route::get('/test', function () { return view('welcome')->with('app_js', 'Test');}); // Психотесты
+Route::get('/search', function () { return view('welcome')->with('app_js', 'Search');}); // Поиск ВУЗов

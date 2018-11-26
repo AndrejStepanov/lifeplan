@@ -1,5 +1,11 @@
-const mix = require('laravel-mix');
+const {mix} = require('laravel-mix');
 
+
+mix.disableNotifications();
+
+mix.options({
+    processCssUrls: false
+});
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,5 +17,20 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+mix.js('resources/assets/js/Main.js', 'public/js')
+    .js('resources/assets/js/About.js', 'public/js')
+    .js('resources/assets/js/Search.js', 'public/js')
+    .js('resources/assets/js/Test.js', 'public/js')
+    .webpackConfig({
+        resolve: {
+            alias: {
+                '@': path.resolve('resources/assets/sass')
+            }
+        }
+    })
+    .sass('resources/assets/sass/app.scss', 'public/css').extract(['vue','vuetify']);
+
+
+if (mix.inProduction()) {
+    mix.version();
+}
