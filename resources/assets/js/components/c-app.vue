@@ -1,56 +1,42 @@
 <template>
-    <v-app dark>
+    <v-app dark >
 		<c-head ref="head" :curentSystem='curentSystem' :showLeft="panelLeftDrawer" :showRight="panelRightDrawer"/>
-		<v-content ref='content' >
-			<v-navigation-drawer v-if="panelLeftDrawer" fixed v-model="panelLeftShowen" left :clipped="$vuetify.breakpoint.width > 1264"  app :class="panelLeftClass" :width="panelLeftWidth">
+		<v-content ref='content' :style="getContentStyles">
+			<v-navigation-drawer v-if="needMainPanels && panelLeftDrawer" fixed v-model="panelLeftShowen" left :clipped="$vuetify.breakpoint.width > 1264"  app :class="panelLeftClass" :width="panelLeftWidth">
 				<slot name="panelLeft"/>
 			</v-navigation-drawer>
-			<v-navigation-drawer v-if="panelRightDrawer" fixed v-model="panelRightShowen" right :clipped="$vuetify.breakpoint.width > 1264"  app :class="panelRightClass" :width="panelRightWidth">
+			<v-navigation-drawer v-if="needMainPanels && panelRightDrawer" fixed v-model="panelRightShowen" right :clipped="$vuetify.breakpoint.width > 1264"  app :class="panelRightClass" :width="panelRightWidth">
 				<slot name="panelRight"/>
 			</v-navigation-drawer>
-			<slot />
+			<slot v-if="!needMainPanels" />
+			<c-layouts v-else :config="panelsConfig">
+				<div  v-for="(slotName, index) in slotNames" :key="index"   :slot="slotName" >
+					<slot :name="slotName" />
+				</div>				
+			</c-layouts>
 		</v-content>		
-		<c-footer />
+		<c-footer :fixed="oneScreen"/>
 		<c-msg-list />
-		
 		<component v-bind:is="dialogModule" v-if="dialogIsShowen(dialogIdOpened)" :dialogId="dialogIdOpened"/>
     </v-app>
 </template>
 
 <script>
-/*			<Layout	:edit="panelsEditable"	:resize="panelsResizable"	:splits="panelsSplitable">
-				<Pane :title="getFormsTitles[0]" :style="getFormsStyles[0]">
-					
-				</Pane>
-				<Pane :title="getFormsTitles[1]" :style="getFormsStyles[1]">
-					<slot name='secondPanel'/>
-				</Pane>
-				<Pane :title="getFormsTitles[2]" :style="getFormsStyles[2]">
-					<slot name='thirdPanel'/>
-				</Pane>
-				<Pane :title="getFormsTitles[3]" :style="getFormsStyles[3]">
-					<slot name='fourthPanel'/>
-				</Pane>
-				<Pane :title="getFormsTitles[4]" :style="getFormsStyles[4]">
-					<slot name='fifthPanel'/>
-				</Pane>
-			</Layout>*/
 			
 	import XStore from '../mixins/x-store'
 	import XDialog from '../mixins/x-dialog'
     import CHead from '../components/c-head'
 	import CFooter from '../components/c-footer'
-    import CMsgList from '../components/c-msg-list'
-	import {Layout,Pane} from 'vue-split-layout'
+	import CMsgList from '../components/c-msg-list'
     export default {
+		name:'c-app',
 		data:() => ({
 			dialogsConfig: {
 				auth:{id: getNewId(),  module:'m-input-fields',  name:"auth-login", title:"$vuetify.texts.modals.auth.title", 	params:{ socetHref:"/login", socetEvent:"auth.login"}, }
 			},
 			panelLeftShowen: false,
 			panelRightShowen: false,
-			isMounted:false,
-			tmpRes:[{display:'none',},{display:'none',},{display:'none',},{display:'none',},{display:'none',},{display:'none',},{display:'none',},{display:'none',},{display:'none',},],
+			slotNamesCalc:[],
 		}),
 		props:{
 			curentSystem: {type:  String, required: true},
@@ -64,50 +50,48 @@
 			panelRightClass: {type:  String,  default: ''},
 			panelRightWidth: {type:  Number | String,  default: 300},
 			formsProps:{type:Array,default:()=>{ return []} },
-			panelsEditable: {type:  Boolean,  default: false},
-			panelsResizable: {type:  Boolean,  default: false},
-			panelsSplitable: {type:  Boolean,  default: false},
+			needMainPanels: {type:  Boolean,  default: false},
+			oneScreen:{type:  Boolean,  default: true},
+			panelsResizable: {type:  Boolean,  default: true},
+			panelsConfig: {type:  Array,  default: () => {return [ //'horizontal' - внутри будут строки,  'vertical' - внутри будут столбики;  Последнему слою выставлять размер бессмысленно
+				{  name: 'first',   width:'100%',	height:'100%',  type: 'vertical' , data:[
+					{  name: 'second',   width:'50%',	height:'100%',  type: 'horizontal'},
+					{  name: 'third',   width:'100%',	height:'100%',  type: 'horizontal'},
+				]}, 
+			]}},
 		},
 		computed:{
-			getFormsTitles(){
-				let vm=this,
-					res=this.tmpRes.slice()
-				return res.map( (row,i)=>{
-					if(vm.formsProps.length>=i+1)
-						return vm.formsProps[i]
-					else 
-						return ''
-				})
+			slotNames(){
+				let vm=this
+				vm.calcSlotNames(vm.panelsConfig)
+				return vm.slotNamesCalc
 			},
-			getFormsStyles(){
-				let vm=this,
-					res=this.tmpRes.slice()
-				//if(!vm.isMounted)
-					return res
-				/*return res.map( (row,i)=>{
-					if(i==0)
-						return row
-					return 
-				})
-
-					overflowY='hidden'
-				if(vm.type=='DATETIME_RANGE' && vm.isNarrowDialog || height+48>vm.$vuetify.breakpoint.height *0.9 || vm.type=='TEXT' || vm.isNeedTab){
-					height = vm.getDialogMainDivHeight
-					overflowY=vm.type=='TEXT'|| vm.isNeedTab?'auto':'scroll'
-				}
-				return {
-					height: height + 'px' ,
-					overflowY: overflowY,
-				}*/
+			getContentStyles(){
+				let vm=this
+				if(vm.oneScreen)//финт ушами, что бы основная область не прокручивалась
+					return {height: '100px' ,}
+				else	
+					return {  }
 			},
 		},
         components: {
-			CHead, CFooter,CMsgList,Layout,Pane,
+			CHead, CFooter,CMsgList, Multipane, MultipaneResizer,
 			MInputFields: (resolve) => require(['../modules/m-input-fields.vue'], resolve),
+			CLayouts: (resolve) => require(['./c-layouts.vue'], resolve),
 		},
 		mixins: [
 			XStore,XDialog,
 		],
+		methods: {
+			calcSlotNames(arr){
+				let vm=this
+				arr.forEach(row => {
+					vm.slotNamesCalc.push(row.name)
+					if(row.data!=undefined && row.data.length )
+						vm.calcSlotNames(row.data)
+				});
+			},
+		},
 		created: function (){
 			let vm=this
 			vm.panelLeftShowen=vm.panelLeftShow
@@ -124,9 +108,8 @@
 			});	
 			
 		},
-		mounted(){
-			let vm=this
-        	vm.isMounted = true;
-    	},
     }
 </script>
+
+<style lang="scss">
+</style>
