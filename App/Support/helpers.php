@@ -1,6 +1,6 @@
 <?php
 use App\Exceptions\KonsomException;
-		
+
 /**
 *	Функция проверяет существование указанной переменной
 *	
