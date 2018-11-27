@@ -47,82 +47,286 @@ exports.push([module.i, "\n.custom-resizer {\n  width: 100%;\n  height: 100%;\n}
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_multipane__ = __webpack_require__(203);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__c_layout__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__c_layout___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__c_layout__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	name: 'c-layouts',
 	data: function data() {
 		return {
-			slotNames: ['fst', 'scnd']
+			rendersObjects: {},
+			configPars: {},
+			isResizing: false
 		};
 	},
 	props: {
-		panelsConfig: { type: Array, default: function _default() {
-				return [{ name: 'first', width: '50%', height: '100%', type: 'horizontal', data: [] }];
+		config: { type: Object, default: function _default() {
+				return { name: 'first', width: '50%', height: '100%', layout: 'horizontal', data: [] };
 			} }
 	},
 	computed: {},
 	components: {
-		Multipane: __WEBPACK_IMPORTED_MODULE_0_vue_multipane__["a" /* Multipane */], MultipaneResizer: __WEBPACK_IMPORTED_MODULE_0_vue_multipane__["b" /* MultipaneResizer */]
+		CLayout: __WEBPACK_IMPORTED_MODULE_0__c_layout___default.a
 	},
-	methods: {},
+	methods: {
+		recurPars: function recurPars(_ref) {
+			var config = _ref.config,
+			    _ref$parent = _ref.parent,
+			    parent = _ref$parent === undefined ? '' : _ref$parent,
+			    _ref$isLast = _ref.isLast,
+			    isLast = _ref$isLast === undefined ? false : _ref$isLast;
+
+			var vm = this;
+			vm.$set(vm.configPars, config.name, _extends({}, config, { parent: parent, isLast: isLast }));
+			if (config.data != undefined && config.data.length) {
+				config.data.forEach(function (element, idx) {
+					vm.recurPars({ config: element, parent: config.name, isLast: idx < config.data.length - 1 ? false : true });
+				});
+				config.data.forEach(function (row) {
+					vm.configPars[row.name].last = config.data[config.data.length - 1].name;
+				});
+			}
+		},
+		recurRend: function recurRend(_ref2) {
+			var _this = this;
+
+			var config = _ref2.config;
+
+			var vm = this,
+			    tmp = [];
+			if (config.data != undefined && config.data.length) {
+				config.data.forEach(function (element, idx) {
+					vm.recurRend({ config: element });
+				});
+				config.data.forEach(function (row, idx) {
+					tmp.push(vm.rendersObjects[row.name]);
+					if (idx < config.data.length - 1) tmp.push(vm.$createElement('div', { class: { 'multipane-resizer': true }, attrs: { block: row.name }, on: { mousedown: _this.onMouseDown } }));
+				});
+				vm.rendersObjects[config.name] = vm.$createElement('c-layout', { props: { config: vm.configPars[config.name] } }, tmp);
+			} else vm.rendersObjects[config.name] = vm.$createElement('c-layout', { props: { config: vm.configPars[config.name] } }, [vm.$slots[config.name]]);
+		},
+		onMouseDown: function onMouseDown(_ref3) {
+			var resizer = _ref3.target,
+			    initialPageX = _ref3.pageX,
+			    initialPageY = _ref3.pageY;
+
+			if (!resizer.className || !resizer.className.match('multipane-resizer')) return;
+			var vm = this,
+			    blockName = resizer.getAttribute('block');
+			var parentName = vm.configPars[blockName].parent,
+			    lastName = vm.configPars[blockName].last,
+			    container = vm.$el,
+			    pane = resizer.previousElementSibling,
+			    initialPaneWidth = parseFloat(vm.configPars[blockName].width.replace("%", "").replace("px", "")),
+			    initialPaneHeight = parseFloat(vm.configPars[blockName].height.replace("%", "").replace("px", ""));
+
+			var curLayout = vm.configPars[parentName].layout;
+			//let { offsetWidth: initialPaneWidth,    offsetHeight: initialPaneHeight,   } = pane
+			var usePercentage = !!(pane.style.width + '').match('%');
+			var _window = window,
+			    addEventListener = _window.addEventListener,
+			    removeEventListener = _window.removeEventListener;
+
+
+			var resize = function resize(initialSize) {
+				var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+				if (initialSize == undefined) return;
+				if (curLayout == 'vertical') return pane.style.width = usePercentage ? initialSize + offset / container.clientWidth * 100 + '%' : initialSize + offset + 'px';
+				if (curLayout == 'horizontal') return pane.style.height = usePercentage ? initialSize + offset / container.clientHeight * 100 + '%' : initialSize + offset + 'px';
+			};
+			// This adds is-resizing class to container
+			vm.isResizing = true;
+			// Resize once to get current computed size
+			var size = resize();
+			// Trigger paneResizeStart event
+			vm.$emit('paneResizeStart', pane, resizer, size);
+			var onMouseMove = function onMouseMove(_ref4) {
+				var pageX = _ref4.pageX,
+				    pageY = _ref4.pageY;
+
+				size = curLayout == 'vertical' ? resize(initialPaneWidth, pageX - initialPageX) : resize(initialPaneHeight, pageY - initialPageY);
+				vm.$emit('paneResize', pane, resizer, size);
+			};
+
+			var onMouseUp = function onMouseUp(_ref5) {
+				var pageX = _ref5.pageX,
+				    pageY = _ref5.pageY;
+
+				// Run resize one more time to set computed width/height.
+				var changeSize = 0,
+				    sizeLast = 0,
+				    size = parseFloat(resize(curLayout == 'vertical' ? initialPaneWidth : initialPaneHeight, curLayout == 'vertical' ? pageX - initialPageX : pageY - initialPageY).replace("%", "").replace("px", ""));
+				size = size > 100 ? 100 : size;
+				changeSize = (curLayout == 'vertical' ? initialPaneWidth : initialPaneHeight) - size;
+				sizeLast = parseFloat((curLayout == 'vertical' ? vm.configPars[lastName].width : vm.configPars[lastName].height).replace("%", "").replace("px", ""));
+				if (sizeLast + changeSize - (usePercentage ? 5 : 100) <= 0) {
+					changeSize = (usePercentage ? 5 : 100) - sizeLast;
+					size = (curLayout == 'vertical' ? initialPaneWidth : initialPaneHeight) - changeSize;
+					sizeLast = usePercentage ? 5 : 100;
+				} else sizeLast += changeSize;
+				if (vm.configPars[parentName].layout == 'vertical') {
+					vm.configPars[blockName].width = size + (usePercentage ? '%' : 'px');
+					vm.configPars[lastName].width = sizeLast + (usePercentage ? '%' : 'px');
+				} else {
+					vm.configPars[blockName].height = size + (usePercentage ? '%' : 'px');
+					vm.configPars[lastName].height = sizeLast + (usePercentage ? '%' : 'px');
+				}
+				// This removes is-resizing class to container
+				vm.isResizing = false;
+				removeEventListener('mousemove', onMouseMove);
+				removeEventListener('mouseup', onMouseUp);
+				vm.$emit('paneResizeStop', pane, resizer, size);
+			};
+			addEventListener('mousemove', onMouseMove);
+			addEventListener('mouseup', onMouseUp);
+		}
+	},
 	created: function created() {
 		var vm = this;
+		vm.recurPars({ config: vm.config });
+	},
+	render: function render(h) {
+		var vm = this;
+		if (vm.config.data == undefined || !vm.config.data.length) return null;
+		vm.recurRend({ config: vm.config });
+		return vm.rendersObjects[vm.config.name];
 	}
 });
 
 /***/ }),
 
-/***/ 203:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ 214:
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __$__vue_module__; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return MultipaneResizer; });
-var LAYOUT_HORIZONTAL="horizontal",LAYOUT_VERTICAL="vertical",__vue_module__={name:"multipane",props:{layout:{type:String,default:LAYOUT_VERTICAL}},data:function(){return{isResizing:!1}},computed:{classnames:function(){return["multipane","layout-"+this.layout.slice(0,1),this.isResizing?"is-resizing":""]},cursor:function(){return this.isResizing?this.layout==LAYOUT_VERTICAL?"col-resize":"row-resize":""},userSelect:function(){return this.isResizing?"none":""}},methods:{onMouseDown:function(e){var t=e.target,i=e.pageX,n=e.pageY;if(t.className&&t.className.match("multipane-resizer")){var s=this,o=s.$el,a=s.layout,u=t.previousElementSibling,r=u.offsetWidth,l=u.offsetHeight,d=!!(u.style.width+"").match("%"),c=window.addEventListener,p=window.removeEventListener,m=function(e,t){if(void 0===t&&(t=0),a==LAYOUT_VERTICAL){var i=o.clientWidth,n=e+t;return u.style.width=d?n/i*100+"%":n+"px"}if(a==LAYOUT_HORIZONTAL){var s=o.clientHeight,r=e+t;return u.style.height=d?r/s*100+"%":r+"px"}};s.isResizing=!0;var _=m();s.$emit("paneResizeStart",u,t,_);var h=function(e){var o=e.pageX,d=e.pageY;_=a==LAYOUT_VERTICAL?m(r,o-i):m(l,d-n),s.$emit("paneResize",u,t,_)},f=function(){_=m(a==LAYOUT_VERTICAL?u.clientWidth:u.clientHeight),s.isResizing=!1,p("mousemove",h),p("mouseup",f),s.$emit("paneResizeStop",u,t,_)};c("mousemove",h),c("mouseup",f)}}}};!function(){if("undefined"!=typeof document){var e=document.head||document.getElementsByTagName("head")[0],t=document.createElement("style"),i=".multipane { display: flex; } .multipane.layout-h { flex-direction: column; } .multipane.layout-v { flex-direction: row; } .multipane > div { position: relative; z-index: 1; } .multipane-resizer { display: block; position: relative; z-index: 2; } .layout-h > .multipane-resizer { width: 100%; height: 10px; margin-top: -10px; top: 5px; cursor: row-resize; } .layout-v > .multipane-resizer { width: 10px; height: 100%; margin-left: -10px; left: 5px; cursor: col-resize; } ";t.type="text/css",t.styleSheet?t.styleSheet.cssText=i:t.appendChild(document.createTextNode(i)),e.appendChild(t)}}();var __$__vue_module__=Object.assign(__vue_module__,{render:function(){var e=this,t=e.$createElement;return(e._self._c||t)("div",{class:e.classnames,style:{cursor:e.cursor,userSelect:e.userSelect},on:{mousedown:e.onMouseDown}},[e._t("default")],2)},staticRenderFns:[]});__$__vue_module__.prototype=__vue_module__.prototype,function(){if("undefined"!=typeof document){var e=document.head||document.getElementsByTagName("head")[0],t=document.createElement("style");t.type="text/css",t.styleSheet?t.styleSheet.cssText="":t.appendChild(document.createTextNode("")),e.appendChild(t)}}();var MultipaneResizer={render:function(){var e=this,t=e.$createElement;return(e._self._c||t)("div",{staticClass:"multipane-resizer"},[e._t("default")],2)},staticRenderFns:[]};"undefined"!=typeof window&&window.Vue&&(window.Vue.component("multipane",__$__vue_module__),window.Vue.component("multipane-resizer",MultipaneResizer));
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(215)
+}
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(217)
+/* template */
+var __vue_template__ = __webpack_require__(218)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/c-layout.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-19fcdaeb", Component.options)
+  } else {
+    hotAPI.reload("data-v-19fcdaeb", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
 
 
 /***/ }),
 
-/***/ 204:
+/***/ 215:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(216);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("476d69a9", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-19fcdaeb\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./c-layout.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-19fcdaeb\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./c-layout.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 216:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.multipane {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  overflow: hidden;\n}\n.multipane.layout-h {\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n}\n.multipane.layout-v {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n}\n\n/*.multipane > div {  position: relative;  z-index: 1;}*/\n.multipane.scroll {\n  overflow: auto;\n  padding: 5px;\n  margin: 5px 5px 5px 0px;\n}\n.multipane.auto-size {\n  -webkit-box-flex: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n}\n.multipane-resizer {\n  display: block;\n  position: relative;\n  z-index: 2;\n}\n.layout-h > .multipane-resizer {\n  width: 100%;\n  height: 3px;\n  margin-top: -10px;\n  top: 5px;\n  cursor: row-resize;\n}\n.layout-v > .multipane-resizer {\n  width: 3px;\n  height: 100%;\n  margin-left: -10px;\n  left: 5px;\n  cursor: col-resize;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 217:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'c-layout',
+  data: function data() {
+    return {};
+  },
+
+  props: {
+    config: { type: Object, default: function _default() {
+        return { name: 'first', width: '50%', height: '100%', layout: 'horizontal', isLast: false, data: [] };
+      } },
+    noMultiPane: { type: Boolean, default: false }
+  },
+  computed: {
+    classnames: function classnames() {
+      return ['multipane', 'layout-' + this.config.layout.slice(0, 1), this.config.data != undefined && this.config.data.length > 0 ? 'custom-resizer ' : 'scroll', this.config.isLast ? 'auto-size' : ''];
+    }
+  },
+  methods: {}
+});
+
+/***/ }),
+
+/***/ 218:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -130,69 +334,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "multipane",
-    { staticClass: "custom-resizer", attrs: { layout: "vertical" } },
-    [
-      _c(
-        "div",
-        { staticClass: "pane" },
-        [
-          _c("h6", { staticClass: "title is-6" }, [_vm._v("Pane 1")]),
-          _vm._v("\n\t\twjehfvblw fblawejva \n\t\t"),
-          _vm._t(_vm.slotNames[0])
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c("multipane-resizer"),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "pane" },
-        [
-          _c("h6", { staticClass: "title is-6" }, [_vm._v("Pane 2")]),
-          _vm._v("\n\t\twjehfvblw fblawejv \n\t\t"),
-          _vm._t(_vm.slotNames[1])
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c("multipane-resizer"),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "pane", style: { flexGrow: 1 } },
-        [
-          _c(
-            "multipane",
-            { staticClass: "custom-resizer", attrs: { layout: "horizontal" } },
-            [
-              _c("div", { staticClass: "pane" }, [
-                _c("h6", { staticClass: "title is-6" }, [_vm._v("Pane 1")]),
-                _vm._v("\n\t\t\t\twjehfvblw fblawejv \n\t\t\t\t\n\t\t\t")
-              ]),
-              _vm._v(" "),
-              _c("multipane-resizer"),
-              _vm._v(" "),
-              _c("div", { staticClass: "pane" }, [
-                _c("h6", { staticClass: "title is-6" }, [_vm._v("Pane 2")]),
-                _vm._v("\n\t\t\t\twjehfvblw fblawejv \n\t\t\t")
-              ]),
-              _vm._v(" "),
-              _c("multipane-resizer"),
-              _vm._v(" "),
-              _c("div", { staticClass: "pane", style: { flexGrow: 1 } }, [
-                _c("h6", { staticClass: "title is-6" }, [_vm._v("Pane 3")]),
-                _vm._v("\n\t\t\t\twjehfvblw fblawejv \n\t\t\t")
-              ])
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
+    "div",
+    {
+      class: _vm.classnames,
+      style: { width: _vm.config.width, height: _vm.config.height },
+      attrs: { name: _vm.config.name }
+    },
+    [_vm._t("default")],
+    2
   )
 }
 var staticRenderFns = []
@@ -201,7 +350,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-294a2398", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-19fcdaeb", module.exports)
   }
 }
 
@@ -219,7 +368,7 @@ var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(202)
 /* template */
-var __vue_template__ = __webpack_require__(204)
+var __vue_template__ = null
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */

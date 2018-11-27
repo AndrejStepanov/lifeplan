@@ -1,163 +1,48 @@
 <template>
-  <div :class="classnames" :style="{ cursor, userSelect }" @mousedown="onMouseDown">
+  <div :class="classnames" :style="{ width:config.width, height:config.height }" :name='config.name'>
     <slot></slot>
   </div>
 </template>
 
 <script>
-const LAYOUT_HORIZONTAL = 'horizontal';
-const LAYOUT_VERTICAL = 'vertical';
-
 export default {
-  name: 'multipane',
-
-  props: {
-    layout: {
-      type: String,
-      default: LAYOUT_VERTICAL,
-    },
-  },
-
+  name: 'c-layout',
   data() {
     return {
-      isResizing: false,
-    };
+    }
   },
-
+  props: {
+	config:{type: Object,  default: () =>{return{  name: 'first',   width:'50%',	height:'100%',  layout: 'horizontal', isLast:false , data:[],} }},
+	noMultiPane:{type: Boolean, default:false},
+  },
   computed: {
     classnames() {
       return [
-        'multipane',
-        'layout-' + this.layout.slice(0, 1),
-        this.isResizing ? 'is-resizing' : '',
-      ];
-    },
-    cursor() {
-      return this.isResizing
-        ? this.layout == LAYOUT_VERTICAL ? 'col-resize' : 'row-resize'
-        : '';
-    },
-    userSelect() {
-      return this.isResizing ? 'none' : '';
-    },
+		'multipane',
+        'layout-' + this.config.layout.slice(0, 1),
+        this.config.data!=undefined && this.config.data.length>0? 'custom-resizer ':'scroll',
+        this.config.isLast? 'auto-size':'',
+      ]
+	},
   },
-
   methods: {
-    onMouseDown({ target: resizer, pageX: initialPageX, pageY: initialPageY }) {
-      if (resizer.className && resizer.className.match('multipane-resizer')) {
-        let self = this;
-        let { $el: container, layout } = self;
-
-        let pane = resizer.previousElementSibling;
-        let {
-          offsetWidth: initialPaneWidth,
-          offsetHeight: initialPaneHeight,
-        } = pane;
-
-        let usePercentage = !!(pane.style.width + '').match('%');
-
-        const { addEventListener, removeEventListener } = window;
-
-        const resize = (initialSize, offset = 0) => {
-          if (layout == LAYOUT_VERTICAL) {
-            let containerWidth = container.clientWidth;
-            let paneWidth = initialSize + offset;
-
-            return (pane.style.width = usePercentage
-              ? paneWidth / containerWidth * 100 + '%'
-              : paneWidth + 'px');
-          }
-
-          if (layout == LAYOUT_HORIZONTAL) {
-            let containerHeight = container.clientHeight;
-            let paneHeight = initialSize + offset;
-
-            return (pane.style.height = usePercentage
-              ? paneHeight / containerHeight * 100 + '%'
-              : paneHeight + 'px');
-          }
-        };
-
-        // This adds is-resizing class to container
-        self.isResizing = true;
-
-        // Resize once to get current computed size
-        let size = resize();
-
-        // Trigger paneResizeStart event
-        self.$emit('paneResizeStart', pane, resizer, size);
-
-        const onMouseMove = function({ pageX, pageY }) {
-          size =
-            layout == LAYOUT_VERTICAL
-              ? resize(initialPaneWidth, pageX - initialPageX)
-              : resize(initialPaneHeight, pageY - initialPageY);
-
-          self.$emit('paneResize', pane, resizer, size);
-        };
-
-        const onMouseUp = function() {
-          // Run resize one more time to set computed width/height.
-          size =
-            layout == LAYOUT_VERTICAL
-              ? resize(pane.clientWidth)
-              : resize(pane.clientHeight);
-
-          // This removes is-resizing class to container
-          self.isResizing = false;
-
-          removeEventListener('mousemove', onMouseMove);
-          removeEventListener('mouseup', onMouseUp);
-
-          self.$emit('paneResizeStop', pane, resizer, size);
-        };
-
-        addEventListener('mousemove', onMouseMove);
-        addEventListener('mouseup', onMouseUp);
-      }
-    },
   },
-};
-
+}
 </script>
 
 <style lang="scss">
-.multipane {
-    display: flex;
-
-    &.layout-h {
-        flex-direction: column;
-    }
-
-    &.layout-v {
-        flex-direction: row;
-    }
+.multipane {   display: -webkit-box;  display: -ms-flexbox; overflow: hidden; 
+    &.layout-h {flex-direction: column; }
+    &.layout-v { flex-direction: row;    }
 }
 
-.multipane > div {
-  position: relative;
-  z-index: 1;
-}
+/*.multipane > div {  position: relative;  z-index: 1;}*/
+.multipane.scroll {overflow: auto;  padding: 5px;   margin: 5px 5px 5px 0px;}
+.multipane.auto-size {flex-grow: 1;}
 
-.multipane-resizer {
-  display: block;
-  position: relative;
-  z-index: 2;
-}
+.multipane-resizer {  display: block;  position: relative;  z-index: 2;}
 
-.layout-h > .multipane-resizer {
-  width: 100%;
-  height: 10px;
-  margin-top: -10px;
-  top: 5px;
-  cursor: row-resize;
-}
+.layout-h > .multipane-resizer {  width: 100%;  height: 3px;  margin-top: -10px;  top: 5px;  cursor: row-resize;}
 
-.layout-v > .multipane-resizer {
-  width: 10px;
-  height: 100%;
-  margin-left: -10px;
-  left: 5px;
-  cursor: col-resize;
-}
+.layout-v > .multipane-resizer {  width: 3px;  height: 100%;  margin-left: -10px;  left: 5px;  cursor: col-resize;}
 </style>

@@ -17,6 +17,7 @@
 		</v-content>		
 		<c-footer :fixed="oneScreen"/>
 		<c-msg-list />
+		<slot name="dialogs" />
 		<component v-bind:is="dialogModule" v-if="dialogIsShowen(dialogIdOpened)" :dialogId="dialogIdOpened"/>
     </v-app>
 </template>
@@ -53,12 +54,12 @@
 			needMainPanels: {type:  Boolean,  default: false},
 			oneScreen:{type:  Boolean,  default: true},
 			panelsResizable: {type:  Boolean,  default: true},
-			panelsConfig: {type:  Array,  default: () => {return [ //'horizontal' - внутри будут строки,  'vertical' - внутри будут столбики;  Последнему слою выставлять размер бессмысленно
-				{  name: 'first',   width:'100%',	height:'100%',  type: 'vertical' , data:[
-					{  name: 'second',   width:'50%',	height:'100%',  type: 'horizontal'},
-					{  name: 'third',   width:'100%',	height:'100%',  type: 'horizontal'},
-				]}, 
-			]}},
+			panelsConfig: {type: Object,  default: () => {return{ //'horizontal' - внутри будут строки,  'vertical' - внутри будут столбики;  Последнему слою выставлять размер бессмысленно
+				name: 'first',   width:'100%',	height:'100%',  layout: 'vertical' , data:[
+					{  name: 'second',   width:'50%',	height:'100%',  layout: 'horizontal'},
+					{  name: 'third',   width:'100%',	height:'100%',  layout: 'horizontal'},
+				]}}
+			}, 
 		},
 		computed:{
 			slotNames(){
@@ -75,7 +76,7 @@
 			},
 		},
         components: {
-			CHead, CFooter,CMsgList, Multipane, MultipaneResizer,
+			CHead, CFooter,CMsgList, 
 			MInputFields: (resolve) => require(['../modules/m-input-fields.vue'], resolve),
 			CLayouts: (resolve) => require(['./c-layouts.vue'], resolve),
 		},
@@ -83,13 +84,13 @@
 			XStore,XDialog,
 		],
 		methods: {
-			calcSlotNames(arr){
+			calcSlotNames(obj){
 				let vm=this
-				arr.forEach(row => {
-					vm.slotNamesCalc.push(row.name)
-					if(row.data!=undefined && row.data.length )
-						vm.calcSlotNames(row.data)
-				});
+				vm.slotNamesCalc.push(obj.name)
+				if(obj.data!=undefined && obj.data.length )
+					obj.data.forEach(row => {
+						vm.calcSlotNames(row)
+					});
 			},
 		},
 		created: function (){

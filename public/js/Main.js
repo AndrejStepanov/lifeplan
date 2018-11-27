@@ -2267,6 +2267,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -2303,10 +2304,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		needMainPanels: { type: Boolean, default: false },
 		oneScreen: { type: Boolean, default: true },
 		panelsResizable: { type: Boolean, default: true },
-		panelsConfig: { type: Array, default: function _default() {
-				return [//'horizontal' - внутри будут строки,  'vertical' - внутри будут столбики;  Последнему слою выставлять размер бессмысленно
-				{ name: 'first', width: '100%', height: '100%', type: 'vertical', data: [{ name: 'second', width: '50%', height: '100%', type: 'horizontal' }, { name: 'third', width: '100%', height: '100%', type: 'horizontal' }] }];
-			} }
+		panelsConfig: { type: Object, default: function _default() {
+				return { //'horizontal' - внутри будут строки,  'vertical' - внутри будут столбики;  Последнему слою выставлять размер бессмысленно
+					name: 'first', width: '100%', height: '100%', layout: 'vertical', data: [{ name: 'second', width: '50%', height: '100%', layout: 'horizontal' }, { name: 'third', width: '100%', height: '100%', layout: 'horizontal' }] };
+			}
+		}
 	},
 	computed: {
 		slotNames: function slotNames() {
@@ -2321,7 +2323,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		}
 	},
 	components: {
-		CHead: __WEBPACK_IMPORTED_MODULE_2__components_c_head___default.a, CFooter: __WEBPACK_IMPORTED_MODULE_3__components_c_footer___default.a, CMsgList: __WEBPACK_IMPORTED_MODULE_4__components_c_msg_list___default.a, Multipane: Multipane, MultipaneResizer: MultipaneResizer,
+		CHead: __WEBPACK_IMPORTED_MODULE_2__components_c_head___default.a, CFooter: __WEBPACK_IMPORTED_MODULE_3__components_c_footer___default.a, CMsgList: __WEBPACK_IMPORTED_MODULE_4__components_c_msg_list___default.a,
 		MInputFields: function MInputFields(resolve) {
 			return __webpack_require__.e/* require */(0/* duplicate */).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(54)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
 		},
@@ -2331,11 +2333,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_x_store___default.a, __WEBPACK_IMPORTED_MODULE_1__mixins_x_dialog___default.a],
 	methods: {
-		calcSlotNames: function calcSlotNames(arr) {
+		calcSlotNames: function calcSlotNames(obj) {
 			var vm = this;
-			arr.forEach(function (row) {
-				vm.slotNamesCalc.push(row.name);
-				if (row.data != undefined && row.data.length) vm.calcSlotNames(row.data);
+			vm.slotNamesCalc.push(obj.name);
+			if (obj.data != undefined && obj.data.length) obj.data.forEach(function (row) {
+				vm.calcSlotNames(row);
 			});
 		}
 	},
@@ -3614,6 +3616,8 @@ var render = function() {
       _vm._v(" "),
       _c("c-msg-list"),
       _vm._v(" "),
+      _vm._t("dialogs"),
+      _vm._v(" "),
       _vm.dialogIsShowen(_vm.dialogIdOpened)
         ? _c(_vm.dialogModule, {
             tag: "component",
@@ -3621,7 +3625,7 @@ var render = function() {
           })
         : _vm._e()
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
@@ -4952,6 +4956,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4959,7 +4978,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 		return {
 			systems: [{ name: '$vuetify.texts.main.systems.objects.name', title: '$vuetify.texts.main.systems.objects.title', icon: 'dashboard' }],
 			ALL_Links: [{ id: 1, system: '$vuetify.texts.main.systems.objects.name', color: '', type: '$vuetify.texts.main.links.types.ARM', name: '$vuetify.texts.main.links.objWork.name', icon: 'local_activity', href: '/Работа_с_объектами', title: '$vuetify.texts.main.links.objWork.title' }, { id: 2, system: '$vuetify.texts.main.systems.objects.name', color: '', type: '$vuetify.texts.main.links.types.ARM', name: '$vuetify.texts.main.links.obgView.name', icon: 'dvr', href: '/Просмотр_объектов', title: '$vuetify.texts.main.links.obgView.title' }],
-			Links: []
+			Links: [],
+			panelsConfig: //'horizontal' - внутри будут строки,  'vertical' - внутри будут столбики;  Последнему слою выставлять размер бессмысленно
+			{ name: 'first', width: '100%', height: '100%', layout: 'vertical', data: [{ name: 'second', width: '70%', height: '100%', layout: 'horizontal', data: [{ name: 'fourth', width: '100%', height: '60%', layout: 'vertical' }, { name: 'sixth', width: '100%', height: '40%', layout: 'vertical' }] }, { name: 'third', width: '30%', height: '100%', layout: 'horizontal', data: [{ name: 'fifth', width: '100%', height: '40%', layout: 'vertical' }, { name: 'seventh', width: '100%', height: '60%', layout: 'vertical' }] }] }
 		};
 	},
 	mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_x_app___default.a],
@@ -4999,7 +5020,9 @@ var render = function() {
         panelLeftShow: true,
         panelLeftDrawer: true,
         panelRightShow: true,
-        panelRightDrawer: true
+        panelRightDrawer: true,
+        panelsConfig: _vm.panelsConfig,
+        needMainPanels: true
       }
     },
     [
@@ -5090,6 +5113,54 @@ var render = function() {
                 1
               )
             })
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "template",
+        { slot: "fourth" },
+        [
+          _c("H1", [_vm._v("fourth")]),
+          _vm._v(
+            " fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y\n\t"
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "template",
+        { slot: "sixth" },
+        [
+          _c("H1", [_vm._v("sixth")]),
+          _vm._v(
+            " fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y\n\t\t\n\t"
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "template",
+        { slot: "fifth" },
+        [
+          _c("H1", [_vm._v("fifth")]),
+          _vm._v(
+            " fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y\n\t\t\n\t"
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "template",
+        { slot: "seventh" },
+        [
+          _c("H1", [_vm._v("seventh")]),
+          _vm._v(
+            " fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y fkwsehf vbsjfy siof goaseif gwaoeifygewoiyfgaweoif ygwoaeiyvg weoiycg weaoiyg weaioy gweiv gweoivyu gweoivyg weaif gwoaeyfwfli uygweofuiwaegfpoweug fpowufag poewfugwoeafuihgwae of8y\n\t\t\n\t"
           )
         ],
         1

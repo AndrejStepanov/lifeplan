@@ -1,5 +1,5 @@
 <template>
-	<c-app :curentSystem="$vuetify.t('$vuetify.texts.main.links.obgView.name')" :panelRightShow="true" :panelRightDrawer="true" panelRightClass="display--flex flex-direction--column" panelRightWidth='358' :needMainPanels="true">
+	<c-app :curentSystem="$vuetify.t('$vuetify.texts.main.links.obgView.name')" :panelRightShow="true" :panelRightDrawer="true" panelRightClass="display--flex flex-direction--column" panelRightWidth='358' :panelsConfig="panelsConfig" :needMainPanels="true" >
 		<template slot="panelRight">
 			<v-toolbar-title class="text-xs-center check-size flex--inherit">{{ $vuetify.t('$vuetify.texts.simple.labels.filter') }} </v-toolbar-title> 
 			<v-btn block  small class="check-size accent flex--inherit" @click="filterSet()"  > <v-icon>search</v-icon> {{$vuetify.t('$vuetify.texts.simple.actions.search')}}</v-btn>
@@ -9,12 +9,6 @@
 					<c-input-cols  :inputs="inputs" :paramsForm="filterName" :maxCols="1" :needCheckBox="true" :needSign="true" :listItemMin="true" />
 				</v-form>
 			</v-responsive>
-		</template>
-		<template slot="fst">
-			123
-		</template>
-				<template slot="scnd">
-			1111111
 		</template>
 	</c-app>
 </template>
@@ -26,6 +20,7 @@
 	export default {
 		data: () => ({
 			filterName:'object-tree-add',
+			panelsConfig: {  name: 'first',   width:'100%',	height:'100%',  layout: 'vertical' },
 		}),
 		computed: {
 			inputs() {
