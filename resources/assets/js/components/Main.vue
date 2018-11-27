@@ -20,8 +20,7 @@
             <v-list>
                 <v-divider></v-divider>
                 <v-list-tile class="pt-2"
-                        v-for="item in items"
-                        :title="item.title"
+                        v-for="item in items" :key="item.title" :title="item.title"
                         @click=""
                 >
                     <v-list-tile-action>
