@@ -11,6 +11,7 @@
 			config: {type:  Object,  default: () =>{return {  name: 'first',   width:'50%',	height:'100%',  layout: 'horizontal' , data:[]}}},
 		},
 		computed:{
+			resizable(){return nvl(this.config.resizable,false)	},
 		},
         components: {
 			CLayout,
@@ -45,10 +46,10 @@
 					vm.rendersObjects[config.name]= vm.$createElement('c-layout', {	props:{ config:vm.configPars[config.name] } }, [vm.$slots[config.name], ] )
 			},
 			onMouseDown({ target: resizer, pageX: initialPageX, pageY: initialPageY }) {
-				if (!resizer.className || !resizer.className.match('multipane-resizer'))
-					return
 				let vm = this,
 					blockName = resizer.getAttribute('block')
+				if ( !vm.resizable || !resizer.className || !resizer.className.match('multipane-resizer'))
+					return
 				let parentName = vm.configPars[blockName].parent,
 					lastName=vm.configPars[blockName].last,
 					{ $el: container } =  vm,

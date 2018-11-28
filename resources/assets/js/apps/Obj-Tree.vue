@@ -1,5 +1,5 @@
 <template>
-	<c-app :curentSystem="$vuetify.t('$vuetify.texts.main.links.objWork.name')" :panelLeftShow="true" :panelLeftDrawer="true" panelLeftClass="display--flex flex-direction--column" :panelsConfig="panelsConfig" :needMainPanels="true" >
+	<c-app :curentSystem="$vuetify.t('$vuetify.texts.main.links.objWork.name')" :panelLeft="{show:true, class:'display--flex flex-direction--column'}"  :mainPanelConfig="mainPanelConfig">
 		<template slot="panelLeft">
 			<v-text-field id="treeSearch" name="treeSearch" class="check-size flex--inherit" append-icon="search" v-model="treeSearch"  single-line :label="$vuetify.t('$vuetify.texts.simple.actions.search')" @keyup.enter="treeSearchSubmit"/>
 			<v-btn block  small class="check-size accent flex--inherit" @click="openDialog(dialogsConfig.treeAdd.id)" > <v-icon>add</v-icon> {{ $vuetify.t('$vuetify.texts.simple.actions.add') }}</v-btn>
@@ -26,7 +26,7 @@
 			dialogsConfig: {
 				treeAdd:{id: getNewId(),  module:'m-input-fields',  name:"object-tree-add", title:"$vuetify.texts.modals.treeAdd.title", 	params:{socetHref:"/data_command", socetEvent:"object.tree.add"},kyes:{ treeId:{value:0}, }, }
 			},
-			panelsConfig: {  name: 'first',   width:'100%',	height:'100%',  layout: 'vertical' },
+			mainPanelConfig: {  name: 'first',   width:'100%',	height:'100%',  layout: 'vertical' },
 		}),
 		components: {
 			CTree,

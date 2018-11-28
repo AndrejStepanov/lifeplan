@@ -18,7 +18,7 @@ export default {
   computed: {
     classnames() {
       return [
-		'multipane',
+		    'multipane',
         'layout-' + this.config.layout.slice(0, 1),
         this.config.data!=undefined && this.config.data.length>0? 'custom-resizer ':'scroll',
         this.config.isLast? 'auto-size':'',

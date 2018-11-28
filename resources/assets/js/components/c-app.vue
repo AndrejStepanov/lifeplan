@@ -2,28 +2,27 @@
     <v-app dark >
 		<c-head ref="head" :curentSystem='curentSystem' :showLeft="panelLeftDrawer" :showRight="panelRightDrawer"/>
 		<v-content ref='content' :style="getContentStyles">
-			<v-navigation-drawer v-if="needMainPanels && panelLeftDrawer" fixed v-model="panelLeftShowen" left :clipped="$vuetify.breakpoint.width > 1264"  app :class="panelLeftClass" :width="panelLeftWidth">
+			<v-navigation-drawer v-if="panelLeftDrawer" fixed v-model="panelLeftShowen" left :clipped="$vuetify.breakpoint.width > 1264"  app :class="panelLeft.class" :width="panelLeftWidth">
 				<slot name="panelLeft"/>
 			</v-navigation-drawer>
-			<v-navigation-drawer v-if="needMainPanels && panelRightDrawer" fixed v-model="panelRightShowen" right :clipped="$vuetify.breakpoint.width > 1264"  app :class="panelRightClass" :width="panelRightWidth">
+			<v-navigation-drawer v-if="panelRightDrawer" fixed v-model="panelRightShowen" right :clipped="$vuetify.breakpoint.width > 1264"  app :class="panelRight.class" :width="panelRightWidth">
 				<slot name="panelRight"/>
 			</v-navigation-drawer>
-			<slot v-if="!needMainPanels" />
-			<c-layouts v-else :config="panelsConfig">
+			<slot v-if="!mainPanelReq" />
+			<c-layouts v-else :config="mainPanelConfig">
 				<div  v-for="(slotName, index) in slotNames" :key="index"   :slot="slotName" >
 					<slot :name="slotName" />
-				</div>				
+				</div>
 			</c-layouts>
-		</v-content>		
-		<c-footer :fixed="oneScreen"/>
+		</v-content>
+		<c-footer :fixed="mainPanelReq"/>
 		<c-msg-list />
 		<slot name="dialogs" />
 		<component v-bind:is="dialogModule" v-if="dialogIsShowen(dialogIdOpened)" :dialogId="dialogIdOpened"/>
     </v-app>
 </template>
 
-<script>
-			
+<script>	
 	import XStore from '../mixins/x-store'
 	import XDialog from '../mixins/x-dialog'
     import CHead from '../components/c-head'
@@ -40,31 +39,22 @@
 			slotNamesCalc:[],
 		}),
 		props:{
-			curentSystem: {type:  String, required: true},
-			authHrefBack: {type:  String},			
-			panelLeftDrawer: {type:  Boolean,  default: false},
-			panelLeftShow: {type:  Boolean,  default: false},
-			panelLeftClass: {type:  String,  default: ''},
-			panelLeftWidth: {type:  Number | String,  default: 300},
-			panelRightDrawer: {type:  Boolean,  default: false},
-			panelRightShow: {type:  Boolean,  default: false},
-			panelRightClass: {type:  String,  default: ''},
-			panelRightWidth: {type:  Number | String,  default: 300},
-			formsProps:{type:Array,default:()=>{ return []} },
-			needMainPanels: {type:  Boolean,  default: false},
-			oneScreen:{type:  Boolean,  default: true},
-			panelsResizable: {type:  Boolean,  default: true},
-			panelsConfig: {type: Object,  default: () => {return{ //'horizontal' - внутри будут строки,  'vertical' - внутри будут столбики;  Последнему слою выставлять размер бессмысленно
-				name: 'first',   width:'100%',	height:'100%',  layout: 'vertical' , data:[
+			curentSystem: {type:  String, required: true},	
+			panelLeft:{type: Object,  default: () => {return{ drawer:false, show:false, class:'', width:300, filter:false,} }}	,
+			panelRight:{type: Object,  default: () => {return{ drawer:false, show:false, class:'', width:300, filter:false,} }}	,
+			mainPanelConfig: {type: Object,  default: () => {return null/*{ //'horizontal' - внутри будут строки,  'vertical' - внутри будут столбики;  Последнему слою выставлять размер бессмысленно
+				name: 'first',   width:'100%',	height:'100%',  layout: 'vertical', resizable:false , data:[
 					{  name: 'second',   width:'50%',	height:'100%',  layout: 'horizontal'},
 					{  name: 'third',   width:'100%',	height:'100%',  layout: 'horizontal'},
-				]}}
+				]}*/}
 			}, 
 		},
 		computed:{
 			slotNames(){
 				let vm=this
-				vm.calcSlotNames(vm.panelsConfig)
+				if(vm.mainPanelConfig==null)
+					return[]
+				vm.calcSlotNames(vm.mainPanelConfig)
 				return vm.slotNamesCalc
 			},
 			getContentStyles(){
@@ -74,6 +64,11 @@
 				else	
 					return {  }
 			},
+			panelLeftDrawer(){ return this.panelLeft.drawer || this.panelLeft.show || this.panelLeft.filter	},
+			panelRightDrawer(){ return this.panelRight.drawer || this.panelRight.show || this.panelLeft.filter	},
+			panelLeftWidth(){ return this.panelLeft.filter? 358 : this.panelLeft.width  },
+			panelRightWidth(){ return this.panelRight.filter? 358 : this.panelRight.width  },
+			mainPanelReq(){ return this.mainPanelConfig==null}
 		},
         components: {
 			CHead, CFooter,CMsgList, 
@@ -95,8 +90,8 @@
 		},
 		created: function (){
 			let vm=this
-			vm.panelLeftShowen=vm.panelLeftShow
-			vm.panelRightShowen=vm.panelRightShow
+			vm.panelLeftShowen=vm.panelLeft.show
+			vm.panelRightShowen=vm.panelRight.show
 			vm.$root.$on('headDrawerLeftClick', (obj)=>{
 				vm.panelLeftShowen=!vm.panelLeftShowen
 			}); 
