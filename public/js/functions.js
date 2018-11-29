@@ -1,7 +1,7 @@
 const MAX_ID= 9999999,
 	MAX_INPUT_IN_COL= 6,
-	appTheme={  primary: '#2c353f', secondary: '#452F41', accent: '#555C3E', error: '#f44336', warning: '#ffeb3b', info: '#2196f3', success: '#4caf50', checkBox:"#FFFFFF"},
-	authButtons= [ {id:1, title:'Войти', icon:'input', allig:'right', click:'dialogSave' , needCheck:true} ],
+	appTheme={  primary: '#0d47a1', secondary: '#fd0000', accent: '#ff9800', error: '#f44336', warning: '#ffeb3b', info: '#2196f3', success: '#4caf50', checkBox:"#fd0000"},
+	authButtons= [ {id:1, title:'$vuetify.texts.simple.actions.logIn', icon:'input', allig:'right', click:'dialogSave' , needCheck:true} ],
 	dateFormatStr = '$3.$2.$1' //2018-10-03 - 1, 2 и 3 цифры
 
 var sysNumeral=null
@@ -18,9 +18,13 @@ function appThemeInit({numeral}){
 		styleSheet = document.styleSheets[document.styleSheets.length-1]
 	}
 	styleElt.innerHTML = styleSheet.cssText = 
-		'.accent-color								{color: '+appTheme.accent+';} '+
-		'.primary--text 							{color: white !important;} '+
-		'.margin-5px	 							{color: white !important;} '+
+		'.accent-color								{color: '+appTheme.accent+' !important;} '+ //оранжевый
+		'.primary-color								{color: '+appTheme.primary+' !important;} '+ //синий
+		//'.primary--text 							{color: white !important;} '+
+		//'.margin-5px	 							{color: white !important;} '+
+		'.theme--light.v-label 						{color: rgba(0,0,0);		}'+
+		'.theme--dark.v-navigation-drawer			{background-color:'+appTheme.accent+'}'+
+		'.theme--dark.application 					{background-color:#fafafa;}'+
 		'.cursor-pointer							{cursor: pointer} '+
 		'.top-center 								{top:50%;} '+
 		'.overflow-y-auto 							{overflow-y: auto;} '+

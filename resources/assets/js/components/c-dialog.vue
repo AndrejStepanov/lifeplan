@@ -1,8 +1,8 @@
 <template>
-	<v-dialog value = "true" :persistent="dialogConfigGet.persistent" no-click-animation >
+	<v-dialog value = "true" :persistent="dialogConfigGet.persistent" no-click-animation  >
 		<c-drag-resize :isActive="dragActive" :isDraggable="dragDraggable" :isResizable="dragResizable" :preventActiveBehavior="dragActiveBehavior" :parentLimitation="dragLimitation" :sticks="dragSticks" :noLineStyle="dragNoLineStyle"
 				:w="width" :h="height" @resizing="changeSize($event)"  :x="x" :y="y" :reInitEvent="dragReInitEvent">
-			<v-toolbar slot='header'  color="primary" >
+			<v-toolbar slot='header'  color="primary" dark >
 				<v-toolbar-side-icon/>
 				<v-toolbar-title >{{ $vuetify.t(dialogConfigGet.title) }}</v-toolbar-title>
 				<v-spacer/>
@@ -18,7 +18,7 @@
 				<slot />
 			</v-card>
 
-			<v-layout row justify-center color="primary" >
+			<v-layout row justify-center color="primary" dark>
 				<v-flex xs12>
 					<v-toolbar dense  color="primary" >		
 						<v-btn v-for="row in buttonsLeft"   small v-bind:key="row.id" @click.native="buttonClick(row)" color="accent"  :disabled="row.disabled" > <v-icon v-if="row.icon!=''" >{{row.icon}}</v-icon>&nbsp;{{$vuetify.t(row.title)}}</v-btn>

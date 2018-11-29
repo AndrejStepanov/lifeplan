@@ -1,13 +1,35 @@
 <template>
-    <v-app dark >
+    <v-app light >
 		<c-head ref="head" :curentSystem='curentSystem' :showLeft="panelLeftDrawer" :showRight="panelRightDrawer"/>
+		<v-navigation-drawer dark v-if="panelLeftDrawer" fixed app v-model="panelLeftShowen" left   :class="panelLeft.class" :width="panelLeftWidth">
+			<slot name="panelLeft">
+				<v-list class="" dense>
+					<v-list-tile avatar >
+						<v-list-tile-avatar>
+							<img src="https://randomuser.me/api/portraits/men/85.jpg">
+						</v-list-tile-avatar>
+						<v-list-tile-content>
+							<v-list-tile-title>{{$vuetify.t('$vuetify.texts.simple.labels.personalAccount') }}</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
+				</v-list>
+				<v-list dense>
+					<v-divider></v-divider>
+					<v-list-tile class="pt-2" v-for="item in items" :key="item.title" :title="$vuetify.t(item.link+'.title')"  >
+						<v-list-tile-action>
+							<v-icon large>{{ item.icon }}</v-icon>
+						</v-list-tile-action>
+						<v-list-tile-content>
+							<v-list-tile-title>{{$vuetify.t(item.link+'.name') }}</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
+				</v-list>
+			</slot>
+		</v-navigation-drawer>
+		<v-navigation-drawer dark v-if="panelRightDrawer" fixed app v-model="panelRightShowen" right   :class="panelRight.class" :width="panelRightWidth">
+			<slot name="panelRight"/>
+		</v-navigation-drawer>
 		<v-content ref='content' :style="getContentStyles">
-			<v-navigation-drawer v-if="panelLeftDrawer" fixed v-model="panelLeftShowen" left :clipped="$vuetify.breakpoint.width > 1264"  app :class="panelLeft.class" :width="panelLeftWidth">
-				<slot name="panelLeft"/>
-			</v-navigation-drawer>
-			<v-navigation-drawer v-if="panelRightDrawer" fixed v-model="panelRightShowen" right :clipped="$vuetify.breakpoint.width > 1264"  app :class="panelRight.class" :width="panelRightWidth">
-				<slot name="panelRight"/>
-			</v-navigation-drawer>
 			<slot v-if="!mainPanelReq" />
 			<c-layouts v-else :config="mainPanelConfig">
 				<div  v-for="(slotName, index) in slotNames" :key="index"   :slot="slotName" >
@@ -15,7 +37,7 @@
 				</div>
 			</c-layouts>
 		</v-content>
-		<c-footer :fixed="mainPanelReq"/>
+		<c-footer v-if="needFooter"/>
 		<c-msg-list />
 		<slot name="dialogs" />
 		<component v-bind:is="dialogModule" v-if="dialogIsShowen(dialogIdOpened)" :dialogId="dialogIdOpened"/>
@@ -37,10 +59,22 @@
 			panelLeftShowen: false,
 			panelRightShowen: false,
 			slotNamesCalc:[],
+            items: [
+                { link: '$vuetify.texts.main.links.mainPage', icon: 'home' },
+                { link: '$vuetify.texts.main.links.demandProf', icon: 'trending_up' },
+                { link: '$vuetify.texts.main.links.topEdu', icon: 'account_balance' },
+                { link: '$vuetify.texts.main.links.topProf', icon: 'favorite' },
+                { link: '$vuetify.texts.main.links.catalogProf', icon: 'view_module' },
+                { link: '$vuetify.texts.main.links.psyhTests', icon: 'library_books' },
+                { link: '$vuetify.texts.main.links.astrologForecast', icon: 'brightness_4' },
+                { link: '$vuetify.texts.main.links.actualOffers', icon: 'adb' },
+				{ link: '$vuetify.texts.main.links.serch', icon: 'search' }
+            ], 
 		}),
 		props:{
-			curentSystem: {type:  String, required: true},	
-			panelLeft:{type: Object,  default: () => {return{ drawer:false, show:false, class:'', width:300, filter:false,} }}	,
+			curentSystem: {type:  String, default: ''},	
+			needFooter: {type:  Boolean, default: true},	
+			panelLeft:{type: Object,  default: () => {return{ drawer:true, show:false, class:'', width:300, filter:false,} }}	,
 			panelRight:{type: Object,  default: () => {return{ drawer:false, show:false, class:'', width:300, filter:false,} }}	,
 			mainPanelConfig: {type: Object,  default: () => {return null/*{ //'horizontal' - внутри будут строки,  'vertical' - внутри будут столбики;  Последнему слою выставлять размер бессмысленно
 				name: 'first',   width:'100%',	height:'100%',  layout: 'vertical', resizable:false , data:[
@@ -68,7 +102,7 @@
 			panelRightDrawer(){ return this.panelRight.drawer || this.panelRight.show || this.panelLeft.filter	},
 			panelLeftWidth(){ return this.panelLeft.filter? 358 : this.panelLeft.width  },
 			panelRightWidth(){ return this.panelRight.filter? 358 : this.panelRight.width  },
-			mainPanelReq(){ return this.mainPanelConfig==null}
+			mainPanelReq(){ return this.mainPanelConfig!=null}
 		},
         components: {
 			CHead, CFooter,CMsgList, 
@@ -90,8 +124,8 @@
 		},
 		created: function (){
 			let vm=this
-			vm.panelLeftShowen=vm.panelLeft.show
-			vm.panelRightShowen=vm.panelRight.show
+			vm.panelLeftShowen=nvl(vm.panelLeft.show,false)
+			vm.panelRightShowen=nvl(vm.panelRight.show,false)
 			vm.$root.$on('headDrawerLeftClick', (obj)=>{
 				vm.panelLeftShowen=!vm.panelLeftShowen
 			}); 

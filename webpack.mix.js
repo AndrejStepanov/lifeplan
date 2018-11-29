@@ -11,9 +11,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
  |
  */
 
-mix.js('resources/assets/js/main/Main.js', 'public/js')
-	.js('resources/assets/js/main/Obj-tree.js', 'public/js')
-	.js('resources/assets/js/main/Obj-view.js', 'public/js')
+mix.js('resources/assets/js/main/Main.js', 'public/js/Main.js')
+	/*.js('resources/assets/js/main/About.js', 'public/js/About.js')
+	.js('resources/assets/js/main/Search.js', 'public/js/Search.js')
+	.js('resources/assets/js/main/Test.js', 'public/js/Test.js')*/
 	.js('resources/assets/js/main/Auth.js', 'public/js')
 	.js('resources/assets/js/main/Register.js', 'public/js')
 	.webpackConfig({

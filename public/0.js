@@ -1,173 +1,14 @@
 webpackJsonp([0],{
 
-/***/ 164:
+/***/ 148:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(165)
+var __vue_script__ = __webpack_require__(149)
 /* template */
-var __vue_template__ = __webpack_require__(178)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/modules/m-input-fields.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-623fd9b6", Component.options)
-  } else {
-    hotAPI.reload("data-v-623fd9b6", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 165:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_x_store__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_x_store___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__mixins_x_store__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_c_dialog__ = __webpack_require__(166);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_c_dialog___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_c_dialog__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_c_input_cols__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_c_input_cols___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_c_input_cols__);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-	name: 'm-input-fields',
-	data: function data() {
-		return {
-			inputsValid: false,
-			dialogWidth: 10,
-			dialogHeight: 10,
-			paramsForm: '',
-			dialogButtons: [{ id: 1, title: '$vuetify.texts.simple.actions.save', icon: 'done', allig: 'left', click: 'dialogSave', needCheck: true }, { id: 2, title: '$vuetify.texts.simple.actions.close', icon: 'close', allig: 'right', click: 'dialogClose' }]
-		};
-	},
-	props: {
-		dialogId: { type: Number, required: true }
-	},
-	computed: {
-		dialogConfigGet: function dialogConfigGet() {
-			var vm = this;
-			return vm.dialogConfig(vm.dialogId);
-		},
-		dialogParamsGet: function dialogParamsGet() {
-			var vm = this;
-			return vm.dialogParams(vm.dialogId);
-		},
-		inputs: function inputs() {
-			var vm = this;
-			var data = [{ id: 1, form: 'object-tree-add', code: 'obj_level', name: 'Вложенность', placeholder: 'Уровень вложенности объекта', type: 'LIST', nullable: 0, column_size: 30, sort_seq: 1, table_values: [{ value: 'cur', text: 'На текущем уровне' }, { value: 'inside', text: 'Вложенный' }] }, { id: 2, form: 'object-tree-add', code: 'tree_group', name: 'Тип', placeholder: 'Тип объекта', type: 'LIST', nullable: 0, column_size: 30, sort_seq: 2, table_values: [{ value: 'node', text: 'Узел дерева' }, { value: 'ARM', text: 'Рабочая область' }, { value: 'filter', text: 'Фильтр' }, { value: 'input', text: 'Поле ввода' }] }, { id: 3, form: 'object-tree-add', code: 'tree_desc', name: 'Название', placeholder: 'Описание объекта', type: 'INPUT', nullable: 0, column_size: 30, sort_seq: 3, max_len: 25 }, { id: 4, form: 'auth-login', code: 'login', name: 'Пользователь', placeholder: 'Логин пользователя', type: 'INPUT', nullable: 0, column_size: 30, sort_seq: 1 }, { id: 5, form: 'auth-login', code: 'password', name: 'Пароль', placeholder: 'Пароль пользователя', type: 'PASSWORD', nullable: 0, column_size: 30, sort_seq: 2 }, { id: 6, form: 'auth-login', code: 'remember', name: 'Запомнить мои данные', placeholder: 'Запомнить данные пользователя', type: 'BOOL', nullable: 1, column_size: 30, sort_seq: 3 }];
-			return data.filter(function (row) {
-				return row.form == vm.paramsForm;
-			}).sort(function (a, b) {
-				return sort(a, b, 'sort_seq', 'sort_seq');
-			});
-		},
-		buttons: function buttons() {
-			var vm = this;
-			var tmp = [],
-			    buttons = [];
-			if (vm.paramsForm == 'auth-login') buttons = authButtons;else buttons = vm.dialogButtons;
-			buttons.forEach(function (row) {
-				tmp.push(_extends({}, row, { disabled: row.needCheck == true && !vm.inputsValid }));
-			});
-			return tmp;
-		}
-	},
-	components: {
-		CDialog: __WEBPACK_IMPORTED_MODULE_1__components_c_dialog___default.a, CInputCols: __WEBPACK_IMPORTED_MODULE_2__components_c_input_cols___default.a
-	},
-	mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_x_store___default.a],
-	methods: {
-		dialogSave: function dialogSave() {
-			var vm = this;
-			if (!vm.$refs[vm.paramsForm].validate()) return;
-			var todo = _extends({}, vm.paramTodo(vm.paramsForm), vm.dialogParamsGet.kyes);
-
-			if (vm.dialogParamsGet.checkFunc) vm.dialogParamsGet.checkFunc(todo);
-			if (vm.dialogParamsGet.saveFunc) vm.dialogParamsGet.saveFunc(todo);else {
-				if (vm.paramsForm == 'auth-login') {
-					var tmp = {};
-					for (name in todo) {
-						tmp[name] = todo[name].value;
-					}todo = tmp;
-				}
-				console.log(todo);
-				sendRequest({ href: nvl(vm.dialogParamsGet.socetHref, '/data_command'), type: vm.dialogParamsGet.socetEvent, data: todo, hrefBack: vm.dialogParamsGet.hrefBack, handler: function handler() {
-						return vm.$refs.dialog.dialogClose();
-					} });
-			}
-		}
-	},
-	created: function created() {
-		var vm = this;
-		var dialogTitle = vm.$vuetify.t(vm.dialogConfigGet.title);
-		vm.paramsForm = vm.dialogConfigGet.name;
-		vm.paramInit({ num: vm.paramsForm });
-		vm.$root.$on('dialog' + vm.dialogId + 'InputsCols', function (obj) {
-			vm.dialogHeight = vm.dialogConfigGet.height > 0 ? vm.dialogConfigGet.height : obj.rowInColA * 74 + 140;
-			vm.dialogWidth = vm.dialogConfigGet.width > 0 ? vm.dialogConfigGet.width : dialogTitle.length * 20 + 110 > obj.colsCnt * 300 ? dialogTitle.length * 20 + 110 : obj.colsCnt * 300;
-		});
-		vm.$root.$on('dialog' + vm.paramsForm + 'Send', function () {
-			vm.dialogSave();
-		});
-	}
-});
-
-/***/ }),
-
-/***/ 166:
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(167)
-/* template */
-var __vue_template__ = __webpack_require__(173)
+var __vue_template__ = __webpack_require__(155)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -207,14 +48,14 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 167:
+/***/ 149:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_x_store__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_x_store__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_x_store___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__mixins_x_store__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__c_drag_resize_c_drag_resize__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__c_drag_resize_c_drag_resize__ = __webpack_require__(150);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__c_drag_resize_c_drag_resize___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__c_drag_resize_c_drag_resize__);
 //
 //
@@ -334,19 +175,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 168:
+/***/ 150:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(169)
+  __webpack_require__(151)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(171)
+var __vue_script__ = __webpack_require__(153)
 /* template */
-var __vue_template__ = __webpack_require__(172)
+var __vue_template__ = __webpack_require__(154)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -386,17 +227,17 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 169:
+/***/ 151:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(170);
+var content = __webpack_require__(152);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("68ecb6b4", content, false, {});
+var update = __webpack_require__(5)("68ecb6b4", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -413,10 +254,10 @@ if(false) {
 
 /***/ }),
 
-/***/ 170:
+/***/ 152:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(4)(false);
 // imports
 
 
@@ -428,7 +269,7 @@ exports.push([module.i, "\n:root{    --stick-size: 8px;\n}\n.cdr {    position: 
 
 /***/ }),
 
-/***/ 171:
+/***/ 153:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -966,7 +807,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 172:
+/***/ 154:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1036,7 +877,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 173:
+/***/ 155:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -1079,7 +920,10 @@ var render = function() {
         [
           _c(
             "v-toolbar",
-            { attrs: { slot: "header", color: "primary" }, slot: "header" },
+            {
+              attrs: { slot: "header", color: "primary", dark: "" },
+              slot: "header"
+            },
             [
               _c("v-toolbar-side-icon"),
               _vm._v(" "),
@@ -1125,7 +969,14 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-layout",
-            { attrs: { row: "", "justify-center": "", color: "primary" } },
+            {
+              attrs: {
+                row: "",
+                "justify-center": "",
+                color: "primary",
+                dark: ""
+              }
+            },
             [
               _c(
                 "v-flex",
@@ -1216,74 +1067,126 @@ if (false) {
 
 /***/ }),
 
-/***/ 178:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ 160:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "c-dialog",
-    {
-      ref: "dialog",
-      attrs: {
-        dialogId: _vm.dialogId,
-        widthOrig: _vm.dialogWidth,
-        heightOrig: _vm.dialogHeight,
-        buttons: _vm.buttons
-      },
-      on: { dialogSave: _vm.dialogSave }
-    },
-    [
-      _c(
-        "v-form",
-        {
-          ref: _vm.paramsForm,
-          model: {
-            value: _vm.inputsValid,
-            callback: function($$v) {
-              _vm.inputsValid = $$v
-            },
-            expression: "inputsValid"
-          }
-        },
-        [
-          _c("c-input-cols", {
-            attrs: {
-              inputs: _vm.inputs,
-              dialogId: _vm.dialogId,
-              paramsForm: _vm.paramsForm
-            }
-          })
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-623fd9b6", module.exports)
-  }
-}
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_x_store__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_x_store___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__mixins_x_store__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_c_dialog__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_c_dialog___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_c_dialog__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_c_input_cols__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_c_input_cols___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_c_input_cols__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	name: 'm-input-fields',
+	data: function data() {
+		return {
+			inputsValid: false,
+			dialogWidth: 10,
+			dialogHeight: 10,
+			paramsForm: '',
+			dialogButtons: [{ id: 1, title: '$vuetify.texts.simple.actions.save', icon: 'done', allig: 'left', click: 'dialogSave', needCheck: true }, { id: 2, title: '$vuetify.texts.simple.actions.close', icon: 'close', allig: 'right', click: 'dialogClose' }]
+		};
+	},
+	props: {
+		dialogId: { type: Number, required: true }
+	},
+	computed: {
+		dialogConfigGet: function dialogConfigGet() {
+			var vm = this;
+			return vm.dialogConfig(vm.dialogId);
+		},
+		dialogParamsGet: function dialogParamsGet() {
+			var vm = this;
+			return vm.dialogParams(vm.dialogId);
+		},
+		inputs: function inputs() {
+			var vm = this;
+			var data = [{ id: 1, form: 'object-tree-add', code: 'obj_level', name: 'Вложенность', placeholder: 'Уровень вложенности объекта', type: 'LIST', nullable: 0, column_size: 30, sort_seq: 1, table_values: [{ value: 'cur', text: 'На текущем уровне' }, { value: 'inside', text: 'Вложенный' }] }, { id: 2, form: 'object-tree-add', code: 'tree_group', name: 'Тип', placeholder: 'Тип объекта', type: 'LIST', nullable: 0, column_size: 30, sort_seq: 2, table_values: [{ value: 'node', text: 'Узел дерева' }, { value: 'ARM', text: 'Рабочая область' }, { value: 'filter', text: 'Фильтр' }, { value: 'input', text: 'Поле ввода' }] }, { id: 3, form: 'object-tree-add', code: 'tree_desc', name: 'Название', placeholder: 'Описание объекта', type: 'INPUT', nullable: 0, column_size: 30, sort_seq: 3, max_len: 25 }, { id: 4, form: 'auth-login', code: 'login', name: 'Пользователь', placeholder: 'Логин пользователя', type: 'INPUT', nullable: 0, column_size: 30, sort_seq: 1 }, { id: 5, form: 'auth-login', code: 'password', name: 'Пароль', placeholder: 'Пароль пользователя', type: 'PASSWORD', nullable: 0, column_size: 30, sort_seq: 2 }, { id: 6, form: 'auth-login', code: 'remember', name: 'Запомнить мои данные', placeholder: 'Запомнить данные пользователя', type: 'BOOL', nullable: 1, column_size: 30, sort_seq: 3 }];
+			return data.filter(function (row) {
+				return row.form == vm.paramsForm;
+			}).sort(function (a, b) {
+				return sort(a, b, 'sort_seq', 'sort_seq');
+			});
+		},
+		buttons: function buttons() {
+			var vm = this;
+			var tmp = [],
+			    buttons = [];
+			if (vm.paramsForm == 'auth-login') buttons = authButtons;else buttons = vm.dialogButtons;
+			buttons.forEach(function (row) {
+				tmp.push(_extends({}, row, { disabled: row.needCheck == true && !vm.inputsValid }));
+			});
+			return tmp;
+		}
+	},
+	components: {
+		CDialog: __WEBPACK_IMPORTED_MODULE_1__components_c_dialog___default.a, CInputCols: __WEBPACK_IMPORTED_MODULE_2__components_c_input_cols___default.a
+	},
+	mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_x_store___default.a],
+	methods: {
+		dialogSave: function dialogSave() {
+			var vm = this;
+			if (!vm.$refs[vm.paramsForm].validate()) return;
+			var todo = _extends({}, vm.paramTodo(vm.paramsForm), vm.dialogParamsGet.kyes);
+
+			if (vm.dialogParamsGet.checkFunc) vm.dialogParamsGet.checkFunc(todo);
+			if (vm.dialogParamsGet.saveFunc) vm.dialogParamsGet.saveFunc(todo);else {
+				if (vm.paramsForm == 'auth-login') {
+					var tmp = {};
+					for (name in todo) {
+						tmp[name] = todo[name].value;
+					}todo = tmp;
+				}
+				console.log(todo);
+				sendRequest({ href: nvl(vm.dialogParamsGet.socetHref, '/data_command'), type: vm.dialogParamsGet.socetEvent, data: todo, hrefBack: vm.dialogParamsGet.hrefBack, handler: function handler() {
+						return vm.$refs.dialog.dialogClose();
+					} });
+			}
+		}
+	},
+	created: function created() {
+		var vm = this;
+		var dialogTitle = vm.$vuetify.t(vm.dialogConfigGet.title);
+		vm.paramsForm = vm.dialogConfigGet.name;
+		vm.paramInit({ num: vm.paramsForm });
+		vm.$root.$on('dialog' + vm.dialogId + 'InputsCols', function (obj) {
+			vm.dialogHeight = vm.dialogConfigGet.height > 0 ? vm.dialogConfigGet.height : obj.rowInColA * 74 + 140;
+			vm.dialogWidth = vm.dialogConfigGet.width > 0 ? vm.dialogConfigGet.width : dialogTitle.length * 20 + 110 > obj.colsCnt * 300 ? dialogTitle.length * 20 + 110 : obj.colsCnt * 300;
+		});
+		vm.$root.$on('dialog' + vm.paramsForm + 'Send', function () {
+			vm.dialogSave();
+		});
+	}
+});
 
 /***/ }),
 
-/***/ 62:
+/***/ 161:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(63)
+var __vue_script__ = __webpack_require__(162)
 /* template */
-var __vue_template__ = __webpack_require__(69)
+var __vue_template__ = __webpack_require__(173)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -1323,12 +1226,12 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 63:
+/***/ 162:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__c_input__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__c_input__ = __webpack_require__(163);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__c_input___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__c_input__);
 //
 //
@@ -1400,19 +1303,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 64:
+/***/ 163:
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(65)
+  __webpack_require__(164)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(67)
+var __vue_script__ = __webpack_require__(166)
 /* template */
-var __vue_template__ = __webpack_require__(68)
+var __vue_template__ = __webpack_require__(172)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -1452,17 +1355,17 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 65:
+/***/ 164:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(66);
+var content = __webpack_require__(165);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("0cb190ca", content, false, {});
+var update = __webpack_require__(5)("0cb190ca", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -1479,10 +1382,10 @@ if(false) {
 
 /***/ }),
 
-/***/ 66:
+/***/ 165:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(4)(false);
 // imports
 
 
@@ -1494,14 +1397,14 @@ exports.push([module.i, "\ndiv.input-contaner,\nspan.input-contaner>span,\nspan.
 
 /***/ }),
 
-/***/ 67:
+/***/ 166:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_x_store__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_x_store__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_x_store___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__mixins_x_store__);
 
 
@@ -1860,7 +1763,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 	watch: {},
 	components: {
 		CTable: function CTable(resolve) {
-			__webpack_require__.e/* require */(1).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(163)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
+			__webpack_require__.e/* require */(7).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(167)]; ((resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe);
 		}
 	},
 	mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_x_store___default.a],
@@ -2295,7 +2198,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 /***/ }),
 
-/***/ 68:
+/***/ 172:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -3593,7 +3496,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 69:
+/***/ 173:
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -3642,6 +3545,113 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-65a99457", module.exports)
   }
 }
+
+/***/ }),
+
+/***/ 174:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "c-dialog",
+    {
+      ref: "dialog",
+      attrs: {
+        dialogId: _vm.dialogId,
+        widthOrig: _vm.dialogWidth,
+        heightOrig: _vm.dialogHeight,
+        buttons: _vm.buttons
+      },
+      on: { dialogSave: _vm.dialogSave }
+    },
+    [
+      _c(
+        "v-form",
+        {
+          ref: _vm.paramsForm,
+          model: {
+            value: _vm.inputsValid,
+            callback: function($$v) {
+              _vm.inputsValid = $$v
+            },
+            expression: "inputsValid"
+          }
+        },
+        [
+          _c("c-input-cols", {
+            attrs: {
+              inputs: _vm.inputs,
+              dialogId: _vm.dialogId,
+              paramsForm: _vm.paramsForm
+            }
+          })
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-623fd9b6", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 65:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(160)
+/* template */
+var __vue_template__ = __webpack_require__(174)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/modules/m-input-fields.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-623fd9b6", Component.options)
+  } else {
+    hotAPI.reload("data-v-623fd9b6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
 
 /***/ })
 

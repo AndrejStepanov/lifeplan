@@ -1,10 +1,10 @@
 <template>
 	<v-speed-dial v-model="fab"  direction="bottom" :open-on-hover="hover" transition="scale-transition" >
-		<v-btn slot="activator" class="accent"  hover v-model="fab">						<v-icon>account_circle</v-icon> &nbsp;{{profileUserName()==''?$vuetify.t('$vuetify.texts.simple.labels.guest'):profileUserName()}}		</v-btn>
-		<v-btn v-if="profileSysId()=='' "  	small class="secondary"	@click='login' >		<v-icon>edit</v-icon>			&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.auth')}} 												</v-btn>
-		<v-btn v-if="profileSysId()=='' "  	small class="secondary"	@click='registration' >	<v-icon>person_add</v-icon>		&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.registration')}} 										</v-btn>		
-		<v-btn v-if="profileSysId()!='' " 	small class="secondary"	href='\register'> 		<v-icon>add</v-icon>			&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.chacngePass')}} 										</v-btn>
-		<v-btn v-if="profileSysId()!='' " 	small class="secondary"	@click='logout'>		<v-icon>delete</v-icon>			&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.logOut')}} 											</v-btn>
+		<v-btn slot="activator" class="accent"  hover v-model="fab">						&nbsp;{{profileUserName()==''?$vuetify.t('$vuetify.texts.simple.labels.auth'):profileUserName()}}&nbsp;	<v-icon>account_circle</v-icon>  </v-btn>
+		<v-btn v-if="profileSysId()=='' "  	small class="secondary"	@click='login' >		&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.auth')}} 												<v-icon>edit</v-icon>			 </v-btn>
+		<v-btn v-if="profileSysId()=='' "  	small class="secondary"	@click='registration' >	&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.registration')}} 										<v-icon>person_add</v-icon>		 </v-btn>		
+		<v-btn v-if="profileSysId()!='' " 	small class="secondary"	href='\register'> 		&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.chacngePass')}} 										<v-icon>add</v-icon>			 </v-btn>
+		<v-btn v-if="profileSysId()!='' " 	small class="secondary"	@click='logout'>		&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.logOut')}} 											<v-icon>delete</v-icon>			 </v-btn>
 	</v-speed-dial>
 </template>
 
