@@ -1,11 +1,5 @@
-const {mix} = require('laravel-mix');
-
-
-mix.disableNotifications();
-
-mix.options({
-    processCssUrls: false
-});
+let mix = require('laravel-mix');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -17,20 +11,23 @@ mix.options({
  |
  */
 
-mix.js('resources/assets/js/Main.js', 'public/js/Main.js')
-    .js('resources/assets/js/About.js', 'public/js/About.js')
-    .js('resources/assets/js/Search.js', 'public/js/Search.js')
-    .js('resources/assets/js/Test.js', 'public/js/Test.js')
-    .webpackConfig({
-        resolve: {
-            alias: {
-                '@': path.resolve('resources/assets/sass')
-            }
-        }
-    })
-    .sass('resources/assets/sass/app.scss', 'public/css/app.css').extract(['vue','vuetify']);
-
-
-if (mix.inProduction()) {
-    mix.version();
-}
+mix.js('resources/assets/js/main/Main.js', 'public/js/Main.js')
+	/*.js('resources/assets/js/main/About.js', 'public/js/About.js')
+	.js('resources/assets/js/main/Search.js', 'public/js/Search.js')
+	.js('resources/assets/js/main/Test.js', 'public/js/Test.js')*/
+	.js('resources/assets/js/main/Auth.js', 'public/js')
+	.js('resources/assets/js/main/User.js', 'public/js')
+	.webpackConfig({
+		resolve: {
+			alias: {
+				'@': path.resolve('resources/assets/sass')
+			}
+		},
+		plugins: [
+			new CopyWebpackPlugin([
+				{ from: 'resources/assets/js/helpers/functions.js', to: 'js' },
+			]),
+		],
+	})
+   .sass('resources/assets/sass/app.scss', 'public/css')
+   .extract(['vue','vuetify','vue-axios','axios','vuex','vue-router','socket.io-client','laravel-echo']);

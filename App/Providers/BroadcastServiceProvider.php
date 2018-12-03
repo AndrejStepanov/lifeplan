@@ -5,17 +5,19 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Broadcast;
 
-class BroadcastServiceProvider extends ServiceProvider
-{
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        Broadcast::routes();
+class BroadcastServiceProvider extends ServiceProvider{
+	/**
+	 * Bootstrap any application services.
+	 *
+	 * @return void
+	 */
+	public function boot()    {
+		Broadcast::routes();
 
-        require base_path('routes/channels.php');
-    }
+		require base_path('routes/channels.php');
+
+		Broadcast::channel('channel.AuthChange.*', function ($user, $ticket) {
+			return false ;//checkTicket($ticket);
+		});
+	}
 }
