@@ -1,4 +1,4 @@
-webpackJsonp([6],[
+webpackJsonp([7],[
 /* 0 */
 /***/ (function(module, exports) {
 
@@ -4932,49 +4932,8 @@ return numeral;
 /* 96 */,
 /* 97 */,
 /* 98 */,
-/* 99 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(100);
-module.exports = __webpack_require__(153);
-
-
-/***/ }),
-/* 100 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_s_msg__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_s_profile__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_s_dialog__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__stores_s_param__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__apps_Main_vue__ = __webpack_require__(148);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__apps_Main_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__apps_Main_vue__);
-
-window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
-
-__webpack_require__(13);
-
-
-
-
-
-
-window.Vue.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["default"]);
-var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["default"].Store({ modules: { msg: __WEBPACK_IMPORTED_MODULE_2__stores_s_msg__["a" /* default */], dialog: __WEBPACK_IMPORTED_MODULE_4__stores_s_dialog__["a" /* default */], profile: __WEBPACK_IMPORTED_MODULE_3__stores_s_profile__["a" /* default */], param: __WEBPACK_IMPORTED_MODULE_5__stores_s_param__["a" /* default */] } });
-
-
-window._vue = new window.Vue({ el: '#app', store: store, render: function render(h) {
-    return h(__WEBPACK_IMPORTED_MODULE_6__apps_Main_vue___default.a);
-  } });
-
-appThemeInit({ numeral: __webpack_require__(48) });
-
-/***/ }),
+/* 99 */,
+/* 100 */,
 /* 101 */,
 /* 102 */,
 /* 103 */,
@@ -5022,19 +4981,85 @@ appThemeInit({ numeral: __webpack_require__(48) });
 /* 145 */,
 /* 146 */,
 /* 147 */,
-/* 148 */
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(173);
+
+
+/***/ }),
+/* 173 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_s_msg__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_s_profile__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_s_dialog__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__stores_s_param__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__apps_User_vue__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__apps_User_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__apps_User_vue__);
+
+window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
+
+__webpack_require__(13);
+
+
+
+
+
+
+window.Vue.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["default"]);
+var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["default"].Store({ modules: { msg: __WEBPACK_IMPORTED_MODULE_2__stores_s_msg__["a" /* default */], dialog: __WEBPACK_IMPORTED_MODULE_4__stores_s_dialog__["a" /* default */], profile: __WEBPACK_IMPORTED_MODULE_3__stores_s_profile__["a" /* default */], param: __WEBPACK_IMPORTED_MODULE_5__stores_s_param__["a" /* default */] } });
+
+
+window._vue = new window.Vue({ el: '#app', store: store, render: function render(h) {
+    return h(__WEBPACK_IMPORTED_MODULE_6__apps_User_vue___default.a);
+  } });
+
+appThemeInit({ numeral: __webpack_require__(48) });
+
+/***/ }),
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(149)
+  __webpack_require__(175)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(151)
+var __vue_script__ = __webpack_require__(177)
 /* template */
-var __vue_template__ = __webpack_require__(152)
+var __vue_template__ = __webpack_require__(178)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -5051,7 +5076,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/apps/Main.vue"
+Component.options.__file = "resources/assets/js/apps/User.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -5060,9 +5085,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-34bf92d8", Component.options)
+    hotAPI.createRecord("data-v-538278b4", Component.options)
   } else {
-    hotAPI.reload("data-v-34bf92d8", Component.options)
+    hotAPI.reload("data-v-538278b4", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -5073,23 +5098,23 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 149 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(150);
+var content = __webpack_require__(176);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(4)("1f557095", content, false, {});
+var update = __webpack_require__(4)("8849e11c", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-34bf92d8\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Main.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-34bf92d8\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Main.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-538278b4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./User.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-538278b4\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./User.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -5099,7 +5124,7 @@ if(false) {
 }
 
 /***/ }),
-/* 150 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -5107,145 +5132,35 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\nimg.bg_2{\tposition:absolute;\tz-index:0;\n}\ndiv.bg_div{\tbackground:#FFFFFF;\tz-index:1;\twidth:90%;\tmargin-top: -10px;\tmin-height:120px;\tpadding-top:25px;\tpadding-left:10%;\tfont-size:22px;\tcolor:#ff6600;\ttext-align:left;\n}\nimg.logo{\tfloat:left;\tmargin-right:20px;\theight:70px;\n}\ndiv.v-parallax__image-container, div.v-parallax__content{padding:0px;\n}\n.v-content {padding: 0px !important;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 151 */
+/* 177 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_x_app__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_x_app___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__mixins_x_app__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_x_store__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_x_store___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__mixins_x_store__);
 //
 //
 //
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {};
 	},
-	mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_x_app___default.a],
+	mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_x_app___default.a, __WEBPACK_IMPORTED_MODULE_1__mixins_x_store___default.a],
 	methods: {},
 	created: function created() {
 		var vm = this;
@@ -5253,592 +5168,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 152 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("c-app", [
-    _c(
-      "section",
-      [
-        _c(
-          "v-parallax",
-          { attrs: { src: "storage/bg.jpg", height: "720" } },
-          [
-            _c(
-              "v-layout",
-              {
-                staticClass: "white--text",
-                attrs: { column: "", "align-center": "", "justify-center": "" }
-              },
-              [
-                _c("img", {
-                  staticClass: "bg_2",
-                  attrs: {
-                    src: "storage/bg2.jpg",
-                    alt: "lifeplan",
-                    height: "603"
-                  }
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "bg_div" }, [
-                  _c("img", {
-                    staticClass: "logo",
-                    attrs: { src: "storage/logo2.png", alt: "lifeplan" }
-                  }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "hidden-xs-only" }, [
-                    _vm._v(
-                      _vm._s(_vm.$vuetify.t("$vuetify.texts.mainPage.logoTxt1"))
-                    ),
-                    _c("br"),
-                    _vm._v(
-                      _vm._s(
-                        _vm.$vuetify.t("$vuetify.texts.mainPage.logoTxt2")
-                      ) + " "
-                    )
-                  ])
-                ])
-              ]
-            )
-          ],
-          1
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "section",
-      [
-        _c(
-          "v-layout",
-          {
-            staticClass: "my-4",
-            attrs: { column: "", wrap: "", "align-center": "" }
-          },
-          [
-            _c(
-              "v-flex",
-              { staticClass: "my-2", attrs: { xs12: "", sm4: "" } },
-              [
-                _c("div", { staticClass: "text-xs-center" }, [
-                  _c("h2", { staticClass: "headline" }, [
-                    _vm._v(
-                      " " +
-                        _vm._s(
-                          _vm.$vuetify.t("$vuetify.texts.mainPage.headerTxt")
-                        )
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "subheading" }, [
-                    _vm._v(
-                      _vm._s(
-                        _vm.$vuetify.t("$vuetify.texts.mainPage.headerTxt2")
-                      )
-                    )
-                  ])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "v-flex",
-              { attrs: { xs12: "" } },
-              [
-                _c(
-                  "v-container",
-                  { attrs: { "grid-list-xl": "" } },
-                  [
-                    _c(
-                      "v-layout",
-                      { attrs: { row: "", wrap: "", "align-center": "" } },
-                      [
-                        _c(
-                          "v-flex",
-                          { attrs: { xs12: "", md4: "" } },
-                          [
-                            _c(
-                              "v-card",
-                              { staticClass: "elevation-0 transparent" },
-                              [
-                                _c(
-                                  "v-card-text",
-                                  { staticClass: "text-xs-center" },
-                                  [
-                                    _c(
-                                      "v-icon",
-                                      {
-                                        staticClass: "accent-color",
-                                        attrs: { "x-large": "" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm.$vuetify.t(
-                                              "$vuetify.texts.mainPage.dopI1"
-                                            )
-                                          )
-                                        )
-                                      ]
-                                    )
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-card-title",
-                                  {
-                                    staticClass: "layout justify-center",
-                                    attrs: { "primary-title": "" }
-                                  },
-                                  [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass: "headline text-xs-center"
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm.$vuetify.t(
-                                              "$vuetify.texts.mainPage.dopH1"
-                                            )
-                                          )
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("v-card-text", [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.$vuetify.t(
-                                        "$vuetify.texts.mainPage.dopT1"
-                                      )
-                                    )
-                                  )
-                                ])
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "v-flex",
-                          { attrs: { xs12: "", md4: "" } },
-                          [
-                            _c(
-                              "v-card",
-                              { staticClass: "elevation-0 transparent" },
-                              [
-                                _c(
-                                  "v-card-text",
-                                  { staticClass: "text-xs-center" },
-                                  [
-                                    _c(
-                                      "v-icon",
-                                      {
-                                        staticClass: "accent-color",
-                                        attrs: { "x-large": "" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm.$vuetify.t(
-                                              "$vuetify.texts.mainPage.dopI2"
-                                            )
-                                          )
-                                        )
-                                      ]
-                                    )
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-card-title",
-                                  {
-                                    staticClass: "layout justify-center",
-                                    attrs: { "primary-title": "" }
-                                  },
-                                  [
-                                    _c("div", { staticClass: "headline" }, [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.$vuetify.t(
-                                            "$vuetify.texts.mainPage.dopH2"
-                                          )
-                                        )
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("v-card-text", [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.$vuetify.t(
-                                        "$vuetify.texts.mainPage.dopT2"
-                                      )
-                                    )
-                                  )
-                                ])
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "v-flex",
-                          { attrs: { xs12: "", md4: "" } },
-                          [
-                            _c(
-                              "v-card",
-                              { staticClass: "elevation-0 transparent" },
-                              [
-                                _c(
-                                  "v-card-text",
-                                  { staticClass: "text-xs-center" },
-                                  [
-                                    _c(
-                                      "v-icon",
-                                      {
-                                        staticClass: "accent-color",
-                                        attrs: { "x-large": "" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm.$vuetify.t(
-                                              "$vuetify.texts.mainPage.dopI3"
-                                            )
-                                          )
-                                        )
-                                      ]
-                                    )
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-card-title",
-                                  {
-                                    staticClass: "layout justify-center",
-                                    attrs: { "primary-title": "" }
-                                  },
-                                  [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass: "headline text-xs-center"
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm.$vuetify.t(
-                                              "$vuetify.texts.mainPage.dopH3"
-                                            )
-                                          )
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("v-card-text", [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.$vuetify.t(
-                                        "$vuetify.texts.mainPage.dopT3"
-                                      )
-                                    )
-                                  )
-                                ])
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              ],
-              1
-            )
-          ],
-          1
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "section",
-      [
-        _c(
-          "v-parallax",
-          { attrs: { src: "storage/bg.jpg", height: "380" } },
-          [
-            _c(
-              "v-layout",
-              {
-                attrs: { column: "", "align-center": "", "justify-center": "" }
-              },
-              [
-                _c(
-                  "div",
-                  { staticClass: "headline white--text mb-3 text-xs-center" },
-                  [
-                    _vm._v(
-                      _vm._s(
-                        _vm.$vuetify.t("$vuetify.texts.mainPage.header2Txt")
-                      )
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("em", [
-                  _vm._v(
-                    _vm._s(
-                      _vm.$vuetify.t("$vuetify.texts.mainPage.header2Txt2")
-                    ) + " "
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "v-btn",
-                  {
-                    staticClass: "mt-5",
-                    attrs: { dark: "", large: "", color: "accent" }
-                  },
-                  [
-                    _vm._v(
-                      _vm._s(
-                        _vm.$vuetify.t("$vuetify.texts.mainPage.buttonTxt2")
-                      ) + " "
-                    ),
-                    _c("v-icon", { attrs: { right: "" } }, [_vm._v("search")])
-                  ],
-                  1
-                )
-              ],
-              1
-            )
-          ],
-          1
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "section",
-      [
-        _c(
-          "v-container",
-          { attrs: { "grid-list-xl": "" } },
-          [
-            _c(
-              "v-layout",
-              {
-                staticClass: "my-1",
-                attrs: { row: "", wrap: "", "justify-center": "" }
-              },
-              [
-                _c(
-                  "v-flex",
-                  { attrs: { xs12: "", sm4: "" } },
-                  [
-                    _c(
-                      "v-card",
-                      { staticClass: "elevation-0 transparent" },
-                      [
-                        _c(
-                          "v-card-title",
-                          {
-                            staticClass: "layout justify-center",
-                            attrs: { "primary-title": "" }
-                          },
-                          [
-                            _c("div", { staticClass: "headline" }, [
-                              _vm._v(
-                                _vm._s(
-                                  _vm.$vuetify.t(
-                                    "$vuetify.texts.mainPage.aboutProjectH"
-                                  )
-                                )
-                              )
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("v-card-text", [
-                          _vm._v(
-                            "\n\t\t\t\t\t\t\t" +
-                              _vm._s(
-                                _vm.$vuetify.t(
-                                  "$vuetify.texts.mainPage.aboutProject"
-                                )
-                              ) +
-                              "\n\t\t\t\t\t\t"
-                          )
-                        ])
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-flex",
-                  { attrs: { xs12: "", sm4: "", "offset-sm1": "" } },
-                  [
-                    _c(
-                      "v-card",
-                      { staticClass: "elevation-0 transparent" },
-                      [
-                        _c(
-                          "v-card-title",
-                          {
-                            staticClass: "layout justify-center",
-                            attrs: { "primary-title": "" }
-                          },
-                          [
-                            _c("div", { staticClass: "headline" }, [
-                              _vm._v(
-                                " " +
-                                  _vm._s(
-                                    _vm.$vuetify.t(
-                                      "$vuetify.texts.mainPage.contacts"
-                                    )
-                                  ) +
-                                  " "
-                              )
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("v-card-text", [
-                          _vm._v(
-                            _vm._s(
-                              _vm.$vuetify.t(
-                                "$vuetify.texts.mainPage.contacts2"
-                              )
-                            ) + "  "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "v-list",
-                          { staticClass: "transparent" },
-                          [
-                            _c(
-                              "v-list-tile",
-                              [
-                                _c(
-                                  "v-list-tile-action",
-                                  [
-                                    _c(
-                                      "v-icon",
-                                      {
-                                        staticClass:
-                                          "primary-color text--lighten-2"
-                                      },
-                                      [_vm._v("phone")]
-                                    )
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-list-tile-content",
-                                  [
-                                    _c("v-list-tile-title", [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.$vuetify.t(
-                                            "$vuetify.texts.mainPage.phone"
-                                          )
-                                        )
-                                      )
-                                    ])
-                                  ],
-                                  1
-                                )
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "v-list-tile",
-                              [
-                                _c(
-                                  "v-list-tile-action",
-                                  [
-                                    _c(
-                                      "v-icon",
-                                      {
-                                        staticClass:
-                                          "primary-color text--lighten-2"
-                                      },
-                                      [_vm._v("email")]
-                                    )
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "v-list-tile-content",
-                                  [
-                                    _c("v-list-tile-title", [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.$vuetify.t(
-                                            "$vuetify.texts.mainPage.email"
-                                          )
-                                        )
-                                      )
-                                    ])
-                                  ],
-                                  1
-                                )
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  ],
-                  1
-                )
-              ],
-              1
-            )
-          ],
-          1
-        )
-      ],
-      1
-    )
-  ])
+  return _c("c-app")
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -5846,15 +5183,9 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-34bf92d8", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-538278b4", module.exports)
   }
 }
 
-/***/ }),
-/* 153 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
 /***/ })
-],[99]);
+],[172]);

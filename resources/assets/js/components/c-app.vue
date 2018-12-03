@@ -6,7 +6,7 @@
 				<v-list class="" dense>
 					<v-list-tile avatar >
 						<v-list-tile-avatar>
-							<img src="https://randomuser.me/api/portraits/men/85.jpg">
+							<img :src="currentAvatar">
 						</v-list-tile-avatar>
 						<v-list-tile-content>
 							<v-list-tile-title>{{$vuetify.t('$vuetify.texts.simple.labels.personalAccount') }}</v-list-tile-title>
@@ -15,7 +15,7 @@
 				</v-list>
 				<v-list dense>
 					<v-divider></v-divider>
-					<v-list-tile class="pt-2" v-for="item in items" :key="item.title" :title="$vuetify.t(item.link+'.title')"  >
+					<v-list-tile class="pt-2" v-for="item in items" :key="item.title" :title="$vuetify.t(item.link+'.title')"  :href="item.href" >
 						<v-list-tile-action>
 							<v-icon large>{{ item.icon }}</v-icon>
 						</v-list-tile-action>
@@ -60,15 +60,15 @@
 			panelRightShowen: false,
 			slotNamesCalc:[],
             items: [
-                { link: '$vuetify.texts.main.links.mainPage', icon: 'home' },
-                { link: '$vuetify.texts.main.links.demandProf', icon: 'trending_up' },
-                { link: '$vuetify.texts.main.links.topEdu', icon: 'account_balance' },
-                { link: '$vuetify.texts.main.links.topProf', icon: 'favorite' },
-                { link: '$vuetify.texts.main.links.catalogProf', icon: 'view_module' },
-                { link: '$vuetify.texts.main.links.psyhTests', icon: 'library_books' },
-                { link: '$vuetify.texts.main.links.astrologForecast', icon: 'brightness_4' },
-                { link: '$vuetify.texts.main.links.actualOffers', icon: 'adb' },
-				{ link: '$vuetify.texts.main.links.serch', icon: 'search' }
+                { link: '$vuetify.texts.main.links.mainPage', 			icon: 'home', 				href:'\\user' },
+                { link: '$vuetify.texts.main.links.demandProf', 		icon: 'trending_up', 		href:'\\user' },
+                { link: '$vuetify.texts.main.links.topEdu', 			icon: 'account_balance', 	href:'\\user'  },
+                { link: '$vuetify.texts.main.links.topProf', 			icon: 'favorite', 			href:'\\user'  },
+                { link: '$vuetify.texts.main.links.catalogProf', 		icon: 'view_module', 		href:'\\user'  },
+                { link: '$vuetify.texts.main.links.psyhTests', 			icon: 'library_books', 		href:'\\user'  },
+                { link: '$vuetify.texts.main.links.astrologForecast', 	icon: 'brightness_4', 		href:'\\user'  },
+                { link: '$vuetify.texts.main.links.actualOffers', 		icon: 'adb', 				href:'\\user'  },
+				{ link: '$vuetify.texts.main.links.serch', 				icon: 'search', 			href:'\\user'  }
             ], 
 		}),
 		props:{
@@ -90,6 +90,10 @@
 					return[]
 				vm.calcSlotNames(vm.mainPanelConfig)
 				return vm.slotNamesCalc
+			},
+			currentAvatar(){
+				let vm=this
+				return nvl(vm.profileAvatar(),"https://randomuser.me/api/portraits/men/85.jpg")
 			},
 			getContentStyles(){
 				let vm=this

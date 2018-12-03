@@ -1,10 +1,8 @@
 <template>
-	<v-speed-dial v-model="fab"  direction="bottom" :open-on-hover="hover" transition="scale-transition" >
-		<v-btn slot="activator" class="accent"  hover v-model="fab">						&nbsp;{{profileUserName()==''?$vuetify.t('$vuetify.texts.simple.labels.auth'):profileUserName()}}&nbsp;	<v-icon>account_circle</v-icon>  </v-btn>
-		<v-btn v-if="profileSysId()=='' "  	small class="secondary"	@click='login' >		&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.auth')}} 												<v-icon>edit</v-icon>			 </v-btn>
-		<v-btn v-if="profileSysId()=='' "  	small class="secondary"	@click='registration' >	&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.registration')}} 										<v-icon>person_add</v-icon>		 </v-btn>		
-		<v-btn v-if="profileSysId()!='' " 	small class="secondary"	href='\register'> 		&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.chacngePass')}} 										<v-icon>add</v-icon>			 </v-btn>
-		<v-btn v-if="profileSysId()!='' " 	small class="secondary"	@click='logout'>		&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.logOut')}} 											<v-icon>delete</v-icon>			 </v-btn>
+	<v-speed-dial  v-model="fab"  direction="bottom" :open-on-hover="hover" transition="scale-transition" >
+		<v-btn slot="activator" class="accent"  hover v-model="fab" @click='login'>		&nbsp;{{profileUserName()==''?$vuetify.t('$vuetify.texts.simple.labels.auth'):profileUserName()}}&nbsp;	<v-icon>account_circle</v-icon>		</v-btn>	
+		<v-btn v-if="profileUserName()!=''" small class="secondary"	href='\user'> 		&nbsp;{{$vuetify.t('$vuetify.texts.main.links.mainPage.title')}}&nbsp; 									<v-icon>contacts</v-icon>			</v-btn>
+		<v-btn v-if="profileUserName()!=''" small class="secondary"	@click='logout'>	&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.logOut')}} &nbsp;										<v-icon>power_settings_new</v-icon>	</v-btn>
 	</v-speed-dial>
 </template>
 
@@ -23,34 +21,35 @@
 		],
 		methods: {
 			login(){
-				let vm=this
-				vm.$root.$emit('openAuthDialog')
-			},
-			registration(){
-				window.location.href = "\\Регистрация?auth_href_back="+window.location.href;
+				let vm=this,
+				 	_hrefBack=getLocationParam('auth_href_back')
+				if(vm.profileUserName()!='')
+					return
+				_hrefBack=_hrefBack!=null?_hrefBack:window.location.origin+'\\user'
+				window.location.href = "\\auth?auth_href_back="+_hrefBack
 			},			
 			logout () {
 				sendRequest({href:'/logout', type:'logout', needSucess:'Y', hrefBack:'/', def: getErrDesc('noLogOut') } )
 			},
 			subscribeTicket(newTicket){
 				let vm=this,
-				 	_hrefBack=window.location.search.match(new RegExp('auth_href_back=([^&=]+)'));
+				 	_hrefBack=getLocationParam('auth_href_back')
 				if(vm.userTicket!='' )
 					window.echo.connector.channels['channel.AuthChange.'+vm.userTicket].unsubscribe()
 				vm.userTicket=newTicket
 				window.echo.channel('channel.AuthChange.'+vm.userTicket )
 				.listen('.session.open', (e) => {
-					vm.profileLog({userName:e.data.name,userId:e.data.userId, sysId:e.data.sysId, isRoot:e.data.isRoot});
+					vm.profileLog({userName:e.data.name,userId:e.data.userId, isRoot:e.data.isRoot, avatar:e.data.avatar})
 					vm.subscribeTicket(e.data.newTicket)
-					showMsg({...getMsgDesc('loginSucsess'),   msgParams:[e.data.name],}	);
+					showMsg({...getMsgDesc('loginSucsess'),   msgParams:[e.data.name],}	)
 					if(_hrefBack!=null)
-						window.location.href = decodeURIComponent(_hrefBack[1]);
+						window.location.href = decodeURIComponent(_hrefBack)
 				})
 				.listen('.session.close', (e) => {
-					if(vm.profileUserId()!='' && vm.profileUserId()==e.data.userId || vm.profileSysId()!='' && vm.profileSysId()==e.data.sysId)
-						vm.profileLogout();
+					if(vm.profileUserId()!='' && vm.profileUserId()==e.data.userId)
+						vm.profileLogout()
 					vm.subscribeTicket(e.data.newTicket)
-					showMsg(getMsgDesc('logoutSucsess') );
+					showMsg(getMsgDesc('logoutSucsess') )
 				});
 			},
 		},
@@ -58,9 +57,9 @@
 			let vm=this
 			let userInfo = window.userInfo||{}
 			if(nvl(userInfo.name)!='')
-				vm.profileLog({userName:userInfo.name, userId:userInfo.userId, sysId:userInfo.sysId, isRoot:userInfo.isRoot})
+				vm.profileLog({userName:userInfo.name, userId:userInfo.userId, isRoot:userInfo.isRoot, avatar:userInfo.avatar})
 			else
-				vm.profileLogout();
+				vm.profileLogout()
 			vm.subscribeTicket(window.laravel.ticket)
 		},
 	}

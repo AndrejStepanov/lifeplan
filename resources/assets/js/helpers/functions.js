@@ -122,7 +122,10 @@ function storesParser(stores, field, prefix){
 			tmp[m_title+title.replace(prefix,'')]= m_title+'/'+title
 	return tmp
 }
-
+function getLocationParam(name){
+	if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+	   return decodeURIComponent(name[1]);
+ }
 function sort(a, b, aFild, bFild){
 	let aVal = aFild!=''?a[aFild]:a,
 		bVal = bFild!=''?b[bFild]:b
@@ -172,20 +175,26 @@ function getMsgDesc(msgName, type='success'){
 }
 
 function sendRequest  (params){
+	let _hrefBackAuth=getLocationParam('auth_href_back')
 	if( this.nvl(params.type)==0 || this.nvl(params.href)==0  )
 		showMsg(getErrDesc('noSendAddress') );
 	window._bus.axios.post(params.href, {type:params.type, _token: window.laravel.csrfToken,...params.data,}
 		).then((response) => {
 			if(nvl(params.needSucess,'N')=='Y' && response.data!='sucsess')
-				showMsg({ ...getErrDesc('requestRefused') ,params: params.default, });
+				return;
+				//showMsg({ ...getErrDesc('requestRefused') ,params: params.default, });
 			if(nvl(params.hrefBack)!='')
 				window.location.href = decodeURIComponent( params.hrefBack);
+			if(['/login','/register'].indexOf(params.href)!=-1 && _hrefBackAuth!=null)
+				window.location.href = decodeURIComponent(_hrefBackAuth)
 			if(params.handler )
 				params.handler(response)
 		}).catch(
-			(error) =>
-				showMsg({ title: nvlo(error.response.data).title||nvlo(params.default).title||'$vuetify.texts.errors.requestFaild.title'  , text:nvlo(error.response.data).message||nvlo(params.default).text||'$vuetify.texts.errors.requestFaild.text',
-					'params': {status:error.response.status, trace:nvlo(error.response.data).trace, file:nvlo(error.response.data).file, line:nvlo(error.response.data).line}, })
+			(error) =>{
+				let r = nvlo(error.response)
+				showMsg({ title: nvlo(r.data).title||nvlo(params.default).title||'$vuetify.texts.errors.requestFaild.title'  , text:nvlo(r.data).message||nvlo(params.default).text||'$vuetify.texts.errors.requestFaild.text',
+					'params': {status:r.status, trace:nvlo(r.data).trace, file:nvlo(nvl(error.response).data).file, line:nvlo(r.data).line}, })
+			}
 		);
 	return true
 }

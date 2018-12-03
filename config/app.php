@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -13,7 +12,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'ForwardForms'),
+    'name' => 'LIFE_PLAN',
 
     /*
     |--------------------------------------------------------------------------
@@ -168,7 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        \SocialiteProviders\Manager\ServiceProvider::class,
         /*
          * Application Service Providers...
          */

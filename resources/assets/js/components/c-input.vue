@@ -61,6 +61,7 @@
 							<template v-else>
 								<component v-if="!multy && !isDateTimeLike && !isNeedTab" :is="currentInput" v-model="value" :label="name" :hint="placeholder" :rules="rules" :disabled="getDisable" :readonly="!editable"  :required="!!nullable" ref="input"
 									:multi-line="columnSize>50" :tabindex="sortSeq" :type="getComponentType" :items="getListItems" dense :counter="getCounter"
+									:error="inputErrorState"  :error-messages="inputErrorText"
 									:append-icon="getAppendIcon" :clearable="getClearable" :mask="mask"  :min="min" :max="max" :step="step" auto-grow rows="1"
 									@change="setNewVal" @keyup.enter="submit"  @blur="onBlur" @click:append="changeShow" 
 									:class="getComponentClass" />
@@ -164,6 +165,7 @@ time-with-seconds	##:##:##
 	export default {
 		name:'c-input',
 		data: () => ({
+			callBackEval:'',
 			checkBoxColor:'white',//переопределяется в created
 			checked:false,
 			code: 'code',
@@ -180,6 +182,8 @@ time-with-seconds	##:##:##
 			hasError: false,
 			hasInput: false,
 			id: 0,
+			inputErrorState:false,
+			inputErrorText:'',
 			isDateTimeLike:false,
 			isMounted:false,
 			isNeed:false,
@@ -469,6 +473,8 @@ time-with-seconds	##:##:##
 						vm.valueView =value
 				}
 				vm.checkRefresh({checkedFx,initRun})
+				if(vm.callBackEval!='')
+					eval(vm.callBackEval)
 			},
 			setNewValPairFst(value){
 				let vm=this
@@ -636,7 +642,8 @@ time-with-seconds	##:##:##
 		},
 		created: function (){
 			let vm=this,
-				tmp=''
+				regexp=''
+			vm.callBackEval=vm.data.after_edit_script||vm.callBackEval
 			vm.checkBoxColor=appTheme.checkBox||vm.checkBoxColor
 			vm.id=vm.data.id||vm.id
 			vm.value=vm.data.value||vm.value
@@ -778,9 +785,9 @@ time-with-seconds	##:##:##
 			if(vm.hasInput && vm.maxLenTypes.indexOf(vm.type)!=-1 && vm.maxLen>0)
 				vm.rules.push(v => v.length <= vm.maxLen  || !vm.checked || vm.$vuetify.t('$vuetify.texts.simple.msgs.valLessOrEq', ...([vm.maxLen]) ) )
 			
-			tmp = new RegExp(vm.maskFin)
-			if(vm.hasInput && tmp!='')//надо помнить про экранирование
-				vm.rules.push(v => tmp.test(v) || vm.$vuetify.t( vm.error ))
+			regexp = new RegExp(vm.maskFin)
+			if(vm.hasInput && regexp!='')//надо помнить про экранирование
+				vm.rules.push(v => regexp.test(v) || vm.$vuetify.t( vm.error ))
 			
 			vm.rulesChildInput = vm.rules.slice()
 				

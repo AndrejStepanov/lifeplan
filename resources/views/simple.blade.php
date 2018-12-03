@@ -15,7 +15,7 @@
             window.laravel = { 'csrfToken': "{{ csrf_token() }}", 'ticket': "{{ getTicket() }}", }
             window.userInfo ={ 
                 @if (Auth::check())
-                    name : '{{Auth::user()->name}}', sysId : '{{Auth::user()->id}}', userId : '{{Auth::user()->userId}}', isRoot : '{{Auth::user()->isRoot}}', 
+                    name : '{{Auth::user()->name}}', userId : '{{Auth::user()->id}}', isRoot : '{{Auth::user()->isRoot}}', avatar : '{{Auth::user()->avatar}}', 
                 @endif
             };
             window.systemLanguage="{{Auth::check()? Auth::user()->systemLanguage :'ru'}}"

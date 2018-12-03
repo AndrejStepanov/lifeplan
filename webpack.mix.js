@@ -16,7 +16,7 @@ mix.js('resources/assets/js/main/Main.js', 'public/js/Main.js')
 	.js('resources/assets/js/main/Search.js', 'public/js/Search.js')
 	.js('resources/assets/js/main/Test.js', 'public/js/Test.js')*/
 	.js('resources/assets/js/main/Auth.js', 'public/js')
-	.js('resources/assets/js/main/Register.js', 'public/js')
+	.js('resources/assets/js/main/User.js', 'public/js')
 	.webpackConfig({
 		resolve: {
 			alias: {

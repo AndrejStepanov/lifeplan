@@ -16,7 +16,7 @@
 				paramGroup: "param/getGroup",
 				paramTodo: "param/getTodo",
 				profileIsRoot: "profile/getIsRoot",
-				profileSysId: "profile/getSysId",
+				profileAvatar: "profile/getAvatar",
 				profileUserId: "profile/getUserId",
 				profileUserName: "profile/getUserName",
 				} ) ,	

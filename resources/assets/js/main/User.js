@@ -11,7 +11,7 @@ import param from '../stores/s-param';
 window.Vue.use(vuex);
 let store = new vuex.Store({modules: {	msg, dialog, profile,param} });
 
-import app from '../apps/Register.vue';
+import app from '../apps/User.vue';
 window._vue=new window.Vue({el:'#app', store, render: h=> h(app)});
 
-appThemeInit();
+appThemeInit({numeral:require("numeral")});
