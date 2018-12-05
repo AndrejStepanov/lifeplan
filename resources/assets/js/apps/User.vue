@@ -163,7 +163,7 @@
 				vm.paramInit( {num: vm.paramForm+'_'+vm.user.data.schls.length*-1 })
 			},
 			delSch(id){
-				let vm=this, tmp = 0
+				let vm=this, tmp = 0 
 				vm.user.data.schls.forEach((row,i)=>{if(row.id = id) tmp=i})
 				vm.user.data.schls.splice(tmp,1)
 			},
