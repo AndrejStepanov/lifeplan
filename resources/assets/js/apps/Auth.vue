@@ -5,15 +5,15 @@
 				<v-flex xs12 sm8 md4>
 					<v-card class="elevation-12">
 						<v-toolbar :height="80" >
-							<v-bottom-nav :active.sync="bottomNav" :color="color"	:value="true" absolute shift :height="80" >
+							<v-bottom-nav :active.sync="bottomNav" :color="colorForm"	:value="true" absolute shift :height="80" >
 								<v-btn dark large >	<span>{{$vuetify.t('$vuetify.texts.simple.labels.auth')}}</span>			<v-icon large >account_circle</v-icon>		</v-btn>
 								<v-divider vertical/>
 								<v-btn dark large >	<span>{{$vuetify.t('$vuetify.texts.simple.labels.registration')}}</span>	<v-icon large > person_add</v-icon>			</v-btn>
 							</v-bottom-nav>
 						</v-toolbar>
 						<v-card-text>
-							<v-form v-model="inputsValid" :ref="paramsForm" > 
-								<c-input-cols  :inputs="inputs" :dialogId="dialogId"  :paramsForm="paramsForm" :maxInputCountInCol="10" />
+							<v-form v-model="inputsValid" :ref="paramForm" > 
+								<c-input-cols  :inputs="inputs" :dialogId="dialogId"  :paramForm="paramForm" :maxInputCountInCol="10" />
 							</v-form>
 							<v-divider style='padding-bottom: 10px;'/>
 							Войти через социальные сети:
@@ -29,11 +29,11 @@
 								<div @click.capture.stop>	<share-whats-app has_icon button_design="gradient" 		:href="'/login/vk?hrefBack='+hrefBack" class='disable-social'/> </div>																
 							</v-layout>
 						</v-card-text>
-						<v-layout row justify-center color="primary" >
+						<v-layout row justify-center :color="colorForm" >
 							<v-flex xs12>
-								<v-toolbar slot='header' dense  color="primary" >		
+								<v-toolbar slot='header' dense  :color="colorForm" >		
 									<v-spacer/>
-									<v-btn class='accent' @click="dialogSave"  :disabled="!inputsValid"><v-icon>input</v-icon>&nbsp;{{$vuetify.t(acceptFormTitle)}}</v-btn>
+									<v-btn :class="classForm" @click="dialogSave"  :disabled="!inputsValid"><v-icon>input</v-icon>&nbsp;{{$vuetify.t(acceptFormTitle)}}</v-btn>
 								</v-toolbar>
 							</v-flex>
 						</v-layout>
@@ -64,8 +64,9 @@
 			 dialogId:getNewId(),
 		}),
 		computed: {
-			color () {return !this.bottomNav? 'accent': 'primary'},
-			paramsForm () {return !this.bottomNav? 'auth-login': 'auth-registration'},		
+			colorForm () {return !this.bottomNav? 'primary': 'accent' },
+			classForm () {return [ !this.bottomNav? 'accent': 'primary']},
+			paramForm () {return !this.bottomNav? 'auth-login': 'auth-registration'},		
 			acceptFormTitle () {return !this.bottomNav? '$vuetify.texts.simple.actions.auth': '$vuetify.texts.simple.actions.registration'},
 			hrefBack(){return nvl(getLocationParam('auth_href_back','')) },
 			inputs() {
@@ -94,7 +95,7 @@
 							"}",},
 					{id:27, form:'auth-registration', 	code:'accept',	value:'true',		name:'Я подтверждаю согласие на обработку персональных данных', 				placeholder:'Запомнить данные пользователя', 	type:'BOOL',		nullable:0, column_size:30, sort_seq:3,  },
 				]
-				return data.filter(row =>  row.form == vm.paramsForm ).sort( (a, b) =>{return sort(a, b, 'sort_seq', 'sort_seq')})
+				return data.filter(row =>  row.form == vm.paramForm ).sort( (a, b) =>{return sort(a, b, 'sort_seq', 'sort_seq')})
 			},
 		},
 		components: {
@@ -104,14 +105,11 @@
 			XApp,XStore,
 		],
 		methods: {
-			con(){
-				console.log(123);
-			},
 			dialogSave(){
 				let vm=this,tmp={},todo={}
-				if (!vm.$refs[vm.paramsForm].validate())
+				if (!vm.$refs[vm.paramForm].validate())
 					return;
-				todo={...vm.paramTodo(vm.paramsForm)}
+				todo={...vm.paramTodo(vm.paramForm)}
 				for (name in todo)
 					if(!this.bottomNav && ['_login','_password'].indexOf(name)!=-1 )
 						tmp[name.slice(1)]= todo[name].value
@@ -119,16 +117,16 @@
 						tmp[name]= todo[name].value
 				todo=tmp
 				if(!vm.bottomNav)
-					sendRequest({href:"/login", type:"auth.login", data:todo, default:{title:'$vuetify.texts.errors.withLogIn.title', text:'$vuetify.texts.errors.withLogIn.text'}, })
+					sendRequest({href:"/login", type:"auth.login", data:todo, default: getErrDesc('withLogIn') })
 				else
-					sendRequest({href:"/register", type:"register", needSucess:"Y", data:todo,  default:{title:'$vuetify.texts.errors.withRegistration.title', text:'$vuetify.texts.errors.withRegistration.text'}, })
+					sendRequest({href:"/register", type:"register", needSucess:"Y", data:todo, default: getErrDesc('withRegistration') })
 			},
 		},
 		created: function (){
 			let vm=this
 			vm.paramInit( {num: 'auth-login' })
 			vm.paramInit( {num: 'auth-registration' })
-			vm.$root.$on('dialog'+vm.paramsForm+'Send', ()=>{
+			vm.$root.$on('dialog'+vm.paramForm+'Send', ()=>{
 				vm.dialogSave();
 			});
 		},

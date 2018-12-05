@@ -9,12 +9,29 @@
 							<img :src="currentAvatar">
 						</v-list-tile-avatar>
 						<v-list-tile-content>
-							<v-list-tile-title>{{$vuetify.t('$vuetify.texts.simple.labels.personalAccount') }}</v-list-tile-title>
+							<v-list-tile-title>{{profileUserName()==''?$vuetify.t('$vuetify.texts.simple.labels.guest'):profileUserName()}}</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
+					<v-list-tile class="pt-2" v-for="item in authItems" :key="item.title" :title="$vuetify.t(item.link+'.title')"  :href="item.href" >
+						<v-list-tile-action>
+							<v-icon large>{{ item.icon }}</v-icon>
+						</v-list-tile-action>
+						<v-list-tile-content>
+							<v-list-tile-title>{{$vuetify.t(item.link+'.name') }}</v-list-tile-title>
+						</v-list-tile-content>
+					</v-list-tile>
+					<v-list-tile class="pt-2" @click="authChange" >
+						<v-list-tile-action>
+							<v-icon large>{{ authAva }}</v-icon>
+						</v-list-tile-action>
+						<v-list-tile-content>
+							<v-list-tile-title>{{profileUserName()==''?$vuetify.t('$vuetify.texts.simple.actions.auth'):$vuetify.t('$vuetify.texts.simple.actions.authEnd')}}</v-list-tile-title>
 						</v-list-tile-content>
 					</v-list-tile>
 				</v-list>
+				<v-divider style='padding-bottom: 10px;'/>
 				<v-list dense>
-					<v-divider></v-divider>
+					<v-divider/>
 					<v-list-tile class="pt-2" v-for="item in items" :key="item.title" :title="$vuetify.t(item.link+'.title')"  :href="item.href" >
 						<v-list-tile-action>
 							<v-icon large>{{ item.icon }}</v-icon>
@@ -60,20 +77,17 @@
 			panelRightShowen: false,
 			slotNamesCalc:[],
             items: [
-                { link: '$vuetify.texts.main.links.mainPage', 			icon: 'home', 				href:'\\user' },
-                { link: '$vuetify.texts.main.links.demandProf', 		icon: 'trending_up', 		href:'\\user' },
-                { link: '$vuetify.texts.main.links.topEdu', 			icon: 'account_balance', 	href:'\\user'  },
+				{ link: '$vuetify.texts.main.links.demandProf', 		icon: 'trending_up', 		href:'\\user' },
+				{ link: '$vuetify.texts.main.links.topEdu', 			icon: 'account_balance', 	href:'\\user'  },
                 { link: '$vuetify.texts.main.links.topProf', 			icon: 'favorite', 			href:'\\user'  },
                 { link: '$vuetify.texts.main.links.catalogProf', 		icon: 'view_module', 		href:'\\user'  },
-                { link: '$vuetify.texts.main.links.psyhTests', 			icon: 'library_books', 		href:'\\user'  },
-                { link: '$vuetify.texts.main.links.astrologForecast', 	icon: 'brightness_4', 		href:'\\user'  },
-                { link: '$vuetify.texts.main.links.actualOffers', 		icon: 'adb', 				href:'\\user'  },
 				{ link: '$vuetify.texts.main.links.serch', 				icon: 'search', 			href:'\\user'  }
             ], 
 		}),
 		props:{
 			curentSystem: {type:  String, default: ''},	
 			needFooter: {type:  Boolean, default: true},	
+			panelLeft:{type: Object,  default: () => {return{ drawer:true, show:false, class:'', width:300, filter:false,} }}	,
 			panelLeft:{type: Object,  default: () => {return{ drawer:true, show:false, class:'', width:300, filter:false,} }}	,
 			panelRight:{type: Object,  default: () => {return{ drawer:false, show:false, class:'', width:300, filter:false,} }}	,
 			mainPanelConfig: {type: Object,  default: () => {return null/*{ //'horizontal' - внутри будут строки,  'vertical' - внутри будут столбики;  Последнему слою выставлять размер бессмысленно
@@ -96,17 +110,23 @@
 				return nvl(vm.profileAvatar(),"https://randomuser.me/api/portraits/men/85.jpg")
 			},
 			getContentStyles(){
-				let vm=this
-				if(vm.oneScreen)//финт ушами, что бы основная область не прокручивалась
-					return {height: '100px' ,}
-				else	
-					return {  }
+				let vm=this//финт ушами, что бы основная область не прокручивалась
+				return vm.oneScreen? {height: '100px' ,}:{  }
 			},
 			panelLeftDrawer(){ return this.panelLeft.drawer || this.panelLeft.show || this.panelLeft.filter	},
 			panelRightDrawer(){ return this.panelRight.drawer || this.panelRight.show || this.panelLeft.filter	},
-			panelLeftWidth(){ return this.panelLeft.filter? 358 : this.panelLeft.width  },
-			panelRightWidth(){ return this.panelRight.filter? 358 : this.panelRight.width  },
-			mainPanelReq(){ return this.mainPanelConfig!=null}
+			panelLeftWidth(){ return this.panelLeft.filter? 358 : nvl(this.panelLeft.width,300)  },
+			panelRightWidth(){ return this.panelRight.filter? 358 : nvl(this.panelRight.width,300)  },
+			mainPanelReq(){ return this.mainPanelConfig!=null},
+			authAva () {return this.profileUserName()==''?'account_circle':'launch'},
+			authItems(){
+					return this.profileUserName()==''?null: [
+					{ link: '$vuetify.texts.main.links.mainPage', 			icon: 'home', 				href:'\\user' },
+					{ link: '$vuetify.texts.main.links.psyhTests', 			icon: 'library_books', 		href:'\\user'  },
+					{ link: '$vuetify.texts.main.links.astrologForecast', 	icon: 'brightness_4', 		href:'\\user'  },
+					{ link: '$vuetify.texts.main.links.actualOffers', 		icon: 'adb', 				href:'\\user'  },
+				]
+			},
 		},
         components: {
 			CHead, CFooter,CMsgList, 
@@ -117,6 +137,13 @@
 			XStore,XDialog,
 		],
 		methods: {
+			authChange(){
+				let vm=this
+				if (vm.profileUserName()=='')
+					vm.$root.$emit('systemLogin')
+				else
+					vm.$root.$emit('systemLogout')
+			},
 			calcSlotNames(obj){
 				let vm=this
 				vm.slotNamesCalc.push(obj.name)

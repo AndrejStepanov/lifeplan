@@ -10,18 +10,22 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ObjTreeData extends Event implements ShouldBroadcast{
+class DataInfo extends Event implements ShouldBroadcast{
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $data;
+    public $type;
+    public $callback;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($data)    {
+    public function __construct($data,$request)    {
         $this->data=$data;
+        $this->type=$request['type'];
+        $this->callback=$request['callback'];
     }
 
     /**
@@ -30,9 +34,9 @@ class ObjTreeData extends Event implements ShouldBroadcast{
      * @return \Illuminate\Broadcasting\Channel|array
      */
     public function broadcastOn()    {
-        return ['channel.ObjTreeData'];
+        return [$this->callback];
     }
 	public function broadcastAs()	{
-		return 'object.tree.by.root';
+		return $this->type;
 	}
 }

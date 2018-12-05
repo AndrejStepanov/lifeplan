@@ -1,9 +1,10 @@
 <template>
-	<v-speed-dial  v-model="fab"  direction="bottom" :open-on-hover="hover" transition="scale-transition" >
-		<v-btn slot="activator" class="accent"  hover v-model="fab" @click='login'>		&nbsp;{{profileUserName()==''?$vuetify.t('$vuetify.texts.simple.labels.auth'):profileUserName()}}&nbsp;	<v-icon>account_circle</v-icon>		</v-btn>	
+	<v-speed-dial  v-model="fab"  direction="bottom" :open-on-hover="hover" transition="scale-transition" v-if="profileUserName()==''">
+		<v-btn slot="activator" class="accent"  hover v-model="fab" @click="login">		&nbsp;{{profileUserName()==''?$vuetify.t('$vuetify.texts.simple.labels.auth'):profileUserName()}}&nbsp;	<v-icon>account_circle</v-icon>		</v-btn>	
 		<v-btn v-if="profileUserName()!=''" small class="secondary"	href='\user'> 		&nbsp;{{$vuetify.t('$vuetify.texts.main.links.mainPage.title')}}&nbsp; 									<v-icon>contacts</v-icon>			</v-btn>
-		<v-btn v-if="profileUserName()!=''" small class="secondary"	@click='logout'>	&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.logOut')}} &nbsp;										<v-icon>power_settings_new</v-icon>	</v-btn>
+		<v-btn v-if="profileUserName()!=''" small class="secondary"	@click="logout">	&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.logOut')}} &nbsp;										<v-icon>power_settings_new</v-icon>	</v-btn>
 	</v-speed-dial>
+	<v-icon color='accent' v-else @click="logout">launch</v-icon>
 </template>
 
 <script>
@@ -29,7 +30,7 @@
 				window.location.href = "\\auth?auth_href_back="+_hrefBack
 			},			
 			logout () {
-				sendRequest({href:'/logout', type:'logout', needSucess:'Y', hrefBack:'/', def: getErrDesc('noLogOut') } )
+				sendRequest({href:'/logout', type:'logout', needSucess:'Y', hrefBack:'/', default: getErrDesc('noLogOut') } )
 			},
 			subscribeTicket(newTicket){
 				let vm=this,
@@ -52,6 +53,15 @@
 					showMsg(getMsgDesc('logoutSucsess') )
 				});
 			},
+		},
+		created: function (){
+			let vm=this
+			vm.$root.$on('systemLogin', ()=>{
+				vm.login();
+			});
+			vm.$root.$on('systemLogout', ()=>{
+				vm.logout();
+			});
 		},
 	 	mounted: function (){	
 			let vm=this

@@ -14,7 +14,7 @@ class DataCommandController extends Controller{
 	public function reciveCommand(Request $request){
 		$data=$request->all();
 		switch($data['type']){
-			case('object.tree.add'):{  throw new \App\Exceptions\KonsomException( 'Что-то пошло не так','Пошло не так все из-за корявых рук!');   };	
+			case('user.info.save'):{ $model = new User(); return $model->saveUserInfo(createTodo(nvl($data,null)));  };	
 		}
 		
 		return;

@@ -1,1 +1,415 @@
-webpackJsonp([2],{234:function(e,t,a){var i=a(235);"string"==typeof i&&(i=[[e.i,i,""]]),i.locals&&(e.exports=i.locals);a(2)("b120ea02",i,!0,{})},235:function(e,t,a){(e.exports=a(1)(!1)).push([e.i,".custom-resizer{width:100%;height:100%}.custom-resizer>.pane{text-align:center;margin:10px;overflow:auto}.custom-resizer.layout-v>.multipane-resizer{margin:0;left:0;position:relative;border-style:solid;border-width:0 thin 0 0;-o-border-image:repeating-linear-gradient(0deg,hsla(0,0%,100%,.5),hsla(0,0%,100%,.5) 2px,transparent 0,transparent 4px) 1 repeat;border-image:repeating-linear-gradient(0deg,hsla(0,0%,100%,.5),hsla(0,0%,100%,.5) 2px,transparent 0,transparent 4px) 1 repeat}.custom-resizer.layout-h>.multipane-resizer{margin:0;left:0;position:relative;border-style:solid;border-width:thin 0 0;-o-border-image:repeating-linear-gradient(90deg,hsla(0,0%,100%,.5),hsla(0,0%,100%,.5) 2px,transparent 0,transparent 4px) 1 repeat;border-image:repeating-linear-gradient(90deg,hsla(0,0%,100%,.5),hsla(0,0%,100%,.5) 2px,transparent 0,transparent 4px) 1 repeat}",""])},236:function(e,t,a){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i=a(237),n=a.n(i),r=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var a=arguments[t];for(var i in a)Object.prototype.hasOwnProperty.call(a,i)&&(e[i]=a[i])}return e};t.default={name:"c-layouts",data:function(){return{rendersObjects:{},configPars:{},isResizing:!1}},props:{config:{type:Object,default:function(){return{name:"first",width:"50%",height:"100%",layout:"horizontal",data:[]}}}},computed:{resizable:function(){return nvl(this.config.resizable,!1)}},components:{CLayout:n.a},methods:{recurPars:function(e){var t=e.config,a=e.parent,i=void 0===a?"":a,n=e.isLast,o=void 0!==n&&n,s=this;s.$set(s.configPars,t.name,r({},t,{parent:i,isLast:o})),void 0!=t.data&&t.data.length&&(t.data.forEach(function(e,a){s.recurPars({config:e,parent:t.name,isLast:!(a<t.data.length-1)})}),t.data.forEach(function(e){s.configPars[e.name].last=t.data[t.data.length-1].name}))},recurRend:function(e){var t=this,a=e.config,i=this,n=[];void 0!=a.data&&a.data.length?(a.data.forEach(function(e,t){i.recurRend({config:e})}),a.data.forEach(function(e,r){n.push(i.rendersObjects[e.name]),r<a.data.length-1&&n.push(i.$createElement("div",{class:{"multipane-resizer":!0},attrs:{block:e.name},on:{mousedown:t.onMouseDown}}))}),i.rendersObjects[a.name]=i.$createElement("c-layout",{props:{config:i.configPars[a.name]}},n)):i.rendersObjects[a.name]=i.$createElement("c-layout",{props:{config:i.configPars[a.name]}},[i.$slots[a.name]])},onMouseDown:function(e){var t=e.target,a=e.pageX,i=e.pageY,n=this,r=t.getAttribute("block");if(n.resizable&&t.className&&t.className.match("multipane-resizer")){var o=n.configPars[r].parent,s=n.configPars[r].last,l=n.$el,c=t.previousElementSibling,p=parseFloat(n.configPars[r].width.replace("%","").replace("px","")),u=parseFloat(n.configPars[r].height.replace("%","").replace("px","")),d=n.configPars[o].layout,f=!!(c.style.width+"").match("%"),g=window,h=g.addEventListener,m=g.removeEventListener,v=function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:0;if(void 0!=e)return"vertical"==d?c.style.width=f?e+t/l.clientWidth*100+"%":e+t+"px":"horizontal"==d?c.style.height=f?e+t/l.clientHeight*100+"%":e+t+"px":void 0};n.isResizing=!0;var x=v();n.$emit("paneResizeStart",c,t,x);var b=function(e){var r=e.pageX,o=e.pageY;x="vertical"==d?v(p,r-a):v(u,o-i),n.$emit("paneResize",c,t,x)};h("mousemove",b),h("mouseup",function e(l){var g=l.pageX,h=l.pageY,x=0,w=0,y=parseFloat(v("vertical"==d?p:u,"vertical"==d?g-a:h-i).replace("%","").replace("px",""));y=y>100?100:y,x=("vertical"==d?p:u)-y,(w=parseFloat(("vertical"==d?n.configPars[s].width:n.configPars[s].height).replace("%","").replace("px","")))+x-(f?5:100)<=0?(x=(f?5:100)-w,y=("vertical"==d?p:u)-x,w=f?5:100):w+=x,"vertical"==n.configPars[o].layout?(n.configPars[r].width=y+(f?"%":"px"),n.configPars[s].width=w+(f?"%":"px")):(n.configPars[r].height=y+(f?"%":"px"),n.configPars[s].height=w+(f?"%":"px")),n.isResizing=!1,m("mousemove",b),m("mouseup",e),n.$emit("paneResizeStop",c,t,y)})}}},created:function(){this.recurPars({config:this.config})},render:function(e){var t=this;return void 0!=t.config.data&&t.config.data.length?(t.recurRend({config:t.config}),t.rendersObjects[t.config.name]):null}}},237:function(e,t,a){var i=a(0)(a(240),a(241),!1,function(e){a(238)},null,null);e.exports=i.exports},238:function(e,t,a){var i=a(239);"string"==typeof i&&(i=[[e.i,i,""]]),i.locals&&(e.exports=i.locals);a(2)("45bef610",i,!0,{})},239:function(e,t,a){(e.exports=a(1)(!1)).push([e.i,".multipane{display:-webkit-box;display:-ms-flexbox;overflow:hidden}.multipane.layout-h{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.multipane.layout-v{-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row}.multipane.scroll{overflow:auto;padding:5px;margin:5px 5px 5px 0}.multipane.auto-size{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1}.multipane-resizer{display:block;position:relative;z-index:2}.layout-h>.multipane-resizer{width:100%;height:3px;margin-top:-10px;top:5px;cursor:row-resize}.layout-v>.multipane-resizer{width:3px;height:100%;margin-left:-10px;left:5px;cursor:col-resize}",""])},240:function(e,t,a){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default={name:"c-layout",data:function(){return{}},props:{config:{type:Object,default:function(){return{name:"first",width:"50%",height:"100%",layout:"horizontal",isLast:!1,data:[]}}},noMultiPane:{type:Boolean,default:!1}},computed:{classnames:function(){return["multipane","layout-"+this.config.layout.slice(0,1),void 0!=this.config.data&&this.config.data.length>0?"custom-resizer ":"scroll",this.config.isLast?"auto-size":""]}},methods:{}}},241:function(e,t){e.exports={render:function(){var e=this.$createElement;return(this._self._c||e)("div",{class:this.classnames,style:{width:this.config.width,height:this.config.height},attrs:{name:this.config.name}},[this._t("default")],2)},staticRenderFns:[]}},75:function(e,t,a){var i=a(0)(a(236),null,!1,function(e){a(234)},null,null);e.exports=i.exports}});
+webpackJsonp([2],{
+
+/***/ 238:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(239);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("26137df6", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-294a2398\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./c-layouts.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-294a2398\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./c-layouts.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 239:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.custom-resizer {\n  width: 100%;\n  height: 100%;\n}\n.custom-resizer > .pane {\n  text-align: center;\n  margin: 10px;\n  overflow: auto;\n}\n.custom-resizer.layout-v > .multipane-resizer {\n  margin: 0;\n  left: 0;\n  position: relative;\n  border-style: solid;\n  border-width: 0 thin 0 0;\n  -o-border-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.5) 0, rgba(255, 255, 255, 0.5) 2px, transparent 0, transparent 4px) 1 repeat;\n     border-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.5) 0, rgba(255, 255, 255, 0.5) 2px, transparent 0, transparent 4px) 1 repeat;\n}\n.custom-resizer.layout-h > .multipane-resizer {\n  margin: 0;\n  left: 0;\n  position: relative;\n  border-style: solid;\n  border-width: thin 0 0;\n  -o-border-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.5) 0, rgba(255, 255, 255, 0.5) 2px, transparent 0, transparent 4px) 1 repeat;\n     border-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.5) 0, rgba(255, 255, 255, 0.5) 2px, transparent 0, transparent 4px) 1 repeat;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 240:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__c_layout__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__c_layout___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__c_layout__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	name: 'c-layouts',
+	data: function data() {
+		return {
+			rendersObjects: {},
+			configPars: {},
+			isResizing: false
+		};
+	},
+	props: {
+		config: { type: Object, default: function _default() {
+				return { name: 'first', width: '50%', height: '100%', layout: 'horizontal', data: [] };
+			} }
+	},
+	computed: {
+		resizable: function resizable() {
+			return nvl(this.config.resizable, false);
+		}
+	},
+	components: {
+		CLayout: __WEBPACK_IMPORTED_MODULE_0__c_layout___default.a
+	},
+	methods: {
+		recurPars: function recurPars(_ref) {
+			var config = _ref.config,
+			    _ref$parent = _ref.parent,
+			    parent = _ref$parent === undefined ? '' : _ref$parent,
+			    _ref$isLast = _ref.isLast,
+			    isLast = _ref$isLast === undefined ? false : _ref$isLast;
+
+			var vm = this;
+			vm.$set(vm.configPars, config.name, _extends({}, config, { parent: parent, isLast: isLast }));
+			if (config.data != undefined && config.data.length) {
+				config.data.forEach(function (element, idx) {
+					vm.recurPars({ config: element, parent: config.name, isLast: idx < config.data.length - 1 ? false : true });
+				});
+				config.data.forEach(function (row) {
+					vm.configPars[row.name].last = config.data[config.data.length - 1].name;
+				});
+			}
+		},
+		recurRend: function recurRend(_ref2) {
+			var _this = this;
+
+			var config = _ref2.config;
+
+			var vm = this,
+			    tmp = [];
+			if (config.data != undefined && config.data.length) {
+				config.data.forEach(function (element, idx) {
+					vm.recurRend({ config: element });
+				});
+				config.data.forEach(function (row, idx) {
+					tmp.push(vm.rendersObjects[row.name]);
+					if (idx < config.data.length - 1) tmp.push(vm.$createElement('div', { class: { 'multipane-resizer': true }, attrs: { block: row.name }, on: { mousedown: _this.onMouseDown } }));
+				});
+				vm.rendersObjects[config.name] = vm.$createElement('c-layout', { props: { config: vm.configPars[config.name] } }, tmp);
+			} else vm.rendersObjects[config.name] = vm.$createElement('c-layout', { props: { config: vm.configPars[config.name] } }, [vm.$slots[config.name]]);
+		},
+		onMouseDown: function onMouseDown(_ref3) {
+			var resizer = _ref3.target,
+			    initialPageX = _ref3.pageX,
+			    initialPageY = _ref3.pageY;
+
+			var vm = this,
+			    blockName = resizer.getAttribute('block');
+			if (!vm.resizable || !resizer.className || !resizer.className.match('multipane-resizer')) return;
+			var parentName = vm.configPars[blockName].parent,
+			    lastName = vm.configPars[blockName].last,
+			    container = vm.$el,
+			    pane = resizer.previousElementSibling,
+			    initialPaneWidth = parseFloat(vm.configPars[blockName].width.replace("%", "").replace("px", "")),
+			    initialPaneHeight = parseFloat(vm.configPars[blockName].height.replace("%", "").replace("px", ""));
+
+			var curLayout = vm.configPars[parentName].layout;
+			//let { offsetWidth: initialPaneWidth,    offsetHeight: initialPaneHeight,   } = pane
+			var usePercentage = !!(pane.style.width + '').match('%');
+			var _window = window,
+			    addEventListener = _window.addEventListener,
+			    removeEventListener = _window.removeEventListener;
+
+
+			var resize = function resize(initialSize) {
+				var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+				if (initialSize == undefined) return;
+				if (curLayout == 'vertical') return pane.style.width = usePercentage ? initialSize + offset / container.clientWidth * 100 + '%' : initialSize + offset + 'px';
+				if (curLayout == 'horizontal') return pane.style.height = usePercentage ? initialSize + offset / container.clientHeight * 100 + '%' : initialSize + offset + 'px';
+			};
+			// This adds is-resizing class to container
+			vm.isResizing = true;
+			// Resize once to get current computed size
+			var size = resize();
+			// Trigger paneResizeStart event
+			vm.$emit('paneResizeStart', pane, resizer, size);
+			var onMouseMove = function onMouseMove(_ref4) {
+				var pageX = _ref4.pageX,
+				    pageY = _ref4.pageY;
+
+				size = curLayout == 'vertical' ? resize(initialPaneWidth, pageX - initialPageX) : resize(initialPaneHeight, pageY - initialPageY);
+				vm.$emit('paneResize', pane, resizer, size);
+			};
+
+			var onMouseUp = function onMouseUp(_ref5) {
+				var pageX = _ref5.pageX,
+				    pageY = _ref5.pageY;
+
+				// Run resize one more time to set computed width/height.
+				var changeSize = 0,
+				    sizeLast = 0,
+				    size = parseFloat(resize(curLayout == 'vertical' ? initialPaneWidth : initialPaneHeight, curLayout == 'vertical' ? pageX - initialPageX : pageY - initialPageY).replace("%", "").replace("px", ""));
+				size = size > 100 ? 100 : size;
+				changeSize = (curLayout == 'vertical' ? initialPaneWidth : initialPaneHeight) - size;
+				sizeLast = parseFloat((curLayout == 'vertical' ? vm.configPars[lastName].width : vm.configPars[lastName].height).replace("%", "").replace("px", ""));
+				if (sizeLast + changeSize - (usePercentage ? 5 : 100) <= 0) {
+					changeSize = (usePercentage ? 5 : 100) - sizeLast;
+					size = (curLayout == 'vertical' ? initialPaneWidth : initialPaneHeight) - changeSize;
+					sizeLast = usePercentage ? 5 : 100;
+				} else sizeLast += changeSize;
+				if (vm.configPars[parentName].layout == 'vertical') {
+					vm.configPars[blockName].width = size + (usePercentage ? '%' : 'px');
+					vm.configPars[lastName].width = sizeLast + (usePercentage ? '%' : 'px');
+				} else {
+					vm.configPars[blockName].height = size + (usePercentage ? '%' : 'px');
+					vm.configPars[lastName].height = sizeLast + (usePercentage ? '%' : 'px');
+				}
+				// This removes is-resizing class to container
+				vm.isResizing = false;
+				removeEventListener('mousemove', onMouseMove);
+				removeEventListener('mouseup', onMouseUp);
+				vm.$emit('paneResizeStop', pane, resizer, size);
+			};
+			addEventListener('mousemove', onMouseMove);
+			addEventListener('mouseup', onMouseUp);
+		}
+	},
+	created: function created() {
+		var vm = this;
+		vm.recurPars({ config: vm.config });
+	},
+	render: function render(h) {
+		var vm = this;
+		if (vm.config.data == undefined || !vm.config.data.length) return null;
+		vm.recurRend({ config: vm.config });
+		return vm.rendersObjects[vm.config.name];
+	}
+});
+
+/***/ }),
+
+/***/ 241:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(242)
+}
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(244)
+/* template */
+var __vue_template__ = __webpack_require__(245)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/c-layout.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-19fcdaeb", Component.options)
+  } else {
+    hotAPI.reload("data-v-19fcdaeb", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 242:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(243);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("476d69a9", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-19fcdaeb\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./c-layout.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-19fcdaeb\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./c-layout.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 243:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.multipane {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  overflow: hidden;\n}\n.multipane.layout-h {\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n}\n.multipane.layout-v {\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n}\n\n/*.multipane > div {  position: relative;  z-index: 1;}*/\n.multipane.scroll {\n  overflow: auto;\n  padding: 5px;\n  margin: 5px 5px 5px 0px;\n}\n.multipane.auto-size {\n  -webkit-box-flex: 1;\n      -ms-flex-positive: 1;\n          flex-grow: 1;\n}\n.multipane-resizer {\n  display: block;\n  position: relative;\n  z-index: 2;\n}\n.layout-h > .multipane-resizer {\n  width: 100%;\n  height: 3px;\n  margin-top: -10px;\n  top: 5px;\n  cursor: row-resize;\n}\n.layout-v > .multipane-resizer {\n  width: 3px;\n  height: 100%;\n  margin-left: -10px;\n  left: 5px;\n  cursor: col-resize;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ 244:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'c-layout',
+  data: function data() {
+    return {};
+  },
+
+  props: {
+    config: { type: Object, default: function _default() {
+        return { name: 'first', width: '50%', height: '100%', layout: 'horizontal', isLast: false, data: [] };
+      } },
+    noMultiPane: { type: Boolean, default: false }
+  },
+  computed: {
+    classnames: function classnames() {
+      return ['multipane', 'layout-' + this.config.layout.slice(0, 1), this.config.data != undefined && this.config.data.length > 0 ? 'custom-resizer ' : 'scroll', this.config.isLast ? 'auto-size' : ''];
+    }
+  },
+  methods: {}
+});
+
+/***/ }),
+
+/***/ 245:
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      class: _vm.classnames,
+      style: { width: _vm.config.width, height: _vm.config.height },
+      attrs: { name: _vm.config.name }
+    },
+    [_vm._t("default")],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-19fcdaeb", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 84:
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(238)
+}
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(240)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/c-layouts.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-294a2398", Component.options)
+  } else {
+    hotAPI.reload("data-v-294a2398", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ })
+
+});

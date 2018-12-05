@@ -1,7 +1,7 @@
 <template>
 	<v-container grid-list-md>
 		<v-layout row wrap>
-			<v-flex v-for="(arr, index) in colsData" :key="index"  :class="classes" >
+			<v-flex v-for="(arr, index) in colsData" :key="index"  :class="[classes,  colsData.length>0&&index!=colsData.length? 'pr-3':'',  colsData.length>0&&index>0? 'pl-3':'' ]" >
 				<c-input  v-for="row in arr" :ref="row.code" :key="row.id"  :data="row" :needCheckBox="needCheckBox" :needSign="needSign" :dialogId="dialogId" :paramsForm="paramsForm" :listItemMin="listItemMin"/>
 			</v-flex>
 		</v-layout>
@@ -29,10 +29,7 @@
 		computed: {
 			classes () {
 				return [
-					{'xs12': this.colsCnt==1},
-					{'xs6': this.colsCnt==2},
-					{'xs4': this.colsCnt==3},
-					{'xs3': this.colsCnt==4},
+					'xs'+(12/this.colsCnt),
 				]
 			},
 			maxInputInCol(){

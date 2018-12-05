@@ -24,7 +24,7 @@
 						<div :class="getInputContanerTemplateClass">
 							<template v-if="isSliderLike">
 								<v-flex shrink style="width: 60px" v-if="type=='RANGE' && isNumeric" >
-									<v-text-field v-model="valueArrPairs[0][0]" class="mt-0 min-width-35px body-1" hide-details single-line :disabled="getDisable" type="number" @change="setNewValPairFst" :min="min" :max="max" :step="step"/>
+									<v-text-field v-model="valueArrPairs[0][0]" class=" min-width-35px body-1" hide-details single-line :disabled="getDisable" type="number" @change="setNewValPairFst" :min="min" :max="max" :step="step"/>
 								</v-flex>
 								<v-flex>
 									<component v-if="type=='RANGE'"  :is="currentInput" v-model="valueArrPairs[0]" :rules="rules" :disabled="getDisable" :readonly="!editable"  :required="!!nullable" ref="input"
@@ -54,8 +54,8 @@
 									</component>
 								</v-flex>
 								<v-flex shrink style="width: 60px" v-if="isNumeric" >
-									<v-text-field  class="mt-0 min-width-35px body-1" hide-details single-line type="number" :disabled="getDisable" v-if="type=='RANGE'" v-model="valueArrPairs[0][1]"  @change="setNewValPairScnd" :min="min" :max="max" :step="step"/>
-									<v-text-field  class="mt-0 min-width-35px body-1" hide-details single-line type="number" :disabled="getDisable" v-else v-model="value" @change="setNewVal" :min="min" :max="max" :step="step"/>
+									<v-text-field  class=" min-width-35px body-1" hide-details single-line type="number" :disabled="getDisable" v-if="type=='RANGE'" v-model="valueArrPairs[0][1]"  @change="setNewValPairScnd" :min="min" :max="max" :step="step"/>
+									<v-text-field  class=" min-width-35px body-1" hide-details single-line type="number" :disabled="getDisable" v-else v-model="value" @change="setNewVal" :min="min" :max="max" :step="step"/>
 								</v-flex>
 							</template>
 							<template v-else>
@@ -74,13 +74,13 @@
 										@update:returnValue="setNewVal" class="max-width" :content-class="getDialogClass">
 									<v-combobox slot="activator" v-model="valueView" :label="name" :hint="placeholder" :rules="rules" :disabled="getDisable"  :required="!!nullable"  readonly ref="input"  append-icon=""
 										:tabindex="sortSeq"  :clearable="getClearable"   :min="min" :max="max" 
-										@change="setNewVal" @input="setNewVal"  @keyup.enter="submit" @blur="onBlur" @click:append="changeShow" class="mt-0 body-1" />
+										@change="setNewVal" @input="setNewVal"  @keyup.enter="submit" @blur="onBlur" @click:append="changeShow" class=" body-1" />
 									<template>
 										<div  :style="getDialogMainDivStyle">
-											<v-date-picker v-if="dialogWithDate  && type!='TIME_RANGE'"  v-model="valueArrPairs[0][0]" scrollable locale="ru" class='v-date-picker-more-height higher-z-index'/>
-											<v-time-picker v-else-if="type=='TIME_RANGE'"  v-model="valueArrPairs[0][0]" scrollable locale="ru" class='higher-z-index' format="24hr"/>
-											<v-time-picker v-if="dialogWithTime && type!='DATE_RANGE'"  v-model="valueArrPairs[0][1]" scrollable locale="ru" class='higher-z-index' format="24hr"/>
-											<v-date-picker v-else-if="type=='DATE_RANGE'"  v-model="valueArrPairs[0][1]" scrollable locale="ru" class='v-date-picker-more-height higher-z-index' />
+											<v-date-picker v-if="dialogWithDate  && type!='TIME_RANGE'"  v-model="valueArrPairs[0][0]" scrollable locale="ru" class='v-date-picker-more-height higher-z-index' :max="max" :min="min" ref="date1"/>
+											<v-time-picker v-else-if="type=='TIME_RANGE'"  v-model="valueArrPairs[0][0]" scrollable locale="ru" class='higher-z-index' format="24hr" ref="time1"/>
+											<v-time-picker v-if="dialogWithTime && type!='DATE_RANGE'"  v-model="valueArrPairs[0][1]" scrollable locale="ru" class='higher-z-index' format="24hr" ref="date2"/>
+											<v-date-picker v-else-if="type=='DATE_RANGE'"  v-model="valueArrPairs[0][1]" scrollable locale="ru" class='v-date-picker-more-height higher-z-index'  ref="time2"/>
 
 											<template v-if="type=='DATETIME_RANGE'">
 												<div :class="getDialogSeparatorClass" >
@@ -103,7 +103,7 @@
 										@update:returnValue="setNewVal" class="max-width" :content-class="getDialogClass">
 									<v-combobox slot="activator" v-model="valueArrView" :label="name" :hint="placeholder" :rules="rules" :disabled="getDisable"  :required="!!nullable"  readonly ref="input"  append-icon=""
 										:tabindex="sortSeq"  :clearable="getClearable"   :min="min" :max="max" multiple chips deletable-chips small-chips
-										@change="setNewVal"  @keyup.enter="submit" @blur="onBlur" @click:append="changeShow" class="mt-0 body-1" />
+										@change="setNewVal"  @keyup.enter="submit" @blur="onBlur" @click:append="changeShow" class=" body-1" />
 									<template>
 										<div  :style="getDialogMainDivStyle">
 											<v-date-picker v-if="dialogWithDate"  v-model="valueArr" multiple  scrollable locale="ru" class='v-date-picker-more-height' />
@@ -119,7 +119,7 @@
 										@update:returnValue="setNewVal" class="max-width" :content-class="getDialogClass">
 									<v-combobox slot="activator" v-model="valueView" :label="name" :hint="placeholder" :rules="rules" :disabled="getDisable"  :required="!!nullable"  readonly ref="input"  append-icon=""
 										:tabindex="sortSeq"  :clearable="getClearable"   :min="min" :max="max"
-										@change="setNewVal"  @keyup.enter="submit" @blur="onBlur" @click:append="changeShow" class="mt-0 body-1" />
+										@change="setNewVal"  @keyup.enter="submit" @blur="onBlur" @click:append="changeShow" class=" body-1" />
 									<template>
 										<div  :style="getDialogMainDivStyle">
 											<c-table tableTitle="$vuetify.texts.modals.treeAdd.title" :searchNeed="true" :headers="getTabHeader"	:items="getTabValues" v-model="tabSelectedRows"  ref="table"  
@@ -184,6 +184,7 @@ time-with-seconds	##:##:##
 			id: 0,
 			inputErrorState:false,
 			inputErrorText:'',
+			isBirthDate:false,
 			isDateTimeLike:false,
 			isMounted:false,
 			isNeed:false,
@@ -365,6 +366,9 @@ time-with-seconds	##:##:##
 			},
 		},
 		watch: {
+			dialog (val) {
+				val && this.isBirthDate && this.$nextTick(() => (this.$refs.date1.activePicker = 'YEAR'))
+			}
 		},
 		components: {
 			CTable: (resolve) =>{ require(['./c-table.vue'], resolve) },
@@ -380,14 +384,14 @@ time-with-seconds	##:##:##
 				check=check||false
 				num=num||0
 				if(vm.type!='DATETIME_RANGE' || stage==1){
-					fstPart = vm.valueArrPairs[num][0]!=null?vm.valueArrPairs[num][0]:''
-					scndPart = vm.valueArrPairs[num][1]!=null?vm.valueArrPairs[num][1]:''
+					fstPart = vm.type=='TIME'?'':vm.valueArrPairs[num][0]!=null?vm.valueArrPairs[num][0]:''
+					scndPart = vm.type=='DATE'?'': vm.valueArrPairs[num][1]!=null?vm.valueArrPairs[num][1]:''
 					if(check && ( (vm.dialogWithDate || vm.dialogWithRange) && fstPart=='' || (vm.dialogWithTime || vm.dialogWithRange) && scndPart=='') )
 						showMsg( getErrDesc('notFullValue') );
 				}
 				else{
 					fstPart = vm.getValueDatetimeFromArr({check,num,stage:1}) 
-					scndPart = vm.getValueDatetimeFromArr({check,num:num+1,stage:1}) 
+					scndPart = vm.getValueDatetimeFromArr({check,num:num+1,stage:1})
 					if(check && ( (vm.dialogWithDate || vm.dialogWithRange) && fstPart=='' || (vm.dialogWithTime || vm.dialogWithRange) && scndPart=='') )
 						showMsg( getErrDesc('notFullValue'));
 				}
@@ -458,7 +462,13 @@ time-with-seconds	##:##:##
 					vm.valueArrPairs[0][1]=value[1]
 				}
 				else{
-					vm.value = value
+					if(['DATE', 'TIME'].indexOf(vm.type)!=-1){
+						vm.valueArrPairs=[]
+						vm.parseToDateArr({str:value})
+						vm.value = vm.getValueDatetimeFromArr({num:0})
+					}
+					else
+						vm.value = value
 					if(['DATE', 'TIME', 'DATETIME', 'TIME_RANGE','DATE_RANGE','DATETIME_RANGE'].indexOf(vm.type)!=-1){
 						vm.valueArrPairs=[]
 						vm.parseToDateArr({str:vm.value})
@@ -670,7 +680,7 @@ time-with-seconds	##:##:##
 			vm.ticksNeed=!!vm.data.ticks_need||vm.ticksNeed
 			vm.tickSize=vm.data.tick_size||vm.tickSize
 			vm.thumbLabelNeed=vm.data.thumb_label_need||vm.thumbLabelNeed
-
+			vm.isBirthDate=vm.data.isBirthDate||vm.isBirthDate
 			if(vm.data.table_values!=undefined && vm.data.table_values.length>0)
 				vm.data.table_values.forEach(element => {
 					vm.tableValues.push(
@@ -800,7 +810,7 @@ time-with-seconds	##:##:##
 			if(vm.hasInput && vm.needCheckBox && !vm.nullable)
 				vm.rules.push(v => !!vm.checked || vm.$vuetify.t('$vuetify.texts.simple.msgs.fieldMustUsed' ) )
 
-			vm.paramSetData( {num: vm.paramsForm, data:{...vm.data,value :null, value_view :null, value_arr :null, value_arr_view:null,  } })
+			vm.paramSetData( {num: vm.paramsForm, data:{...vm.data,value :null, value_view :null, value_arr :null, value_arr_view:null, table_values:null,  } })
 			if(vm.multy && ['DATE', 'LIST'].indexOf(vm.type)!=-1)
 				vm.setNewVal(vm.valueArr,true,true)
 			else if(!vm.multy && ['RANGE'].indexOf(vm.type)!=-1)

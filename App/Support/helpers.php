@@ -50,3 +50,17 @@ function getTicket(){
 function checkTicket($ticket){
 	return  md5(session()->getId())==$ticket ;
 }
+function createTodo($data){
+	$tmp = [];
+	if(!nvl($data['todo']))
+		return $tmp;
+	foreach($data['todo'] as $row ){
+		if(array_search($row['type'], ['INFO','NBSP','LINE', ])!==FALSE)
+			continue;
+		if( !nvl($row['multy'] ) &&  array_search($row['type'], ['INPUT','LIST','BOOL','PASSWORD','NUMBER','HIDDEN','DATE','DATETIME','TIME','TEXT', ])!==FALSE )
+			$tmp[$row['code'] ]=$row['value'];
+		else 
+			$tmp[$row['code'] ]=$row['value_arr'];		
+	}
+	return $tmp;
+}

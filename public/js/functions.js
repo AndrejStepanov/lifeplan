@@ -1,6 +1,6 @@
 const MAX_ID= 9999999,
 	MAX_INPUT_IN_COL= 6,
-	appTheme={  primary: '#0d47a1', secondary: '#fd0000', accent: '#ff9800', error: '#f44336', warning: '#ffeb3b', info: '#2196f3', success: '#4caf50', checkBox:"#fd0000"},
+	appTheme={  primary: '#4E10AE', secondary: '#25D500', accent: '#FF9900', error: '#f44336', warning: '#ffeb3b', info: '#2196f3', success: '#4caf50', checkBox:"#fd0000"},//https://colorscheme.ru/#0M32fw0w0w0w0
 	authButtons= [ {id:1, title:'$vuetify.texts.simple.actions.logIn', icon:'input', allig:'right', click:'dialogSave' , needCheck:true} ],
 	dateFormatStr = '$3.$2.$1' //2018-10-03 - 1, 2 и 3 цифры
 
@@ -20,6 +20,7 @@ function appThemeInit({numeral}){
 	styleElt.innerHTML = styleSheet.cssText = 
 		'.accent-color								{color: '+appTheme.accent+' !important;} '+ //оранжевый
 		'.primary-color								{color: '+appTheme.primary+' !important;} '+ //синий
+		'.secondary-color							{color: '+appTheme.secondary+' !important;} '+ //салатовый
 		//'.primary--text 							{color: white !important;} '+
 		//'.margin-5px	 							{color: white !important;} '+
 		'.theme--light.v-label 						{color: rgba(0,0,0);		}'+
@@ -191,6 +192,7 @@ function sendRequest  (params){
 				params.handler(response)
 		}).catch(
 			(error) =>{
+				console.log(error)
 				let r = nvlo(error.response)
 				showMsg({ title: nvlo(r.data).title||nvlo(params.default).title||'$vuetify.texts.errors.requestFaild.title'  , text:nvlo(r.data).message||nvlo(params.default).text||'$vuetify.texts.errors.requestFaild.text',
 					'params': {status:r.status, trace:nvlo(r.data).trace, file:nvlo(nvl(error.response).data).file, line:nvlo(r.data).line}, })

@@ -4,6 +4,7 @@
         <v-toolbar-title v-if="$vuetify.breakpoint.name!='xs'" class='get-clcik' color='accent'>{{curentSystem}}</v-toolbar-title>
         <v-spacer/>
         <c-profile class='get-clcik'/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <v-icon color='accent' class='get-clcik'>search</v-icon>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <v-icon color='accent' class='get-clcik'>more_vert</v-icon>
