@@ -1756,7 +1756,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 			};
 		},
 		getDisable: function getDisable() {
-			return !this.needCheckBox ? false : !this.checked;
+			return !this.needCheckBox ? !this.editable : !this.checked;
 		},
 		getCounter: function getCounter() {
 			return this.maxLenTypes.indexOf(this.type) != -1 && this.maxLen > 0 ? this.maxLen : false;
@@ -2151,15 +2151,15 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 		vm.mask = vm.data.mask || vm.mask;
 		vm.maskFin = vm.data.mask_fin || vm.maskFin;
 		vm.error = vm.data.error || vm.error;
-		vm.checked = !!vm.data.checked || vm.checked;
-		vm.editable = !!vm.data.editable || vm.editable;
-		vm.multy = !!vm.data.multy || vm.multy;
+		vm.checked = vm.data.checked == undefined ? vm.checked : !!vm.data.checked;
+		vm.editable = vm.data.editable == undefined ? vm.editable : !!vm.data.editable;
+		vm.multy = vm.data.multy == undefined ? vm.multy : !!vm.data.multy;
 		vm.min = vm.data.min || vm.min;
 		vm.max = vm.data.max || vm.max;
 		vm.maxLen = vm.data.max_len || vm.maxLen;
 		vm.step = vm.data.step || vm.step;
 		vm.tabGroup = vm.data.tab_group || vm.tabGroup;
-		vm.ticksNeed = !!vm.data.ticks_need || vm.ticksNeed;
+		vm.ticksNeed = vm.data.ticks_need == undefined ? vm.ticksNeed : !!vm.data.ticks_need;
 		vm.tickSize = vm.data.tick_size || vm.tickSize;
 		vm.thumbLabelNeed = vm.data.thumb_label_need || vm.thumbLabelNeed;
 		vm.isBirthDate = vm.data.isBirthDate || vm.isBirthDate;
@@ -2185,6 +2185,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 		if (vm.type == 'LIST' && !vm.multy && vm.valueArr.length > 0) vm.value = vm.valueArr[0];
 
 		if (['DATE', 'TIME', 'DATETIME', 'DATE_RANGE', 'TIME_RANGE', 'DATETIME_RANGE'].indexOf(vm.type) != -1) {
+			vm.max = isNaN(vm.max) ? vm.max : '';
+			vm.min = isNaN(vm.min) ? vm.min : '';
 			if (!vm.multy && vm.valueArr.length > 0) if (['DATE', 'TIME', 'DATETIME'].indexOf(vm.type) != -1) vm.value = vm.valueArr[0];else if (vm.valueArr[0].length > 1) vm.value = vm.valueArr[0][0] + vm.rangeSeparator + vm.valueArr[0][1];else console.log('Обнаружен некорректно заданый диапазон исходных данных в ' + vm.code);
 			vm.valueArrPairs.push([null, null]);
 			vm.valueArrPairs.push([null, null]);
@@ -2834,8 +2836,6 @@ var render = function() {
                                                   max: _vm.max
                                                 },
                                                 on: {
-                                                  change: _vm.setNewVal,
-                                                  input: _vm.setNewVal,
                                                   keyup: function($event) {
                                                     if (
                                                       !("button" in $event) &&

@@ -15,6 +15,7 @@ class DataCommandController extends Controller{
 		$data=$request->all();
 		switch($data['type']){
 			case('user.info.save'):{ $model = new User(); return $model->saveUserInfo(createTodo(nvl($data,null)));  };	
+			default:{ throw new \App\Exceptions\KonsomException( 'Ошибка доступа','Нет доступа!'); };
 		}
 		
 		return;

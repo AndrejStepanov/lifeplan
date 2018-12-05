@@ -5571,7 +5571,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 			};
 		},
 		getDisable: function getDisable() {
-			return !this.needCheckBox ? false : !this.checked;
+			return !this.needCheckBox ? !this.editable : !this.checked;
 		},
 		getCounter: function getCounter() {
 			return this.maxLenTypes.indexOf(this.type) != -1 && this.maxLen > 0 ? this.maxLen : false;
@@ -5966,15 +5966,15 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 		vm.mask = vm.data.mask || vm.mask;
 		vm.maskFin = vm.data.mask_fin || vm.maskFin;
 		vm.error = vm.data.error || vm.error;
-		vm.checked = !!vm.data.checked || vm.checked;
-		vm.editable = !!vm.data.editable || vm.editable;
-		vm.multy = !!vm.data.multy || vm.multy;
+		vm.checked = vm.data.checked == undefined ? vm.checked : !!vm.data.checked;
+		vm.editable = vm.data.editable == undefined ? vm.editable : !!vm.data.editable;
+		vm.multy = vm.data.multy == undefined ? vm.multy : !!vm.data.multy;
 		vm.min = vm.data.min || vm.min;
 		vm.max = vm.data.max || vm.max;
 		vm.maxLen = vm.data.max_len || vm.maxLen;
 		vm.step = vm.data.step || vm.step;
 		vm.tabGroup = vm.data.tab_group || vm.tabGroup;
-		vm.ticksNeed = !!vm.data.ticks_need || vm.ticksNeed;
+		vm.ticksNeed = vm.data.ticks_need == undefined ? vm.ticksNeed : !!vm.data.ticks_need;
 		vm.tickSize = vm.data.tick_size || vm.tickSize;
 		vm.thumbLabelNeed = vm.data.thumb_label_need || vm.thumbLabelNeed;
 		vm.isBirthDate = vm.data.isBirthDate || vm.isBirthDate;
@@ -6000,6 +6000,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 		if (vm.type == 'LIST' && !vm.multy && vm.valueArr.length > 0) vm.value = vm.valueArr[0];
 
 		if (['DATE', 'TIME', 'DATETIME', 'DATE_RANGE', 'TIME_RANGE', 'DATETIME_RANGE'].indexOf(vm.type) != -1) {
+			vm.max = isNaN(vm.max) ? vm.max : '';
+			vm.min = isNaN(vm.min) ? vm.min : '';
 			if (!vm.multy && vm.valueArr.length > 0) if (['DATE', 'TIME', 'DATETIME'].indexOf(vm.type) != -1) vm.value = vm.valueArr[0];else if (vm.valueArr[0].length > 1) vm.value = vm.valueArr[0][0] + vm.rangeSeparator + vm.valueArr[0][1];else console.log('Обнаружен некорректно заданый диапазон исходных данных в ' + vm.code);
 			vm.valueArrPairs.push([null, null]);
 			vm.valueArrPairs.push([null, null]);
@@ -6648,8 +6650,6 @@ var render = function() {
                                                   max: _vm.max
                                                 },
                                                 on: {
-                                                  change: _vm.setNewVal,
-                                                  input: _vm.setNewVal,
                                                   keyup: function($event) {
                                                     if (
                                                       !("button" in $event) &&
@@ -7720,7 +7720,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.fix-padding,\r\n.fix-padding>div {padding: 0px 34px 0px 34px;\n}\r\n", ""]);
 
 // exports
 
@@ -7770,6 +7770,28 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -7784,17 +7806,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 			links: [{ id: 1, title: '$vuetify.texts.userPage.links.aboutMe', icon: 'info' }, { id: 2, title: '$vuetify.texts.userPage.links.whereStudy', icon: 'language' }, { id: 3, title: '$vuetify.texts.userPage.links.howEge', icon: 'offline_pin' }, { id: 4, title: '$vuetify.texts.userPage.links.wantStady', icon: 'loyalty' }],
 			colors: ['white', 'white', 'white', 'white'],
 			forms: ['aboutMe', 'whereStudy', 'howEge', 'wantStady'],
-			socetUserInfo: { href: "/socet_command", event: "user.info.by.id" },
-			socetCity: { href: "/socet_command", event: "city.list" },
-			userDataLoaded: false,
-			cityDataLoaded: false,
-			userInfo: {},
-			cityData: []
+			saveFormTypes: ['user.info.save', 'user.sch.save', 'user.ege.save', 'user.wants.save'],
+			user: { href: "/socet_command", event: "user.info.by.id", data: {}, loaded: false },
+			city: { href: "/socet_command", event: "city.list", data: [], loaded: false },
+			sch: { href: "/socet_command", event: "school.list", data: [], loaded: false }
 		};
 	},
 	computed: {
 		dataLoading: function dataLoading() {
-			return !(this.userDataLoaded && this.cityDataLoaded);
+			return !(this.user.loaded && this.city.loaded && this.sch.loaded);
 		},
 		colorForm: function colorForm() {
 			return this.colors[this.tabSelected];
@@ -7802,9 +7822,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 		paramForm: function paramForm() {
 			return this.dataLoading ? '' : this.forms[this.tabSelected];
 		},
+		saveFormType: function saveFormType() {
+			return this.saveFormTypes[this.tabSelected];
+		},
 		inputs: function inputs() {
 			var vm = this;
-			var data = [{ id: 1, form: 'aboutMe', code: 'firstName', name: 'Имя', value: nvl(vm.userInfo.firstName, null), type: 'INPUT', nullable: 0, column_size: 30, sort_seq: 1, mask_fin: '^[A-Za-zА-Яа-я]+$', error: '$vuetify.texts.errors.onlyLetters.text' }, { id: 2, form: 'aboutMe', code: 'lastName', name: 'Фамилия', value: nvl(vm.userInfo.lastName, null), type: 'INPUT', nullable: 0, column_size: 30, sort_seq: 2, mask_fin: '^[A-Za-zА-Яа-я]+$', error: '$vuetify.texts.errors.onlyLetters.text' }, { id: 3, form: 'aboutMe', code: 'birthDate', name: 'Дата рождения', value: nvl(vm.userInfo.birthDate, null), type: 'DATE', nullable: 0, column_size: 30, sort_seq: 3, max: new Date().toISOString().substr(0, 10), min: "1950-01-01", isBirthDate: true }, { id: 4, form: 'aboutMe', code: 'residenceCity', name: 'Проживаю в', value_arr: nvl(vm.userInfo.residenceCity, null) == null ? null : [vm.userInfo.residenceCity], type: 'LIST', nullable: 0, column_size: 30, sort_seq: 4, table_values: vm.cityData }];
+			var data = [{ id: 1, form: 'aboutMe', code: 'firstName', name: 'Имя', value: nvl(vm.user.data.firstName, null), type: 'INPUT', nullable: 0, column_size: 30, sort_seq: 1, mask_fin: '^[A-Za-zА-Яа-я]+$', error: '$vuetify.texts.errors.onlyLetters.text' }, { id: 2, form: 'aboutMe', code: 'lastName', name: 'Фамилия', value: nvl(vm.user.data.lastName, null), type: 'INPUT', nullable: 0, column_size: 30, sort_seq: 2, mask_fin: '^[A-Za-zА-Яа-я]+$', error: '$vuetify.texts.errors.onlyLetters.text' }, { id: 3, form: 'aboutMe', code: 'birthDate', name: 'Дата рождения', value: nvl(vm.user.data.birthDate, null), type: 'DATE', nullable: 0, column_size: 30, sort_seq: 3, max: new Date().toISOString().substr(0, 10), min: "1950-01-01", isBirthDate: true }, { id: 4, form: 'aboutMe', code: 'residenceCity', name: 'Проживаю в', value_arr: nvl(vm.user.data.residenceCity, null) == null ? null : [vm.user.data.residenceCity], type: 'LIST', nullable: 0, column_size: 30, sort_seq: 4, table_values: vm.city.data }];
 			return data.filter(function (row) {
 				return row.form == vm.paramForm;
 			}).sort(function (a, b) {
@@ -7813,7 +7836,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 		},
 		inputsBio: function inputsBio() {
 			var vm = this;
-			var data = [{ id: 1, form: 'aboutMe', code: 'bio', name: 'Обо мне', value: nvl(vm.userInfo.bio, null), type: 'TEXT', nullable: 1, column_size: 2000, sort_seq: 1 }];
+			var data = [{ id: 1, form: 'aboutMe', code: 'bio', name: 'Обо мне', value: nvl(vm.user.data.bio, null), type: 'TEXT', nullable: 1, column_size: 2000, sort_seq: 1 }];
 			return data.filter(function (row) {
 				return row.form == vm.paramForm;
 			}).sort(function (a, b) {
@@ -7831,7 +7854,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 			    tmp = {},
 			    todo = {};
 			if (!vm.$refs[vm.paramForm].validate()) return;
-			sendRequest({ href: "/data_command", type: "user.info.save", data: { todo: vm.paramTodo(vm.paramForm) }, default: getErrDesc('requestFaild'), handler: function handler() {
+			if (['aboutMe', 'howEge', 'wantStady'].indexOf(vm.paramForm) != -1) todo = vm.paramTodo(vm.paramForm);else todo = vm.user.data.schls.map(function (row) {
+				return vm.paramTodo(vm.paramForm + '_' + row.id);
+			});
+			if (vm.paramForm == 'aboutMe') {
+				vm.user.data.firstName = todo.firstName.value;
+				vm.user.data.lastName = todo.lastName.value;
+				vm.user.data.birthDate = todo.birthDate.value;
+				vm.user.data.residenceCity = todo.residenceCity.value;
+			}
+			sendRequest({ href: "/data_command", type: vm.saveFormType, data: { todo: todo }, default: getErrDesc('requestFaild'), handler: function handler() {
 					return showMsg(_extends({}, getMsgDesc('saveDoing')));
 				} });
 		},
@@ -7839,27 +7871,59 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 			var vm = this;
 			vm.getUserInfo();
 			vm.getCityInfo();
+			vm.getSchInfo();
 		},
 		getUserInfo: function getUserInfo() {
 			var vm = this;
-			sendRequest({ href: vm.socetUserInfo.href, type: vm.socetUserInfo.event, data: { userId: vm.profileUserId() }, handler: function handler(response) {
-					Object.assign(vm.userInfo, response.data[0]);
-					vm.userDataLoaded = true;
+			sendRequest({ href: vm.user.href, type: vm.user.event, data: { userId: vm.profileUserId() }, handler: function handler(response) {
+					vm.user = Object.assign({}, vm.user, { data: response.data });
+					vm.user.loaded = true;
 				} });
 		},
 		getCityInfo: function getCityInfo() {
 			var vm = this;
-			sendRequest({ href: vm.socetCity.href, type: vm.socetCity.event, handler: function handler(response) {
-					vm.cityData = response.data;
-					vm.cityDataLoaded = true;
+			sendRequest({ href: vm.city.href, type: vm.city.event, handler: function handler(response) {
+					vm.city.data = response.data;
+					vm.city.loaded = true;
 				} });
+		},
+		getSchInfo: function getSchInfo() {
+			var vm = this;
+			sendRequest({ href: vm.sch.href, type: vm.sch.event, handler: function handler(response) {
+					vm.sch.data = response.data;
+					vm.sch.loaded = true;
+				} });
+		},
+		getInputsForSch: function getInputsForSch(sch) {
+			var vm = this;
+			return [{ id: 1, code: 'sch', name: 'Школа', value: nvl(sch.schId), type: 'LIST', nullable: nvl(sch.id) == 0, editable: nvl(sch.id) != 0, column_size: 30, sort_seq: 1,
+				table_values: vm.sch.data.map(function (sch) {
+					return {
+						value: sch.value, text: nvl(nvlo(vm.city.data.find(function (city) {
+							return city.value == sch.cityId;
+						})).text, '') + ' - ' + sch.text
+					};
+				}) }, { id: 2, code: 'dates', name: 'Период обучения', value_arr: sch == {} ? null : [[sch.dateSt, sch.dateFn]], type: nvl(sch.id) == 0 ? 'INPUT' : 'DATE_RANGE', nullable: nvl(sch.id) == 0, editable: nvl(sch.id) != 0, column_size: 30, sort_seq: 2 }];
+		},
+		addSch: function addSch() {
+			var vm = this;
+			vm.user.data.schls.push({ id: vm.user.data.schls.length * -1 - 1, schId: null, dateSt: null, dateFn: null });
+			vm.paramInit({ num: vm.paramForm + '_' + vm.user.data.schls.length * -1 });
+		},
+		delSch: function delSch(id) {
+			var vm = this,
+			    tmp = 0;
+			vm.user.data.schls.forEach(function (row, i) {
+				if (row.id = id) tmp = i;
+			});
+			vm.user.data.schls.splice(tmp, 1);
 		}
 	},
 	created: function created() {
 		var vm = this;
 		vm.paramInit({ num: 'aboutMe' });
-		vm.paramInit({ num: 'whereStudy' });
 		vm.paramInit({ num: 'howEge' });
+		vm.paramInit({ num: 'whereStudy_' });
 		vm.paramInit({ num: 'wantStady' });
 		vm.$root.$on('dialog' + vm.paramsForm + 'Send', function () {
 			vm.formSave();
@@ -8092,23 +8156,160 @@ var render = function() {
                               }
                             },
                             [
-                              _c("c-input-cols", {
-                                attrs: {
-                                  inputs: _vm.inputs,
-                                  dialogId: _vm.dialogId,
-                                  paramsForm: _vm.paramForm,
-                                  maxInputCountInCol: 2
-                                }
-                              }),
+                              ["aboutMe", "howEge", "wantStady"].indexOf(
+                                _vm.paramForm
+                              ) != -1
+                                ? _c("c-input-cols", {
+                                    attrs: {
+                                      inputs: _vm.inputs,
+                                      dialogId: _vm.dialogId,
+                                      paramsForm: _vm.paramForm,
+                                      maxInputCountInCol: 2
+                                    }
+                                  })
+                                : _vm._e(),
                               _vm._v(" "),
-                              _c("c-input-cols", {
-                                attrs: {
-                                  inputs: _vm.inputsBio,
-                                  dialogId: _vm.dialogId,
-                                  paramsForm: _vm.paramForm,
-                                  maxInputCountInCol: 1
-                                }
-                              })
+                              ["aboutMe"].indexOf(_vm.paramForm) != -1
+                                ? _c("c-input-cols", {
+                                    attrs: {
+                                      inputs: _vm.inputsBio,
+                                      dialogId: _vm.dialogId,
+                                      paramsForm: _vm.paramForm,
+                                      maxInputCountInCol: 1
+                                    }
+                                  })
+                                : _vm._e(),
+                              _vm._v(" "),
+                              ["whereStudy"].indexOf(_vm.paramForm) != -1
+                                ? _c(
+                                    "div",
+                                    [
+                                      _vm._l(_vm.user.data.schls, function(
+                                        sch
+                                      ) {
+                                        return _c(
+                                          "v-layout",
+                                          { key: sch.id, attrs: { row: "" } },
+                                          [
+                                            _c(
+                                              "v-container",
+                                              { staticClass: "fix-padding" },
+                                              [
+                                                _c("c-input-cols", {
+                                                  attrs: {
+                                                    inputs: _vm.getInputsForSch(
+                                                      sch
+                                                    ),
+                                                    dialogId: _vm.dialogId,
+                                                    paramsForm:
+                                                      _vm.paramForm +
+                                                      "_" +
+                                                      sch.id,
+                                                    maxInputCountInCol: 1
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-container",
+                                              {
+                                                staticClass: "fix-padding",
+                                                staticStyle: { flex: "0" }
+                                              },
+                                              [
+                                                _c(
+                                                  "v-btn",
+                                                  {
+                                                    staticClass: "accent",
+                                                    attrs: {
+                                                      fab: "",
+                                                      dark: ""
+                                                    },
+                                                    on: {
+                                                      click: function($event) {
+                                                        _vm.delSch(sch.id)
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "v-icon",
+                                                      { attrs: { dark: "" } },
+                                                      [_vm._v("clear")]
+                                                    )
+                                                  ],
+                                                  1
+                                                )
+                                              ],
+                                              1
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-layout",
+                                        { attrs: { row: "" } },
+                                        [
+                                          _c(
+                                            "v-container",
+                                            { staticClass: "fix-padding" },
+                                            [
+                                              _c("c-input-cols", {
+                                                attrs: {
+                                                  inputs: _vm.getInputsForSch(
+                                                    {}
+                                                  ),
+                                                  dialogId: _vm.dialogId,
+                                                  paramsForm:
+                                                    _vm.paramForm + "_",
+                                                  maxInputCountInCol: 1
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-container",
+                                            {
+                                              staticClass: "fix-padding",
+                                              staticStyle: { flex: "0" }
+                                            },
+                                            [
+                                              _c(
+                                                "v-btn",
+                                                {
+                                                  staticClass: "accent",
+                                                  attrs: { fab: "", dark: "" },
+                                                  on: {
+                                                    click: function($event) {
+                                                      _vm.addSch(_vm.sch.id)
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-icon",
+                                                    { attrs: { dark: "" } },
+                                                    [_vm._v("add")]
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    2
+                                  )
+                                : _vm._e()
                             ],
                             1
                           )

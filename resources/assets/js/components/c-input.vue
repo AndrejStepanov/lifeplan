@@ -74,7 +74,7 @@
 										@update:returnValue="setNewVal" class="max-width" :content-class="getDialogClass">
 									<v-combobox slot="activator" v-model="valueView" :label="name" :hint="placeholder" :rules="rules" :disabled="getDisable"  :required="!!nullable"  readonly ref="input"  append-icon=""
 										:tabindex="sortSeq"  :clearable="getClearable"   :min="min" :max="max" 
-										@change="setNewVal" @input="setNewVal"  @keyup.enter="submit" @blur="onBlur" @click:append="changeShow" class=" body-1" />
+										@keyup.enter="submit" @blur="onBlur" @click:append="changeShow" class=" body-1" />
 									<template>
 										<div  :style="getDialogMainDivStyle">
 											<v-date-picker v-if="dialogWithDate  && type!='TIME_RANGE'"  v-model="valueArrPairs[0][0]" scrollable locale="ru" class='v-date-picker-more-height higher-z-index' :max="max" :min="min" ref="date1"/>
@@ -286,7 +286,7 @@ time-with-seconds	##:##:##
 				}
 			},
 			getDisable(){
-				return !this.needCheckBox?false:!this.checked
+				return !this.needCheckBox? !this.editable  : !this.checked
 			},	
 			getCounter(){
 				return this.maxLenTypes.indexOf(this.type)!=-1 && this.maxLen>0?this.maxLen:false
@@ -669,15 +669,15 @@ time-with-seconds	##:##:##
 			vm.mask=vm.data.mask||vm.mask
 			vm.maskFin=vm.data.mask_fin||vm.maskFin
 			vm.error=vm.data.error||vm.error
-			vm.checked=!!vm.data.checked||vm.checked
-			vm.editable=!!vm.data.editable||vm.editable
-			vm.multy=!!vm.data.multy||vm.multy
+			vm.checked=vm.data.checked==undefined? vm.checked:!!vm.data.checked
+			vm.editable=vm.data.editable==undefined? vm.editable:!!vm.data.editable
+			vm.multy=vm.data.multy==undefined? vm.multy:!!vm.data.multy
 			vm.min=vm.data.min||vm.min
 			vm.max=vm.data.max||vm.max
 			vm.maxLen=vm.data.max_len||vm.maxLen
 			vm.step=vm.data.step||vm.step
 			vm.tabGroup=vm.data.tab_group||vm.tabGroup
-			vm.ticksNeed=!!vm.data.ticks_need||vm.ticksNeed
+			vm.ticksNeed=vm.data.ticks_need==undefined? vm.ticksNeed:!!vm.data.ticks_need
 			vm.tickSize=vm.data.tick_size||vm.tickSize
 			vm.thumbLabelNeed=vm.data.thumb_label_need||vm.thumbLabelNeed
 			vm.isBirthDate=vm.data.isBirthDate||vm.isBirthDate
@@ -721,6 +721,8 @@ time-with-seconds	##:##:##
 				vm.value= vm.valueArr[0]
 
 			if(['DATE', 'TIME', 'DATETIME','DATE_RANGE', 'TIME_RANGE', 'DATETIME_RANGE'].indexOf(vm.type)!=-1){
+				vm.max=isNaN(vm.max)?vm.max:''
+				vm.min=isNaN(vm.min)?vm.min:''
 				if(!vm.multy && vm.valueArr.length>0)
 					if(['DATE', 'TIME', 'DATETIME'].indexOf(vm.type)!=-1)
 						vm.value = vm.valueArr[0]
