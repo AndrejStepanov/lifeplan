@@ -4,5 +4,7 @@
     "/js/User.js": "/js/User.js",
     "/js/Main.js": "/js/Main.js",
     "/css/app.css": "/css/app.css",
+    "/js/Test.js": "/js/Test.js",
+    "/js/Catalog_prof.js": "/js/Catalog_prof.js",
     "/js/manifest.js": "/js/manifest.js"
 }

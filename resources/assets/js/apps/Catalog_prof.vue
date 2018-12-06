@@ -3,21 +3,27 @@
 		<div class="back" style="background:url('storage/bg.jpg')"></div>
 		<v-container grid-list-md>
 			<v-layout row wrap>
-				<v-flex  xs12 md6 lg4>
-					<v-card class="pa-2">
-						<v-img class="white--text" height="200px" src="https://legkopolezno.ru/wp-content/uploads/2016/09/it-professii_1.jpg"
+
+				<v-flex v-for="(prof,key) in profs" xs12 md6 lg4 :key="key">
+					<v-card class="pa-2 ma-2">
+						<v-img class="white--text" height="160px" src="http://bezformata.ru/content/Images/000/005/855/image5855940.jpg"
 							   gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.8)">
 							<v-container fill-height fluid pa-2>
 								<v-layout fill-height>
 									<v-flex xs12 align-start flexbox>
-										<span class="headline white--text">asdas asd asda dasd</span>
+										<span class="headline white--text">{{prof.text}}</span>
 									</v-flex>
 								</v-layout>
 							</v-container>
 						</v-img>
-						<v-card-title primary-title>Whitsunday Island, Whitsunday Islands Whitsunday Island, Whitsunday IslandsWhitsunday Island, Whitsunday IslandsWhitsunday Island, Whitsunday IslandsWhitsunday Island, Whitsunday IslandsWhitsunday Island, Whitsunday IslandsWhitsunday Island, Whitsunday IslandsWhitsunday Island, Whitsunday IslandsWhitsunday Island, Whitsunday IslandsWhitsunday Island, Whitsunday IslandsWhitsunday Island, Whitsunday Islands</v-card-title>
+						<v-card-title primary-title>
+							<div>
+								<span class="grey--text">{{prof.profGroup}}</span></br>
+								<span>{{prof.about}}</span>
+							</div>
+						</v-card-title>
 						<v-card-actions>
-							<v-btn flat color="orange">Подробнее</v-btn>
+							<v-btn flat color="orange">Специальности по профессии</v-btn>
 						</v-card-actions>
 					</v-card>
 				</v-flex>
@@ -44,7 +50,8 @@
        		},
             getProfInfo(){
                 let vm=this;
-                axios.get(`api/getProfs`)
+                let href=((top.location.pathname=="/top_prof")?'getProfs2':'getProfs');
+                axios.get(href)
                     .then(response => {
                         vm.profs = response.data
                     }).catch(e => {

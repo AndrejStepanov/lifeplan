@@ -79,7 +79,6 @@
             items: [
                 { link: '$vuetify.texts.main.links.headPage', 			icon: 'home', 				href:'\\' },
 				{ link: '$vuetify.texts.main.links.demandProf', 		icon: 'trending_up', 		href:'\\top_prof' },
-				{ link: '$vuetify.texts.main.links.topEdu', 			icon: 'account_balance', 	href:'\\top_edu'  },
                 { link: '$vuetify.texts.main.links.topProf', 			icon: 'favorite', 			href:'\\top_spec'  },
                 { link: '$vuetify.texts.main.links.catalogProf', 		icon: 'view_module', 		href:'\\catalog_prof'  },
 				{ link: '$vuetify.texts.main.links.serch', 				icon: 'search', 			href:'\\search'  }

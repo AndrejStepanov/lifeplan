@@ -17,9 +17,11 @@ Route::get('/user', function () { return view('simple')->with('app_js', 'User');
 Route::get('/test', function () { return view('simple')->with('app_js', 'Test');})->middleware('auth'); // Психотесты
 Route::get('/search', function () { return view('simple')->with('app_js', 'Search');})->middleware('auth'); // Поиск ВУЗов
 Route::get('/catalog_prof', function () { return view('simple')->with('app_js', 'Catalog_prof');}); // Каталог профессий
+Route::get('/top_prof', function () { return view('simple')->with('app_js', 'Catalog_prof');}); // Каталог профессий
 
 Route::get('getEges', 'Main\EgeController@show')->middleware('auth');
 Route::get('getProfs', 'Main\ProfController@show');
+Route::get('getProfs2', 'Main\ProfController@show2');
 
 
 Route::get('/sucsess', function () { echo 'sucsess';} );
