@@ -19,6 +19,7 @@ class DataCommandController extends Controller{
 			case('user.info.save'):{return (new User())->saveUserInfo(createTodo(nvl($data,null)));  };	
 			case('user.sch.save'):{return (new Sch2user())->saveSchLink(createArrTodo(nvl($data,null)));  };		
 			case('user.ege.save'):{return (new Ege())->saveEge(nvl($data,null));  };		
+			case('user.favorits.save'):{return (new User())->saveFavorits(nvl($data,null));  };		
 			default:{ throw new \App\Exceptions\KonsomException( 'Ошибка доступа','Нет доступа!'); };
 		}
 		

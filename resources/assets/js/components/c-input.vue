@@ -195,10 +195,10 @@ time-with-seconds	##:##:##
 			lastTimeSend: 0,
 			mask: null,
 			maskFin: '',
-			max:40,
+			max:null,
 			maxLen:0,
 			maxLenTypes:['INPUT','NUMBER', 'PASSWORD'],
-			min:0,
+			min:null,
 			multy:false,
 			name: '',
 			nullable: false,
@@ -271,7 +271,7 @@ time-with-seconds	##:##:##
 			},
 			getLabelClass(){
 				return {
-					"disabled-label": !this.checked,
+					"disabled-label": this.needCheckBox && !this.checked,
 					"error--text": ( this.hasError && this.$refs.input.validations!='' ),					
 				}
 			},
@@ -656,7 +656,7 @@ time-with-seconds	##:##:##
 			vm.callBackEval=vm.data.after_edit_script||vm.callBackEval
 			vm.checkBoxColor=appTheme.checkBox||vm.checkBoxColor
 			vm.id=vm.data.id||vm.id
-			vm.value=vm.data.value||vm.value
+			vm.value=nvl(vm.data.value,vm.value)
 			vm.code=vm.data.code||vm.code
 			vm.name=vm.data.name||vm.name
 			vm.tip=vm.data.tip||vm.tip
@@ -672,7 +672,7 @@ time-with-seconds	##:##:##
 			vm.checked=vm.data.checked==undefined? vm.checked:!!vm.data.checked
 			vm.editable=vm.data.editable==undefined? vm.editable:!!vm.data.editable
 			vm.multy=vm.data.multy==undefined? vm.multy:!!vm.data.multy
-			vm.min=vm.data.min||vm.min
+			vm.min=nvl(vm.data.min,vm.min)
 			vm.max=vm.data.max||vm.max
 			vm.maxLen=vm.data.max_len||vm.maxLen
 			vm.step=vm.data.step||vm.step
@@ -763,7 +763,7 @@ time-with-seconds	##:##:##
 						vm.tickSize=vm.data.tick_size||2
 					}
 				}
-				vm.value=vm.value||vm.min
+				vm.value=nvl(vm.value,vm.min)
 				if(vm.valueArr!=undefined && vm.valueArr.length>0)
 					vm.valueArr.forEach((element,i) => {
 						element[0]=nvl(element[0],vm.min)
@@ -795,10 +795,10 @@ time-with-seconds	##:##:##
 			if(vm.tabGroup!='')
 				vm.isNeedTab=true	
 
-			if(vm.hasInput && vm.isNumeric && !isNaN(vm.min) && vm.type!='RANGE' )//Границы должны быть цифрой!
+			if(vm.hasInput && vm.isNumeric && !isNaN(vm.min) && vm.type!='RANGE' && vm.min!=null )//Границы должны быть цифрой!
 				vm.rules.push(v => v>=vm.min|| !vm.checked || vm.$vuetify.t('$vuetify.texts.simple.msgs.valMoreOrEq', ...([vm.min]) ) )
 
-			if(vm.hasInput && vm.isNumeric && !isNaN(vm.max) && vm.type!='RANGE' )
+			if(vm.hasInput && vm.isNumeric && !isNaN(vm.max) && vm.type!='RANGE' && vm.max!=null )
 				vm.rules.push(v => v<=vm.max || !vm.checked || 'Значение не должно превышать '+vm.max+'!')
 
 			if(vm.hasInput && vm.maxLenTypes.indexOf(vm.type)!=-1 && vm.maxLen>0)

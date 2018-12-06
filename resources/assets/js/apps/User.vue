@@ -16,12 +16,12 @@
 							<c-input-cols v-if="['aboutMe', 'howEge', 'wantStady'].indexOf(paramForm)!=-1" :inputs="inputs" :dialogId="dialogId"  :paramsForm="paramForm" :maxInputCountInCol="getMaxColumn"  />
 							<c-input-cols v-if="['aboutMe'].indexOf(paramForm)!=-1"  :inputs="inputsBio" :dialogId="dialogId"  :paramsForm="paramForm" :maxInputCountInCol="1"  />
 							<div  v-if="['whereStudy'].indexOf(paramForm)!=-1">
-								<v-layout row v-for="sch in user.data.schls" :key="sch.id"  >
+								<v-layout row v-for="(sch,idx) in user.data.schls" :key="sch.id"  >
 									<v-container :class="getClassForRow">
 										<c-input-cols :inputs="getInputsForSch(sch)" :dialogId="dialogId"  :paramsForm="paramForm+'_'+sch.id" :maxInputCountInCol="1"  />
 									</v-container>
 									<v-container :class="getClassForRow+ ($vuetify.breakpoint.name=='xs'?' no-height':'')" style="flex: 0;">
-										<v-btn fab dark small class='primary' @click="delSch(sch.id)">
+										<v-btn fab dark small class='primary' @click="delSch(idx)">
 											<v-icon dark>clear</v-icon>
 										</v-btn>
 									</v-container>
@@ -31,7 +31,7 @@
 										<c-input-cols :inputs="getInputsForSch({})" :dialogId="dialogId"  :paramsForm="paramForm+'_'" :maxInputCountInCol="1"  />
 									</v-container>
 									<v-container :class="getClassForRow+ ($vuetify.breakpoint.name=='xs'?' no-height':'')" style="flex: 0;">
-										<v-btn fab dark small class='accent' @click="addSch(sch.id)">
+										<v-btn fab dark small class='accent' @click="addSch()">
 											<v-icon dark>add</v-icon>
 										</v-btn>
 									</v-container>
@@ -57,6 +57,7 @@
 	export default {
 		data: () => ({
 			tabSelected: 0,
+			schCnt:1000,
 			inputsValid:false,
 			dialogId:getNewId(),
 			links:[
@@ -68,14 +69,16 @@
 			colors:['white', 'white', 'white', 'white'],
 			forms:['aboutMe', 'whereStudy', 'howEge', 'wantStady'],
 			maxColumn:[2, 1, 6, 3],
-			saveFormTypes:['user.info.save', 'user.sch.save', 'user.ege.save', 'user.wants.save', ],
+			saveFormTypes:['user.info.save', 'user.sch.save', 'user.ege.save', 'user.favorits.save', ],
 			user:{href:"/socet_command", event:"user.info.by.id", data:{}, loaded:false},
 			city:{href:"/socet_command", event:"city.list", data:[], loaded:false},
 			sch:{href:"/socet_command", event:"school.list", data:[], loaded:false},
 			pr:{href:"/socet_command", event:"predmets.list", data:[], loaded:false},
+			uni:{href:"/socet_command", event:"universitys.list", data:[], loaded:false},
+			prof:{href:"/socet_command", event:"profs.list", data:[], loaded:false},
 		}),
 		computed: {
-			dataLoading(){return !(this.user.loaded && this.city.loaded && this.sch.loaded && this.pr.loaded)},
+			dataLoading(){return !(this.user.loaded && this.city.loaded && this.sch.loaded && this.pr.loaded && this.uni.loaded && this.prof.loaded)},
 			colorForm () {return this.colors[this.tabSelected]},
 			paramForm () {return this.dataLoading?'':this.forms[this.tabSelected]},
 			saveFormType () {return this.saveFormTypes[this.tabSelected]},
@@ -84,10 +87,14 @@
 			inputs() {
 				let vm=this
 				let data= [	
-					{id:1, form:'aboutMe', 	code:'firstName', 		name:'Имя', 			value:nvl(vm.user.data.firstName,null),			type:'INPUT', 	nullable:0, column_size:30, sort_seq:1, mask_fin:'^[A-Za-zА-Яа-я]+$', error:'$vuetify.texts.errors.onlyLetters.text' },
-					{id:2, form:'aboutMe', 	code:'lastName', 		name:'Фамилия', 		value:nvl(vm.user.data.lastName,null),			type:'INPUT', 	nullable:0, column_size:30, sort_seq:2, mask_fin:'^[A-Za-zА-Яа-я]+$', error:'$vuetify.texts.errors.onlyLetters.text' },
-					{id:3, form:'aboutMe', 	code:'birthDate', 		name:'Дата рождения', 	value:nvl(vm.user.data.birthDate,null),			type:'DATE', 	nullable:0, column_size:30, sort_seq:3, max:(new Date().toISOString().substr(0, 10)),   min:"1950-01-01", isBirthDate:true,},
-					{id:4, form:'aboutMe', 	code:'residenceCity', 	name:'Проживаю в',	 	value_arr:nvl(vm.user.data.residenceCity,null)==null?null:[vm.user.data.residenceCity],				type:'LIST', 	nullable:0, column_size:30, sort_seq:4, table_values:vm.city.data, },
+					{id:1, form:'aboutMe', 		code:'firstName', 		name:'Имя', 						value:nvl(vm.user.data.firstName,null),																		type:'INPUT', 	nullable:0, column_size:30, sort_seq:1, mask_fin:'^[A-Za-zА-Яа-я]+$', error:'$vuetify.texts.errors.onlyLetters.text' },
+					{id:2, form:'aboutMe', 		code:'lastName', 		name:'Фамилия', 					value:nvl(vm.user.data.lastName,null),																		type:'INPUT', 	nullable:0, column_size:30, sort_seq:2, mask_fin:'^[A-Za-zА-Яа-я]+$', error:'$vuetify.texts.errors.onlyLetters.text' },
+					{id:3, form:'aboutMe', 		code:'birthDate', 		name:'Дата рождения', 				value:nvl(vm.user.data.birthDate,null),																		type:'DATE', 	nullable:0, column_size:30, sort_seq:3, max:(new Date().toISOString().substr(0, 10)),   min:"1950-01-01", isBirthDate:true,},
+					{id:4, form:'aboutMe', 		code:'residenceCity', 	name:'Проживаю в',	 				value_arr:nvl(vm.user.data.residenceCity,null)==null?null:[vm.user.data.residenceCity],						type:'LIST', 	nullable:0, column_size:30, sort_seq:4, table_values:vm.city.data, },
+					{id:5, form:'wantStady', 	code:'favoritCitys', 	name:'Предпочитаемые города',		value_arr:nvl(vm.user.data.favoritCitys,null)==null?null:vm.user.data.favoritCitys.split(',').map(val=> Number(val)),				type:'LIST',  	nullable:1, column_size:30, sort_seq:4, table_values:vm.city.data, multy:true,},
+					{id:6, form:'wantStady', 	code:'favoritUnivs', 	name:'Предпочитаемые ВУЗ-ы',		value_arr:nvl(vm.user.data.favoritUnivs,null)==null?null:vm.user.data.favoritUnivs.split(',').map(val=> Number(val)),				type:'LIST',  	nullable:1, column_size:30, sort_seq:5, table_values:vm.uni.data, multy:true,},
+					{id:7, form:'wantStady', 	code:'favoritDist', 	name:'Растояние от дома, км',	 	value:nvl(vm.user.data.favoritDist,0),																		type:'SLIDER',  nullable:1, column_size:30, sort_seq:6, min:0, max:500, step:50, },
+					{id:8, form:'wantStady', 	code:'favoritProfs', 	name:'Предпочитаемые профессии',	value_arr:nvl(vm.user.data.favoritProfs,null)==null?null:vm.user.data.favoritProfs.split(',').map(val=> Number(val)),				type:'LIST',  	nullable:1, column_size:30, sort_seq:7, table_values:vm.prof.data, multy:true,},
 				]
 				if(vm.paramForm=='howEge')
 					vm.pr.data.forEach((pr,idx)=>{
@@ -113,7 +120,7 @@
 		],
 		methods: {
 			formSave(){
-				let vm=this,tmp=[],todo={}
+				let vm=this,tmp=[],tmp1={},todo={}
 				if (!vm.$refs[vm.paramForm].validate())
 					return;
 				if(['aboutMe', 'howEge', 'wantStady'].indexOf(vm.paramForm)!=-1)
@@ -122,11 +129,16 @@
 					todo=vm.user.data.schls.map((row)=>{
 						return vm.paramTodo(vm.paramForm+'_'+row.id)
 					})
-				if([ 'howEge'].indexOf(vm.paramForm)!=-1){
+				if(['howEge'].indexOf(vm.paramForm)!=-1){
 					for (name in todo)
 						if(todo[name].value>0)
 							tmp.push(todo[name])
 					todo=tmp.map( row=> {return {prId: row.code.slice(2), val: row.value}})
+				}
+				if(['wantStady'].indexOf(vm.paramForm)!=-1){
+					for (name in todo)
+						tmp1[name]=todo[name].type=='SLIDER' ? todo[name].value : nvl(todo[name].value_arr,[]).join(',')
+					todo=tmp1
 				}
 				if(vm.paramForm=='aboutMe'){
 					vm.user.data.firstName = todo.firstName.value
@@ -142,6 +154,8 @@
 				vm.getCityInfo()
 				vm.getSchInfo()
 				vm.getPrInfo()
+				vm.getUniInfo()
+				vm.getProfInfo()
 			},
 			getUserInfo(){
 				let vm=this
@@ -174,6 +188,20 @@
 					vm.pr.loaded=true
 				}})
 			},
+			getUniInfo(){
+				let vm=this
+				sendRequest({href:vm.uni.href, type:vm.uni.event, handler:(response) => {
+					vm.uni.data= response.data
+					vm.uni.loaded=true
+				}})
+			},
+			getProfInfo(){
+				let vm=this
+				sendRequest({href:vm.prof.href, type:vm.prof.event, handler:(response) => {
+					vm.prof.data= response.data.map(row=>{return {value:row.value, text:row.profGroup+' - '+ row.text} })
+					vm.prof.loaded=true
+				}})
+			},
 			getInputsForSch(sch){
 				let vm=this
 				return [	
@@ -181,18 +209,18 @@
 						table_values:vm.sch.data.map((sch)=>{return {
 							value:sch.value, text: nvl(nvlo(vm.city.data.find((city)=>{return city.value==sch.cityId }) ).text,'')+' - '+sch.text
 						}}),  },
-					{id:2, code:'dates', 		name:'Период обучения', 	value_arr:sch=={}?undefined:[[sch.dateSt,sch.dateFn]],			type:nvl(sch.id)==0?'INPUT':'DATE_RANGE', 	nullable:nvl(sch.id)==0, editable:nvl(sch.id)!=0, column_size:30, sort_seq:2, },		
+					{id:2, code:'dates', 		name:'Период обучения', 	value_arr:sch=={}||sch.dateSt==null?undefined:[[sch.dateSt,sch.dateFn]],			type:nvl(sch.id)==0?'INPUT':'DATE_RANGE', 	nullable:nvl(sch.id)==0, editable:nvl(sch.id)!=0, column_size:30, sort_seq:2, },		
 				]
 			},
 			addSch(){
 				let vm=this
-				vm.user.data.schls.push({id:vm.user.data.schls.length*-1-1, schId:null, dateSt:null, dateFn:null})
-				vm.paramInit( {num: vm.paramForm+'_'+vm.user.data.schls.length*-1 })
+				vm.user.data.schls.push({id:vm.schCnt, schId:null, dateSt:null, dateFn:null})
+				vm.paramInit( {num: vm.paramForm+'_'+vm.schCnt })
+				vm.schCnt++
 			},
-			delSch(id){
+			delSch(idx){
 				let vm=this, tmp = 0 
-				vm.user.data.schls.forEach((row,i)=>{if(row.id = id) tmp=i})
-				vm.user.data.schls.splice(tmp,1)
+				vm.user.data.schls.splice(idx,1)
 			},
 		},
 		created: function (){

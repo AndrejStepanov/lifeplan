@@ -152,7 +152,7 @@ function isNumeric(n) {
  }
 
 function nvl(val,replace=0){
-	if(!val || val==undefined || val==null || val=='' ) return replace; else return val;
+	if(val===false || val===undefined || val===null || val==='' ) return replace; else return val;
 }
 
 function nvlo(val,replace={}){
