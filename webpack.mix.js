@@ -18,6 +18,7 @@ mix.js('resources/assets/js/main/Main.js', 'public/js/Main.js')
 	.js('resources/assets/js/main/Auth.js', 'public/js')
 	.js('resources/assets/js/main/User.js', 'public/js')
     .js('resources/assets/js/main/Test.js', 'public/js')
+    .js('resources/assets/js/main/Catalog_prof.js', 'public/js')
 	.webpackConfig({
 		resolve: {
 			alias: {
