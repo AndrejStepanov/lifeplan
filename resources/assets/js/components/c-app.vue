@@ -3,7 +3,7 @@
 		<c-head ref="head" :curentSystem='curentSystem' :showLeft="panelLeftDrawer" :showRight="panelRightDrawer"/>
 		<v-navigation-drawer dark v-if="panelLeftDrawer" fixed app v-model="panelLeftShowen" left   :class="panelLeft.class" :width="panelLeftWidth">
 			<slot name="panelLeft">
-				<v-list class="" dense>
+				<v-list dense>
 					<v-list-tile avatar >
 						<v-list-tile-avatar>
 							<img :src="currentAvatar">
@@ -77,11 +77,12 @@
 			panelRightShowen: false,
 			slotNamesCalc:[],
             items: [
-				{ link: '$vuetify.texts.main.links.demandProf', 		icon: 'trending_up', 		href:'\\user' },
-				{ link: '$vuetify.texts.main.links.topEdu', 			icon: 'account_balance', 	href:'\\user'  },
-                { link: '$vuetify.texts.main.links.topProf', 			icon: 'favorite', 			href:'\\user'  },
-                { link: '$vuetify.texts.main.links.catalogProf', 		icon: 'view_module', 		href:'\\user'  },
-				{ link: '$vuetify.texts.main.links.serch', 				icon: 'search', 			href:'\\user'  }
+                { link: '$vuetify.texts.main.links.headPage', 			icon: 'home', 				href:'\\' },
+				{ link: '$vuetify.texts.main.links.demandProf', 		icon: 'trending_up', 		href:'\\top_prof' },
+				{ link: '$vuetify.texts.main.links.topEdu', 			icon: 'account_balance', 	href:'\\top_edu'  },
+                { link: '$vuetify.texts.main.links.topProf', 			icon: 'favorite', 			href:'\\top_spec'  },
+                { link: '$vuetify.texts.main.links.catalogProf', 		icon: 'view_module', 		href:'\\catalog_prof'  },
+				{ link: '$vuetify.texts.main.links.serch', 				icon: 'search', 			href:'\\search'  }
             ], 
 		}),
 		props:{
@@ -122,9 +123,7 @@
 			authItems(){
 					return this.profileUserName()==''?null: [
 					{ link: '$vuetify.texts.main.links.mainPage', 			icon: 'home', 				href:'\\user' },
-					{ link: '$vuetify.texts.main.links.psyhTests', 			icon: 'library_books', 		href:'\\user'  },
-					{ link: '$vuetify.texts.main.links.astrologForecast', 	icon: 'brightness_4', 		href:'\\user'  },
-					{ link: '$vuetify.texts.main.links.actualOffers', 		icon: 'adb', 				href:'\\user'  },
+					{ link: '$vuetify.texts.main.links.psyhTests', 			icon: 'library_books', 		href:'\\test'  },
 				]
 			},
 		},

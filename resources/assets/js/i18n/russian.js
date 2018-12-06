@@ -21,15 +21,13 @@ export default {
 				types:{
 					ARM:'АРМ'
 				},
-				navigation:{name:'Навигация',	title:'Навигация по системе',	}, 
-				mainPage:{name:'Личный кабинет',	title:'Личный кабинет',	}, 
+                headPage:{name:'Главная страница',	title:'Главная страница',	},
+                mainPage:{name:'Личный кабинет',	title:'Личный кабинет',	},
 				demandProf:{name:'Востребованные профессии',	title:'Востребованные профессии',	}, 
 				topEdu:{name:'Топ ВУЗов в вашем регионе',	title:'Топ ВУЗов в вашем регионе',	}, 
 				topProf:{name:'Топ специальностей',	title:'Топ специальностей',	}, 
 				catalogProf:{name:'Каталог профессий',	title:'Каталог профессий',	}, 
-				psyhTests:{name:'Психологические тесты',	title:'Психологические тесты',	}, 
-				astrologForecast:{name:'Астрологический прогноз',	title:'Астрологический прогноз',	}, 
-				actualOffers:{name:'Актуальные предложения',	title:'Актуальные предложения',	}, 
+				psyhTests:{name:'Психологические тесты',	title:'Психологические тесты',	},
 				serch:{name:'Поиск',	title:'Поиск',	}, 				
 			},
 		},
@@ -37,26 +35,7 @@ export default {
         testPage:{
             logoTxt1:'ИНТЕЛЛЕКТУАЛЬНАЯ СИСТЕМА 11111',
             logoTxt2:'ПОДБОРА ПРОФЕССИИ ДЛЯ ВАШЕГО РЕБЕНКА',
-            headerTxt:'Лучший путь чтобы найти свою профессию',
-            headerTxt2:'Самая продвинутая система интелектуального поиска',
-            dopI1:'security',
-            dopH1:'Блокчейн технология',
-            dopT1:'Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.',
-            dopI2:'blur_on',
-            dopH2:'Многокритериальный поиск',
-            dopT2:'Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.',
-            dopI3:'face',
-            dopH3:'Персональная настройка',
-            dopT3:'Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.',
-            header2Txt:'Интеллектуальная система поиска ВУЗов',
-            header2Txt2:'Персональный поиск с многокритериальной оценкой. Начни пользоваться сегодня',
-            buttonTxt2:'Начать поиск ВУЗа',
-            aboutProjectH:'О проекте',
-            aboutProject:'Наш проект предназначен для облегчения поиска ВУЗа для ребёнка. Интеллектуальная система поиска учитывает множество факторов позволяющая сделать правильный выбор и найти свою профессию в жизни.',
-            contacts:'Контакты',
-            contacts2:'Если у Вас возникли вопросы Вы можете связаться с нами, будем рады Вам помочь',
-            phone:'8 800 350-5354',
-            email:'info@konsom.ru',
+            HeadTxt:'Психологические тесты'
         },
 		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		userPage:{
@@ -166,7 +145,7 @@ export default {
 				l3:'ТОП СПЕЦИАЛЬНОСТЕЙ',
 				l4:'КАТАЛОГ ПРОФЕССИЙ',
 			},
-            footer:'© 1995-2018 Консом групп', //Интеллектуальная система подбора профессии для Вашего ребенка ©2019
+				footer:'Интеллектуальная система подбора профессии для Вашего ребенка ©2019',
 		},
 		
 		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
