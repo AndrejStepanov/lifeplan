@@ -31,7 +31,8 @@ class User extends Authenticatable{
     ];
 	public  function getUserInfo($userId){
         $data =  $this->select('firstName','lastName','birth_date as birthDate','residence_city as residenceCity','bio' )->where('id' ,'=',$userId)->get()->toArray();
-        $data[0]['schls']	 = (new Sch2user)->getSchByUser($userId);
+        $data[0]['schls'] = (new Sch2user)->getSchByUser($userId);
+        $data[0]['eges'] = (new Ege)->getVal($userId);
 		return $data[0];
     }
 	public  function saveUserInfo($todo){
