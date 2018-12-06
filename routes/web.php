@@ -16,6 +16,11 @@ Route::get('/auth', ['as' => 'Авторизация', function () { return view
 Route::get('/user', function () { return view('simple')->with('app_js', 'User');})->middleware('auth');// О себе
 Route::get('/test', function () { return view('simple')->with('app_js', 'Test');})->middleware('auth'); // Психотесты
 Route::get('/search', function () { return view('simple')->with('app_js', 'Search');})->middleware('auth'); // Поиск ВУЗов
+Route::get('/catalog_prof', function () { return view('simple')->with('app_js', 'Catalog_prof');}); // Каталог профессий
+
+Route::get('getEges', 'Main\EgeController@show')->middleware('auth');
+Route::get('getProfs', 'Main\ProfController@show');
+
 
 Route::get('/sucsess', function () { echo 'sucsess';} );
 Route::post('/socet_command', 'SocetCommandController@reciveCommand')->middleware('auth');//сюда стучатся для получения данных компоненты

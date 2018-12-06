@@ -15,10 +15,10 @@ export default {
 	name:'c-footer',
 	data: () => ({
 		links: [
-				{ title: '$vuetify.texts.main.links.demandProf', 		icon: 'trending_up', 		href:'\\user' },
-				{ title: '$vuetify.texts.main.links.topEdu', 			icon: 'account_balance', 	href:'\\user'  },
-                { title: '$vuetify.texts.main.links.topProf', 			icon: 'favorite', 			href:'\\user'  },
-                { title: '$vuetify.texts.main.links.catalogProf', 		icon: 'view_module', 		href:'\\user'  },
+				{ title: '$vuetify.texts.main.links.demandProf', 		icon: 'trending_up', 		href:'\\top_prof' },
+				{ title: '$vuetify.texts.main.links.topEdu', 			icon: 'account_balance', 	href:'\\top_edu'  },
+                { title: '$vuetify.texts.main.links.topProf', 			icon: 'favorite', 			href:'\\top_spec'  },
+                { title: '$vuetify.texts.main.links.catalogProf', 		icon: 'view_module', 		href:'\\catalog_prof'  },
 		],
 	}),
 	props:{		
