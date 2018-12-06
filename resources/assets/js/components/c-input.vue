@@ -720,7 +720,7 @@ time-with-seconds	##:##:##
 			if(vm.type=='LIST' && !vm.multy  && vm.valueArr.length>0)
 				vm.value= vm.valueArr[0]
 
-			if(['DATE', 'TIME', 'DATETIME','DATE_RANGE', 'TIME_RANGE', 'DATETIME_RANGE'].indexOf(vm.type)!=-1){
+			if(['DATE', 'TIME', 'DATETIME','DATE_RANGE', 'TIME_RANGE', 'DATETIME_RANGE'].indexOf(vm.type)!=-1){ 
 				vm.max=isNaN(vm.max)?vm.max:''
 				vm.min=isNaN(vm.min)?vm.min:''
 				if(!vm.multy && vm.valueArr.length>0)
