@@ -88,8 +88,7 @@
 		props:{
 			curentSystem: {type:  String, default: ''},	
 			needFooter: {type:  Boolean, default: true},	
-			panelLeft:{type: Object,  default: () => {return{ drawer:true, show:false, class:'', width:300, filter:false,} }}	,
-			panelLeft:{type: Object,  default: () => {return{ drawer:true, show:false, class:'', width:300, filter:false,} }}	,
+			panelLeft:{type: Object,  default: () => {return{ drawer:true, show:false, class:'', width:270, filter:false,} }}	,
 			panelRight:{type: Object,  default: () => {return{ drawer:false, show:false, class:'', width:300, filter:false,} }}	,
 			mainPanelConfig: {type: Object,  default: () => {return null/*{ //'horizontal' - внутри будут строки,  'vertical' - внутри будут столбики;  Последнему слою выставлять размер бессмысленно
 				name: 'first',   width:'100%',	height:'100%',  layout: 'vertical', resizable:false , data:[
@@ -116,7 +115,7 @@
 			},
 			panelLeftDrawer(){ return this.panelLeft.drawer || this.panelLeft.show || this.panelLeft.filter	},
 			panelRightDrawer(){ return this.panelRight.drawer || this.panelRight.show || this.panelLeft.filter	},
-			panelLeftWidth(){ return this.panelLeft.filter? 358 : nvl(this.panelLeft.width,300)  },
+			panelLeftWidth(){ return this.panelLeft.filter? 358 : nvl(this.panelLeft.width,270)  },
 			panelRightWidth(){ return this.panelRight.filter? 358 : nvl(this.panelRight.width,300)  },
 			mainPanelReq(){ return this.mainPanelConfig!=null},
 			authAva () {return this.profileUserName()==''?'account_circle':'launch'},
