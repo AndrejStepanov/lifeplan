@@ -33,6 +33,31 @@ export default {
 				serch:{name:'Поиск',	title:'Поиск',	}, 				
 			},
 		},
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        testPage:{
+            logoTxt1:'ИНТЕЛЛЕКТУАЛЬНАЯ СИСТЕМА',
+            logoTxt2:'ПОДБОРА ПРОФЕССИИ ДЛЯ ВАШЕГО РЕБЕНКА',
+            headerTxt:'Лучший путь чтобы найти свою профессию',
+            headerTxt2:'Самая продвинутая система интелектуального поиска',
+            dopI1:'security',
+            dopH1:'Блокчейн технология',
+            dopT1:'Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.',
+            dopI2:'blur_on',
+            dopH2:'Многокритериальный поиск',
+            dopT2:'Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.',
+            dopI3:'face',
+            dopH3:'Персональная настройка',
+            dopT3:'Cras facilisis mi vitae nunc lobortis pharetra. Nulla volutpat tincidunt ornare. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam in aliquet odio. Aliquam eu est vitae tellus bibendum tincidunt. Suspendisse potenti.',
+            header2Txt:'Интеллектуальная система поиска ВУЗов',
+            header2Txt2:'Персональный поиск с многокритериальной оценкой. Начни пользоваться сегодня',
+            buttonTxt2:'Начать поиск ВУЗа',
+            aboutProjectH:'О проекте',
+            aboutProject:'Наш проект предназначен для облегчения поиска ВУЗа для ребёнка. Интеллектуальная система поиска учитывает множество факторов позволяющая сделать правильный выбор и найти свою профессию в жизни.',
+            contacts:'Контакты',
+            contacts2:'Если у Вас возникли вопросы Вы можете связаться с нами, будем рады Вам помочь',
+            phone:'8 800 350-5354',
+            email:'info@konsom.ru',
+        },
 		//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		userPage:{
 			links:{
