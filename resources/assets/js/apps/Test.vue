@@ -6,7 +6,7 @@
 					<img class="bg_2" src="storage/bg2.jpg" alt="lifeplan" height="603">
 					<div class="bg_div">
 						<img class="logo" src="storage/logo2.png" alt="lifeplan">
-						<span  class="hidden-xs-only">{{$vuetify.t('$vuetify.texts.mainPage.logoTxt1') }}<br>{{$vuetify.t('$vuetify.texts.mainPage.logoTxt2') }} </span>
+						<span  class="hidden-xs-only">{{$vuetify.t('$vuetify.texts.testPage.logoTxt1') }}<br>{{$vuetify.t('$vuetify.texts.testPage.logoTxt2') }} </span>
 					</div>
 				</v-layout>
 			</v-parallax>
@@ -16,8 +16,8 @@
 			<v-layout column wrap class="my-4" align-center >
 				<v-flex xs12 sm4 class="my-2">
 					<div class="text-xs-center">
-						<h2 class="headline"> {{$vuetify.t('$vuetify.texts.mainPage.headerTxt') }}</h2>
-						<span class="subheading">{{$vuetify.t('$vuetify.texts.mainPage.headerTxt2') }}</span>
+						<h2 class="headline"> {{$vuetify.t('$vuetify.texts.testPage.headerTxt') }}</h2>
+						<span class="subheading">{{$vuetify.t('$vuetify.texts.testPage.headerTxt2') }}</span>
 					</div>
 				</v-flex>
 				<v-flex xs12>
@@ -26,34 +26,34 @@
 							<v-flex xs12 md4>
 								<v-card class="elevation-0 transparent">
 									<v-card-text class="text-xs-center">
-										<v-icon x-large class="accent-color">{{$vuetify.t('$vuetify.texts.mainPage.dopI1') }}</v-icon>
+										<v-icon x-large class="accent-color">{{$vuetify.t('$vuetify.texts.testPage.dopI1') }}</v-icon>
 									</v-card-text>
 									<v-card-title primary-title class="layout justify-center">
-										<div class="headline text-xs-center">{{$vuetify.t('$vuetify.texts.mainPage.dopH1') }}</div>
+										<div class="headline text-xs-center">{{$vuetify.t('$vuetify.texts.testPage.dopH1') }}</div>
 									</v-card-title>
-									<v-card-text>{{$vuetify.t('$vuetify.texts.mainPage.dopT1') }}</v-card-text>
+									<v-card-text>{{$vuetify.t('$vuetify.texts.testPage.dopT1') }}</v-card-text>
 								</v-card>
 							</v-flex>
 							<v-flex xs12 md4>
 								<v-card class="elevation-0 transparent">
 									<v-card-text class="text-xs-center">
-										<v-icon x-large class="accent-color">{{$vuetify.t('$vuetify.texts.mainPage.dopI2') }}</v-icon>
+										<v-icon x-large class="accent-color">{{$vuetify.t('$vuetify.texts.testPage.dopI2') }}</v-icon>
 									</v-card-text>
 									<v-card-title primary-title class="layout justify-center">
-										<div class="headline">{{$vuetify.t('$vuetify.texts.mainPage.dopH2') }}</div>
+										<div class="headline">{{$vuetify.t('$vuetify.texts.testPage.dopH2') }}</div>
 									</v-card-title>
-									<v-card-text>{{$vuetify.t('$vuetify.texts.mainPage.dopT2') }}</v-card-text>
+									<v-card-text>{{$vuetify.t('$vuetify.texts.testPage.dopT2') }}</v-card-text>
 								</v-card>
 							</v-flex>
 							<v-flex xs12 md4>
 								<v-card class="elevation-0 transparent">
 									<v-card-text class="text-xs-center">
-										<v-icon x-large class="accent-color">{{$vuetify.t('$vuetify.texts.mainPage.dopI3') }}</v-icon>
+										<v-icon x-large class="accent-color">{{$vuetify.t('$vuetify.texts.testPage.dopI3') }}</v-icon>
 									</v-card-text>
 									<v-card-title primary-title class="layout justify-center">
-										<div class="headline text-xs-center">{{$vuetify.t('$vuetify.texts.mainPage.dopH3') }}</div>
+										<div class="headline text-xs-center">{{$vuetify.t('$vuetify.texts.testPage.dopH3') }}</div>
 									</v-card-title>
-									<v-card-text>{{$vuetify.t('$vuetify.texts.mainPage.dopT3') }}</v-card-text>
+									<v-card-text>{{$vuetify.t('$vuetify.texts.testPage.dopT3') }}</v-card-text>
 								</v-card>
 							</v-flex>
 						</v-layout>
@@ -65,9 +65,9 @@
 		<section>
 			<v-parallax src="storage/bg.jpg" height="380">
 				<v-layout column align-center justify-center>
-					<div class="headline white--text mb-3 text-xs-center">{{$vuetify.t('$vuetify.texts.mainPage.header2Txt') }}</div>
-					<em>{{$vuetify.t('$vuetify.texts.mainPage.header2Txt2') }} </em>
-					<v-btn	class="mt-5"	dark	large	color="accent" >{{$vuetify.t('$vuetify.texts.mainPage.buttonTxt2') }} <v-icon right>search</v-icon> </v-btn>
+					<div class="headline white--text mb-3 text-xs-center">{{$vuetify.t('$vuetify.texts.testPage.header2Txt') }}</div>
+					<em>{{$vuetify.t('$vuetify.texts.testPage.header2Txt2') }} </em>
+					<v-btn	class="mt-5"	dark	large	color="accent" >{{$vuetify.t('$vuetify.texts.testPage.buttonTxt2') }} <v-icon right>search</v-icon> </v-btn>
 				</v-layout>
 			</v-parallax>
 		</section>
@@ -78,26 +78,26 @@
 					<v-flex xs12 sm4>
 						<v-card class="elevation-0 transparent">
 							<v-card-title primary-title class="layout justify-center">
-								<div class="headline">{{$vuetify.t('$vuetify.texts.mainPage.aboutProjectH') }}</div>
+								<div class="headline">{{$vuetify.t('$vuetify.texts.testPage.aboutProjectH') }}</div>
 							</v-card-title>
 							<v-card-text>
-								{{$vuetify.t('$vuetify.texts.mainPage.aboutProject') }}
+								{{$vuetify.t('$vuetify.texts.testPage.aboutProject') }}
 							</v-card-text>
 						</v-card>
 					</v-flex>
 					<v-flex xs12 sm4 offset-sm1>
 						<v-card class="elevation-0 transparent">
 							<v-card-title primary-title class="layout justify-center">
-								<div class="headline"> {{$vuetify.t('$vuetify.texts.mainPage.contacts') }} </div>
+								<div class="headline"> {{$vuetify.t('$vuetify.texts.testPage.contacts') }} </div>
 							</v-card-title>
-							<v-card-text>{{$vuetify.t('$vuetify.texts.mainPage.contacts2') }}  </v-card-text>
+							<v-card-text>{{$vuetify.t('$vuetify.texts.testPage.contacts2') }}  </v-card-text>
 							<v-list class="transparent">
 								<v-list-tile>
 									<v-list-tile-action>
 										<v-icon class="primary-color text--lighten-2">phone</v-icon>
 									</v-list-tile-action>
 									<v-list-tile-content>
-										<v-list-tile-title>{{$vuetify.t('$vuetify.texts.mainPage.phone') }}</v-list-tile-title>
+										<v-list-tile-title>{{$vuetify.t('$vuetify.texts.testPage.phone') }}</v-list-tile-title>
 									</v-list-tile-content>
 								</v-list-tile>
 								<v-list-tile>
@@ -105,7 +105,7 @@
 										<v-icon class="primary-color text--lighten-2">email</v-icon>
 									</v-list-tile-action>
 									<v-list-tile-content>
-										<v-list-tile-title>{{$vuetify.t('$vuetify.texts.mainPage.email') }}</v-list-tile-title>
+										<v-list-tile-title>{{$vuetify.t('$vuetify.texts.testPage.email') }}</v-list-tile-title>
 									</v-list-tile-content>
 								</v-list-tile>
 							</v-list>
