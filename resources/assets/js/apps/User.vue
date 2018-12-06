@@ -13,25 +13,25 @@
 					<v-card-text >
 						<c-loading v-if="dataLoading" />
 						<v-form v-else v-model="inputsValid" :ref="paramForm"  > 
-							<c-input-cols v-if="['aboutMe', 'howEge', 'wantStady'].indexOf(paramForm)!=-1" :inputs="inputs" :dialogId="dialogId"  :paramsForm="paramForm" :maxInputCountInCol="2"  />
+							<c-input-cols v-if="['aboutMe', 'howEge', 'wantStady'].indexOf(paramForm)!=-1" :inputs="inputs" :dialogId="dialogId"  :paramsForm="paramForm" :maxInputCountInCol="getMaxColumn"  />
 							<c-input-cols v-if="['aboutMe'].indexOf(paramForm)!=-1"  :inputs="inputsBio" :dialogId="dialogId"  :paramsForm="paramForm" :maxInputCountInCol="1"  />
 							<div  v-if="['whereStudy'].indexOf(paramForm)!=-1">
 								<v-layout row v-for="sch in user.data.schls" :key="sch.id"  >
-									<v-container class='fix-padding'>
+									<v-container :class="getClassForRow">
 										<c-input-cols :inputs="getInputsForSch(sch)" :dialogId="dialogId"  :paramsForm="paramForm+'_'+sch.id" :maxInputCountInCol="1"  />
 									</v-container>
-									<v-container class='fix-padding' style="flex: 0;">
-										<v-btn fab dark class='accent' @click="delSch(sch.id)">
+									<v-container :class="getClassForRow+ ($vuetify.breakpoint.name=='xs'?' no-height':'')" style="flex: 0;">
+										<v-btn fab dark small class='primary' @click="delSch(sch.id)">
 											<v-icon dark>clear</v-icon>
 										</v-btn>
 									</v-container>
 								</v-layout>
 								<v-layout row  >
-									<v-container class='fix-padding'>
+									<v-container :class="getClassForRow">
 										<c-input-cols :inputs="getInputsForSch({})" :dialogId="dialogId"  :paramsForm="paramForm+'_'" :maxInputCountInCol="1"  />
 									</v-container>
-									<v-container class='fix-padding' style="flex: 0;">
-										<v-btn fab dark class='accent' @click="addSch(sch.id)">
+									<v-container :class="getClassForRow+ ($vuetify.breakpoint.name=='xs'?' no-height':'')" style="flex: 0;">
+										<v-btn fab dark small class='accent' @click="addSch(sch.id)">
 											<v-icon dark>add</v-icon>
 										</v-btn>
 									</v-container>
@@ -67,16 +67,20 @@
 			],
 			colors:['white', 'white', 'white', 'white'],
 			forms:['aboutMe', 'whereStudy', 'howEge', 'wantStady'],
+			maxColumn:[2, 1, 6, 3],
 			saveFormTypes:['user.info.save', 'user.sch.save', 'user.ege.save', 'user.wants.save', ],
 			user:{href:"/socet_command", event:"user.info.by.id", data:{}, loaded:false},
 			city:{href:"/socet_command", event:"city.list", data:[], loaded:false},
 			sch:{href:"/socet_command", event:"school.list", data:[], loaded:false},
+			pr:{href:"/socet_command", event:"predmets.list", data:[], loaded:false},
 		}),
 		computed: {
-			dataLoading(){return !(this.user.loaded && this.city.loaded && this.sch.loaded)},
+			dataLoading(){return !(this.user.loaded && this.city.loaded && this.sch.loaded && this.pr.loaded)},
 			colorForm () {return this.colors[this.tabSelected]},
 			paramForm () {return this.dataLoading?'':this.forms[this.tabSelected]},
 			saveFormType () {return this.saveFormTypes[this.tabSelected]},
+			getMaxColumn(){return  this.$vuetify.breakpoint.name=='xs'?100: this.maxColumn[this.tabSelected]},
+			getClassForRow(){return  this.$vuetify.breakpoint.name=='xs'? 'no-padding': 'fix-padding'},
 			inputs() {
 				let vm=this
 				let data= [	
@@ -85,6 +89,12 @@
 					{id:3, form:'aboutMe', 	code:'birthDate', 		name:'Дата рождения', 	value:nvl(vm.user.data.birthDate,null),			type:'DATE', 	nullable:0, column_size:30, sort_seq:3, max:(new Date().toISOString().substr(0, 10)),   min:"1950-01-01", isBirthDate:true,},
 					{id:4, form:'aboutMe', 	code:'residenceCity', 	name:'Проживаю в',	 	value_arr:nvl(vm.user.data.residenceCity,null)==null?null:[vm.user.data.residenceCity],				type:'LIST', 	nullable:0, column_size:30, sort_seq:4, table_values:vm.city.data, },
 				]
+				if(vm.paramForm=='howEge')
+					vm.pr.data.forEach((pr,idx)=>{
+						data.push(
+							{id:data.length+1 , form:'howEge', 	code:'pr'+pr.value, 		name:pr.text, 		value:nvl(nvlo(vm.user.data.eges.find((ege)=>{return ege.prId==pr.value }) ).val,''),			type:'NUMBER', 	nullable:1, column_size:30, sort_seq:idx, min:0, max:100 },
+						)
+					})
 				return data.filter(row =>  row.form == vm.paramForm ).sort( (a, b) =>{return sort(a, b, 'sort_seq', 'sort_seq')})
 			},
 			inputsBio() {
@@ -103,7 +113,7 @@
 		],
 		methods: {
 			formSave(){
-				let vm=this,tmp={},todo={}
+				let vm=this,tmp=[],todo={}
 				if (!vm.$refs[vm.paramForm].validate())
 					return;
 				if(['aboutMe', 'howEge', 'wantStady'].indexOf(vm.paramForm)!=-1)
@@ -112,6 +122,12 @@
 					todo=vm.user.data.schls.map((row)=>{
 						return vm.paramTodo(vm.paramForm+'_'+row.id)
 					})
+				if([ 'howEge'].indexOf(vm.paramForm)!=-1){
+					for (name in todo)
+						if(todo[name].value>0)
+							tmp.push(todo[name])
+					todo=tmp.map( row=> {return {prId: row.code.slice(2), val: row.value}})
+				}
 				if(vm.paramForm=='aboutMe'){
 					vm.user.data.firstName = todo.firstName.value
 					vm.user.data.lastName = todo.lastName.value
@@ -125,12 +141,16 @@
 				vm.getUserInfo() 
 				vm.getCityInfo()
 				vm.getSchInfo()
+				vm.getPrInfo()
 			},
 			getUserInfo(){
 				let vm=this
 				sendRequest({href:vm.user.href, type:vm.user.event, data:{userId: vm.profileUserId()}, handler:(response) => {
 					vm.user = Object.assign({}, vm.user, {data:response.data})
 					vm.user.loaded=true
+					vm.user.data.schls.forEach((row)=>{
+						vm.paramInit( {num: 'whereStudy_'+row.id })
+					})
 				}})
 			},
 			getCityInfo(){
@@ -147,6 +167,13 @@
 					vm.sch.loaded=true
 				}})
 			},
+			getPrInfo(){
+				let vm=this
+				sendRequest({href:vm.pr.href, type:vm.pr.event, handler:(response) => {
+					vm.pr.data= response.data
+					vm.pr.loaded=true
+				}})
+			},
 			getInputsForSch(sch){
 				let vm=this
 				return [	
@@ -154,7 +181,7 @@
 						table_values:vm.sch.data.map((sch)=>{return {
 							value:sch.value, text: nvl(nvlo(vm.city.data.find((city)=>{return city.value==sch.cityId }) ).text,'')+' - '+sch.text
 						}}),  },
-					{id:2, code:'dates', 		name:'Период обучения', 	value_arr:sch=={}?null:[[sch.dateSt,sch.dateFn]],			type:nvl(sch.id)==0?'INPUT':'DATE_RANGE', 	nullable:nvl(sch.id)==0, editable:nvl(sch.id)!=0, column_size:30, sort_seq:2, },		
+					{id:2, code:'dates', 		name:'Период обучения', 	value_arr:sch=={}?undefined:[[sch.dateSt,sch.dateFn]],			type:nvl(sch.id)==0?'INPUT':'DATE_RANGE', 	nullable:nvl(sch.id)==0, editable:nvl(sch.id)!=0, column_size:30, sort_seq:2, },		
 				]
 			},
 			addSch(){
@@ -188,4 +215,7 @@
 <style>
 .fix-padding,
 .fix-padding>div {padding: 0px 34px 0px 34px;}
+.no-height {width:50px;}
+.no-padding,
+.no-padding>div {padding: 0px;}
 </style>

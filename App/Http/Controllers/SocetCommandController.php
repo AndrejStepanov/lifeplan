@@ -6,6 +6,7 @@ use App\Http\main_function;
 use App\Models\User;
 use App\Models\Citys;
 use App\Models\Schools;
+use App\Models\Predmets;
 use Illuminate\Http\Request;
 
 class SocetCommandController extends Controller{
@@ -15,6 +16,7 @@ class SocetCommandController extends Controller{
 			case('user.info.by.id'):{  return json_encode( (new User() )->getUserInfo(nvl($data['userId'],null)) ); };
 			case('city.list'):{  return json_encode( ( new Citys() )->getCitysList() ); };
 			case('school.list'):{  return json_encode( ( new Schools() )->getSchoolsList() ); };
+			case('predmets.list'):{  return json_encode( ( new Predmets() )->getPredmetsList() ); };
 			default:{ throw new \App\Exceptions\KonsomException( 'Ошибка доступа','Нет доступа!'); };
 		}
 		return;

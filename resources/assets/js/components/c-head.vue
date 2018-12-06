@@ -1,6 +1,6 @@
 <template>
     <v-toolbar class='z-index--4 transparent elevation-0 mt-2 no-clcik'    fixed       app   >
-        <v-toolbar-side-icon @click="toolbarClicked('Left')"  v-if="showLeft" color='accent' class='get-clcik'  />
+        <v-btn small smalloutline fab color="teal" @click="toolbarClicked('Left')" class='get-clcik'>   <v-list-tile-avatar style="min-width:0px"> <img src="/favicon.ico">		</v-list-tile-avatar>    </v-btn>
         <v-toolbar-title v-if="$vuetify.breakpoint.name!='xs'" class='get-clcik' color='accent'>{{curentSystem}}</v-toolbar-title>
         <v-spacer/>
         <c-profile class='get-clcik'/>

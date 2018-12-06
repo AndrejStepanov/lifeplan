@@ -727,8 +727,15 @@ time-with-seconds	##:##:##
 					if(['DATE', 'TIME', 'DATETIME'].indexOf(vm.type)!=-1)
 						vm.value = vm.valueArr[0]
 					else
-						if(vm.valueArr[0].length>1 )
-							vm.value=vm.valueArr[0][0] +vm.rangeSeparator + vm.valueArr[0][1]
+						if(vm.valueArr[0].length>1 && nvl(vm.valueArr[0][0],'')!='' && nvl(vm.valueArr[0][1],'')!='' )
+							if(['DATETIME_RANGE'].indexOf(vm.type)!=-1)
+								vm.value=vm.valueArr[0][0] +vm.rangeSeparator + vm.valueArr[0][1]
+							else if(['DATE_RANGE'].indexOf(vm.type)!=-1)
+								vm.value=nvl(vm.valueArr[0][0].match (/^\d\d\d\d-\d\d-\d\d/),['--'])[0] +vm.rangeSeparator + nvl(vm.valueArr[0][1].match (/^\d\d\d\d-\d\d-\d\d/),['--'])[0]
+							else if(['TIME_RANGE'].indexOf(vm.type)!=-1)
+								vm.value=nvl(vm.valueArr[0][0].match (/\s\d\d:\d\d$|\s\d\d:\d\d:\d\d$/),['--'])[0] +vm.rangeSeparator + nvl(vm.valueArr[0][1].match (/\s\d\d:\d\d$|\s\d\d:\d\d:\d\d$/),['--'])[0]
+							else
+								console.log('Обнаружена коллизия исходных данных в '+vm.code)
 						else
 							console.log('Обнаружен некорректно заданый диапазон исходных данных в '+vm.code)
 				vm.valueArrPairs.push([null,null]);

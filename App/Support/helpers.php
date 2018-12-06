@@ -50,17 +50,33 @@ function getTicket(){
 function checkTicket($ticket){
 	return  md5(session()->getId())==$ticket ;
 }
-function createTodo($data){
+
+function parseTodo($arr){
 	$tmp = [];
-	if(!nvl($data['todo']))
-		return $tmp;
-	foreach($data['todo'] as $row ){
+	foreach($arr as $row ){
 		if(array_search($row['type'], ['INFO','NBSP','LINE', ])!==FALSE)
 			continue;
 		if( !nvl($row['multy'] ) &&  array_search($row['type'], ['INPUT','LIST','BOOL','PASSWORD','NUMBER','HIDDEN','DATE','DATETIME','TIME','TEXT', ])!==FALSE )
 			$tmp[$row['code'] ]=$row['value'];
+		//if( array_search($row['type'], ['DATE_RANGE','DATETIME_RANGE', 'TIME_RANGE', 'RANGE' ])!==FALSE )
+
 		else 
 			$tmp[$row['code'] ]=$row['value_arr'];		
 	}
+	return $tmp;
+}
+function createTodo($data){
+	$tmp = [];
+	if(!nvl($data['todo']))
+		return $tmp;
+	$tmp = parseTodo($data['todo']);
+	return $tmp;
+}
+function createArrTodo($data){
+	$tmp = array();
+	if(!nvl($data['todo']))
+		return $tmp;
+	foreach($data['todo'] as $row )
+		$tmp[]=parseTodo($row);
 	return $tmp;
 }
