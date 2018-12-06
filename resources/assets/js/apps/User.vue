@@ -92,7 +92,7 @@
 				if(vm.paramForm=='howEge')
 					vm.pr.data.forEach((pr,idx)=>{
 						data.push(
-							{id:data.length+1 , form:'howEge', 	code:'pr'+pr.value, 		name:pr.text, 		value:nvl(nvlo(vm.user.data.eges.find((ege)=>{return ege.prId==pr.value }) ).val,''),			type:'NUMBER', 	nullable:1, column_size:30, sort_seq:idx, min:0, max:100 },
+							{id:data.length+1 , form:'howEge', 	code:'pr'+pr.value, 		name:pr.text.charAt(0).toUpperCase() + pr.text.slice(1), 		value:nvl(nvlo(vm.user.data.eges.find((ege)=>{return ege.prId==pr.value }) ).val,''),			type:'NUMBER', 	nullable:1, column_size:30, sort_seq:idx, min:0, max:100 },
 						)
 					})
 				return data.filter(row =>  row.form == vm.paramForm ).sort( (a, b) =>{return sort(a, b, 'sort_seq', 'sort_seq')})
