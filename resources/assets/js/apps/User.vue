@@ -1,10 +1,11 @@
 <template>
 	<c-app :curentSystem="$vuetify.t('$vuetify.texts.main.links.mainPage.name')" :panelLeft="{show:true}">
+		<div class="back" style="background:url('storage/bg.jpg')"></div>
 		<v-layout align-center justify-center >
-			<v-flex xs12  >
-				<v-card class="elevation-12">
+			<v-flex xs12 ma-2>
+				<v-card class="elevation-12" >
 					<v-toolbar :height="80" >
-						<v-bottom-nav  :active.sync="tabSelected" :color="colorForm"	:value="true" absolute shift :height="80" >
+						<v-bottom-nav  :active.sync="tabSelected" :color="colorForm" :value="true" absolute shift :height="80" >
 							<v-btn  large v-for="link in links" :key="link.id" class='primary-color'  >	<span>{{$vuetify.t(link.title )}}</span>			<v-icon large >{{link.icon}}</v-icon>		</v-btn>
 						</v-bottom-nav>
 					</v-toolbar>
@@ -241,6 +242,17 @@
 	}
 </script>
 <style>
+	div.back{
+		position:fixed;
+		z-index: 0;
+		left:0;
+		right: 0;
+		top:0;
+		bottom: 0;
+	}
+	footer, div.layout{
+		z-index: 1;
+	}
 .fix-padding,
 .fix-padding>div {padding: 0px 34px 0px 34px;}
 .no-height {width:50px;}

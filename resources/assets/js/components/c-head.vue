@@ -1,13 +1,12 @@
 <template>
     <v-toolbar class='z-index--4 transparent elevation-0 mt-2 no-clcik'    fixed       app   >
-        <v-btn small smalloutline fab color="teal" @click="toolbarClicked('Left')" class='get-clcik'>   <v-list-tile-avatar style="min-width:0px"> <img src="/favicon.ico">		</v-list-tile-avatar>    </v-btn>
-        <v-toolbar-title v-if="$vuetify.breakpoint.name!='xs'" class='get-clcik' color='accent'>{{curentSystem}}</v-toolbar-title>
+        <v-toolbar-side-icon @click="toolbarClicked('Left')"  v-if="showLeft" color='accent' class='get-clcik'  />
+        <v-toolbar-title v-if="$vuetify.breakpoint.name!='xs'" class="white--text">{{curentSystem}}</v-toolbar-title>
         <v-spacer/>
         <c-profile class='get-clcik'/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <v-icon color='accent' class='get-clcik'>search</v-icon>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <v-icon color='accent' class='get-clcik'>more_vert</v-icon>
+        <v-icon color='white' class='get-clcik'>search</v-icon>
+        <v-icon color='white' class='get-clcik'>more_vert</v-icon>
         <v-toolbar-side-icon @click="toolbarClicked('Right')"  v-if="showRight" class='get-clcik'/>
     </v-toolbar>
 </template>
