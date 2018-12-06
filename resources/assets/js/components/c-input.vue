@@ -806,7 +806,7 @@ time-with-seconds	##:##:##
 			if(vm.hasInput && !vm.nullable){
 				vm.isNeed =true
 				vm.rules.push(v => v!=undefined && (v!='' || v===0) || vm.$vuetify.t('$vuetify.texts.simple.msgs.fieldIsNecessary' ) )
-				vm.name='⭐ '+vm.name// ❗
+				vm.name='⭐ '+vm.name//❗
 			}
 
 			if(vm.hasInput && vm.needCheckBox && !vm.nullable)
