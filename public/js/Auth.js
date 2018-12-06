@@ -10582,7 +10582,7 @@ var render = function() {
                                 attrs: {
                                   inputs: _vm.inputs,
                                   dialogId: _vm.dialogId,
-                                  paramForm: _vm.paramForm,
+                                  paramsForm: _vm.paramForm,
                                   maxInputCountInCol: 10
                                 }
                               })

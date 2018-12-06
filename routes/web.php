@@ -25,3 +25,4 @@ Route::get('/clear', function() {    Artisan::call('cache:clear');    Artisan::c
 
 Route::get('login/vk', 'Auth\LoginController@redirectToProviderVKontakte');
 Route::get('login/vk/callback', 'Auth\LoginController@handleProviderCallbackVKontakte');
+Route::get('test', 'Main\EgeController@show')->middleware('auth');

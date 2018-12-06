@@ -13,7 +13,7 @@
 						</v-toolbar>
 						<v-card-text>
 							<v-form v-model="inputsValid" :ref="paramForm" > 
-								<c-input-cols  :inputs="inputs" :dialogId="dialogId"  :paramForm="paramForm" :maxInputCountInCol="10" />
+								<c-input-cols  :inputs="inputs" :dialogId="dialogId"  :paramsForm="paramForm" :maxInputCountInCol="10" />
 							</v-form>
 							<v-divider style='padding-bottom: 10px;'/>
 							Войти через социальные сети:
