@@ -6174,7 +6174,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 			vm.rules.push(function (v) {
 				return v != undefined && (v != '' || v === 0) || vm.$vuetify.t('$vuetify.texts.simple.msgs.fieldIsNecessary');
 			});
-			vm.name = '❗ ' + vm.name; //⭐
+			vm.name = '⭐ ' + vm.name; //❗
 		}
 
 		if (vm.hasInput && vm.needCheckBox && !vm.nullable) vm.rules.push(function (v) {

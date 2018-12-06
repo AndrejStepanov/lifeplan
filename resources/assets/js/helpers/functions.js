@@ -1,6 +1,6 @@
 const MAX_ID= 9999999,
 	MAX_INPUT_IN_COL= 6,
-	appTheme={  primary: '#4E10AE', secondary: '#25D500', accent: '#FF9900', error: '#f44336', warning: '#ffeb3b', info: '#2196f3', success: '#4caf50', checkBox:"#fd0000"},//https://colorscheme.ru/#0M32fw0w0w0w0
+	appTheme={  primary: '#3016B0', secondary: '#00B25C', accent: '#FF9900', error: '#f44336', warning: '#ffeb3b', info: '#2196f3', success: '#4caf50', checkBox:"#fd0000"},//https://colorscheme.ru/#0M32fw0w0w0w0
 	authButtons= [ {id:1, title:'$vuetify.texts.simple.actions.logIn', icon:'input', allig:'right', click:'dialogSave' , needCheck:true} ],
 	dateFormatStr = '$3.$2.$1' //2018-10-03 - 1, 2 и 3 цифры
 
