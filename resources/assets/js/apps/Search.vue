@@ -1,6 +1,10 @@
 <template>
-	<c-app :curentSystem="$vuetify.t('$vuetify.texts.main.links.serch.name')" :panelLeft="{show:true}">
-		
+	<c-app :curentSystem="$vuetify.t('$vuetify.texts.main.links.search.name')" :panelLeft="{show:true}">
+		<c-table tableTitle="$vuetify.texts.searchPage.mainTableTitle"  :headers="tabHeader" :items="tabValues" ref="table" :noRowNum="true" :hide-actions="false" :dataLoading="dataLoading" :fiterButtonhNeed="true" :manBody="true" >
+			<tr  slot="items" slot-scope="props" >
+				<td	v-for="header in tabHeads"	:key="header.code" 	v-if="header.visible"	:class="header.clsssCell"		>	{{props.item[header.code]}}			</td>
+			</tr>	
+		</c-table>
 	</c-app>
 </template>
 
@@ -8,15 +12,28 @@
 	import XApp from '../mixins/x-app'
 	import XStore from '../mixins/x-store'
 	import CInputCols from '../components/c-input-cols'
-	import CLoading from '../components/c-loading'
+	import CTable from '../components/c-table'
 	export default {
 		data: () => ({
 			inputsValid:false,
 			dialogId:getNewId(),
 			paramForm:'search',
+			tabHeader:[
+				{code:'ava',			text:'',					type:'img', 	 		},
+				{code:'program',		text:'Программа',			type:'text', 	 		},
+				{code:'totalBall',		text:'Проходной балл',		type:'numeric', 	 	},
+				{code:'qtyBudgets',		text:'Бюджетных мест',		type:'numeric', 	 	},
+				{code:'priceYear',		text:'Стоимость за год',	type:'numeric', 	 	},
+				{code:'qtyYears',		text:'Срок обучения',		type:'numeric', 	 	},
+				{code:'psyTest',		text:'Психотест',			type:'numeric', 	 	},
+				{code:'astroTest',		text:'Астропрогноз',		type:'numeric', 	 	},
+				{code:'totalTest',		text:'Совместимость',		type:'numeric', 	 	},
+			],
+			uni:{href:"/socet_command", event:"universitys.search.list", data:[], loaded:false},
+			spec:{href:"/socet_command", event:"specialtys.search.list", data:[], loaded:false},
 		}),
 		computed: {
-			dataLoading(){return false},
+			dataLoading(){return !( this.uni.loaded)},
 			inputs() {
 				let vm=this
 				let data= [	
@@ -28,9 +45,10 @@
 				]
 				return data.filter(row =>  row.form == vm.paramForm ).sort( (a, b) =>{return sort(a, b, 'sort_seq', 'sort_seq')})
 			},
+			tabValues(){return []},
 		},
 		components: {
-			CInputCols,CLoading,
+			CInputCols,CTable,
 		},
 		mixins: [
 			XApp,XStore
@@ -43,6 +61,25 @@
 				todo=vm.paramTodo(vm.paramForm)
 				sendRequest({href:"/data_command", type:vm.saveFormType, data:{ todo, }, default: getErrDesc('requestFaild'), handler:()=>showMsg({...getMsgDesc('saveDoing')}),  })
 			},
+			getData(){
+				let vm=this
+				vm.getUniInfo()
+				getSpecInfo()
+			},
+			getUniInfo(){
+				let vm=this
+				sendRequest({href:vm.uni.href, type:vm.uni.event, handler:(response) => {
+					vm.uni.data= response.data
+					vm.uni.loaded=true
+				}})
+			},
+			getSpecInfo(){
+				let vm=this
+				sendRequest({href:vm.spec.href, type:vm.spec.event, handler:(response) => {
+					vm.spec.data= response.data
+					vm.spec.loaded=true
+				}})
+			},
 		},
 		created: function (){
 			let vm=this
@@ -50,6 +87,7 @@
 			vm.$root.$on('dialog'+vm.paramForm+'Send', ()=>{
 				vm.formSave()
 			});
+			setTimeout(vm.getData,100);//что бы параметры успели подгрузится	
 		},
 		mounted(){
 			let vm=this

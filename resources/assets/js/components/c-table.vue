@@ -6,9 +6,13 @@
 				<v-spacer/>
 				<v-text-field	v-model="search"	append-icon="search"	:label="$vuetify.t('$vuetify.texts.simple.labels.searchInFields')"	single-line	hide-details clearable  	/>				
 			</template>
+			<template v-if="fiterButtonhNeed">
+				<v-spacer/>
+				<v-btn     color="accent"      @click="$emit('fiterButtonClick')"  >    {{$vuetify.t('$vuetify.texts.simple.labels.filter')}}     <v-icon dark right>filter_list</v-icon>   </v-btn>			
+			</template>
 		</v-card-title>
 		<v-data-table	:value="selectedValues" :headers ="tabHeads" :items ="tabRows" :headersLength ="headersLength" :headerText ="headerText" :headerKey ="headerKey" :hideHeaders ="hideHeaders" :rowsPerPageText ="rowsPerPageText" :expand ="expand" 
-				:hideActions ="hideActions"  :noResultsText ="noResultsText" :nextIcon ="nextIcon" :prevIcon ="prevIcon" :rowsPerPageItems ="rowsPerPageItems" 
+				:hideActions ="hideActions"  :noResultsText ="noResultsText" :nextIcon ="nextIcon" :prevIcon ="prevIcon" :rowsPerPageItems ="rowsPerPageItems"  :loading="dataLoading"
 				:selectAll ="selectAll" :search ="search"   :itemKey ="itemKey" ref="table"	 :customFilter="searchInTable" 
 				:class="getMainTableClass" :style="getMainTableStyle"
 				@update:pagination='updateTabFirstNum'>
@@ -42,11 +46,20 @@
 					</tr>
 				</template>
 			</template>
+			<template slot="progress">
+				<c-loading slot="progress" />
+			</template>
+			<template slot="no-data">
+				<tr>
+					<td colspan="99" class="text-xs-center">{{dataLoading? $vuetify.t(dataLoadingText) : $vuetify.t(noResultsText) }}</td>
+				</tr>
+			</template>
 		</v-data-table>
 	</v-card>
 </template>
 
 <script>
+	import CLoading from '../components/c-loading'
 	export default {
 		name:'c-table',
 		data: () => ({
@@ -61,7 +74,10 @@
 			typeSelect: {type: String,	default: ''	},
 			manHead:false,
 			manBody:false,
+			manProgress:false,
 			searchNeed:false,
+			fiterButtonhNeed:false,
+			dataLoading:false,
 			tableTitle:'',
 			noRowNum:false,
 			height:{type: Number	},
@@ -75,7 +91,8 @@
 			rowsPerPageText: {type: String,	default: '$vuetify.dataTable.rowsPerPageText'	},
 			expand: Boolean,
 			hideActions: {type:Boolean,	default: false	},
-			noResultsText: {type: String,	default: '$vuetify.dataIterator.noResultsText'	},
+			noResultsText: {type: String,	default: '$vuetify.noDataText'	},
+			dataLoadingText: {type: String,	default: '$vuetify.dataLoadingText'	},
 			nextIcon: {type: String,	default: '$vuetify.icons.next'	},
 			prevIcon: {	type: String,	default: '$vuetify.icons.prev'	},
 			rowsPerPageItems: {type: Array,	default: ()=>{return [500, 250, 100, 50, 25, 2, { text: '$vuetify.dataIterator.rowsPerPageAll',   value: -1 }]}	},
@@ -128,6 +145,9 @@
 					"tabWithPagination": !vm.hideActions,				  
 				}
 			},
+		},
+		components: {
+			CLoading,
 		},
 		mixins: [
 		],

@@ -81,7 +81,7 @@
 				{ link: '$vuetify.texts.main.links.demandProf', 		icon: 'trending_up', 		href:'\\topProf' },
                 { link: '$vuetify.texts.main.links.topProf', 			icon: 'favorite', 			href:'\\topSpec'  },
                 { link: '$vuetify.texts.main.links.catalogProf', 		icon: 'view_module', 		href:'\\catalogProf'  },
-				{ link: '$vuetify.texts.main.links.serch', 				icon: 'search', 			href:'\\search'  }
+				{ link: '$vuetify.texts.main.links.search', 			icon: 'search', 			href:'\\search'  }
             ], 
 		}),
 		props:{
