@@ -20,11 +20,11 @@ class Ege extends Model{
      * @return Результаты ЕГЭ
      */
     public function getVal($user_id)  {
-        $result = array(); $i=0;
+        $result = array();
         $eges = $this->where('user_id', $user_id)->get();
         foreach ($eges as $key=>$ege) {
             $pr = Predmets::findOrFail($ege->pr_id);
-            $result[$i][]= ['prId' => $ege->pr_id,  'prName'=> $pr->pr_name, 'minVal' => $pr->min_val, 'val'=>$ege->val];
+            $result[]= ['prId' => $ege->pr_id,  'prName'=> $pr->pr_name, 'minVal' => $pr->min_val, 'val'=>$ege->val];
         }
         return $result;
     }

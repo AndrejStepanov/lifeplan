@@ -1,5 +1,5 @@
 <template>
-	<c-app  >
+	<c-app  :needBgIm="false">
 		<section>
 			<v-parallax src="storage/bg.jpg" height="720">
 				<v-layout	column	align-center	justify-center	class="white--text" >

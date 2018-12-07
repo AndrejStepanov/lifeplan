@@ -1,6 +1,5 @@
 <template>
 	<c-app :curentSystem="$vuetify.t('$vuetify.texts.testPage.HeadTxt')" :panelLeft="{show:true}">
-		<div class="back" style="background:url('storage/bg.jpg')"></div>
 		<v-layout align-space-between justify-center column fill-height ml-1>
 			<v-flex>
 				<v-tabs
@@ -158,15 +157,4 @@
 	}
 </script>
 <style>
-div.back{
-	position:fixed;
-	z-index: 0;
-	left:0;
-	right: 0;
-	top:0;
-	bottom: 0;
-}
-footer, div.layout{
-	z-index: 1;
-}
 </style>

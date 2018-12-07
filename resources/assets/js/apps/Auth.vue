@@ -1,6 +1,5 @@
 <template>
 	<c-app :curentSystem="$vuetify.t('$vuetify.texts.modals.auth.title')">
-		<div class="back" style="background:url('storage/bg.jpg')"></div>
 		<v-container fluid fill-height>
 			<v-layout align-center justify-center>
 				<v-flex xs12 sm8 md4>
@@ -139,16 +138,5 @@
 </script>
 
 <style>
-	div.back{
-		position:fixed;
-		z-index: 0;
-		left:0;
-		right: 0;
-		top:0;
-		bottom: 0;
-	}
-	footer, div.layout{
-		z-index: 1;
-	}
 	.disable-social {background-image: linear-gradient(to bottom, #bdbdbd, #bdbdbd) !important;}
 </style>

@@ -87,6 +87,7 @@
 		props:{
 			curentSystem: {type:  String, default: ''},	
 			needFooter: {type:  Boolean, default: true},	
+			needBgIm: {type:  Boolean, default: true},	
 			panelLeft:{type: Object,  default: () => {return{ drawer:true, show:false, class:'', width:270, filter:false,} }}	,
 			panelRight:{type: Object,  default: () => {return{ drawer:false, show:false, class:'', width:300, filter:false,} }}	,
 			mainPanelConfig: {type: Object,  default: () => {return null/*{ //'horizontal' - внутри будут строки,  'vertical' - внутри будут столбики;  Последнему слою выставлять размер бессмысленно
@@ -110,7 +111,7 @@
 			},
 			getContentStyles(){
 				let vm=this//финт ушами, что бы основная область не прокручивалась
-				return vm.oneScreen? {height: '100px' ,}:{  }
+				return {height: vm.oneScreen?'100px':null, background:vm.needBgIm?"url('storage/bg.jpg')":null , backgroundAttachment: 'fixed'}
 			},
 			panelLeftDrawer(){ return this.panelLeft.drawer || this.panelLeft.show || this.panelLeft.filter	},
 			panelRightDrawer(){ return this.panelRight.drawer || this.panelRight.show || this.panelLeft.filter	},
