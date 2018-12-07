@@ -3,7 +3,7 @@
         <v-toolbar-side-icon @click="toolbarClicked('Left')"  v-if="showLeft" color='accent' class='get-clcik'  />
         <v-toolbar-title v-if="$vuetify.breakpoint.name!='xs'" class="white--text">{{curentSystem}}</v-toolbar-title>
         <v-spacer/>
-        <v-icon v-if="profileUserName()!=''" color='white' class='get-clcik' @click="searchClick">search</v-icon>
+        <v-icon v-if="profileUserName()!=''" color='accent' class='get-clcik' @click="searchClick">search</v-icon>
          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <c-profile class='get-clcik'/>
         <v-toolbar-side-icon @click="toolbarClicked('Right')"  v-if="showRight" class='get-clcik'/>
@@ -34,7 +34,11 @@
                 this.$root.$emit('headDrawer'+side+'Click')
             },
             searchClick(){
-
+                let vm=this
+                if(top.location.pathname!='/search')
+                    window.location.href = "\\search"
+                else
+                    vm.$root.$emit('searchClick' )
             },
         }
     }
