@@ -19,7 +19,7 @@ class User extends Authenticatable{
     protected $primaryKey = 'id';
     protected $dates = [  'created_at', 'updated_at'];
     protected $fillable = [
-        'id','login', 'firstname', 'lastname', 'password','name','token', 'storage','password','timestamps','email1','systemLanguage','user_system','avatar','bio','favoritCitys','favoritUnivs','favoritDist','favoritProfs',    
+        'id','login', 'firstname', 'lastname', 'password','name','token', 'storage','password','timestamps','email1','systemLanguage','user_system','avatar','bio','favoritCitys','favoritUnivs','favoritDist','favoritProfs','birthCity', 'birthDate', 'residenceCity'
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -30,14 +30,14 @@ class User extends Authenticatable{
         'password', 'remember_token',
     ];
 	public  function getUserInfo($userId){
-        $data =  $this->select('firstName','lastName','birth_date as birthDate','residence_city as residenceCity','bio','favoritCitys','favoritUnivs','favoritDist','favoritProfs' )->where('id' ,'=',$userId)->get()->toArray();
+        $data =  $this->select('firstName','lastName','birthDate','residenceCity','bio','favoritCitys','favoritUnivs','favoritDist','favoritProfs','birthCity' )->where('id' ,'=',$userId)->get()->toArray();
         $data[0]['schls'] = (new Sch2user)->getSchByUser($userId);
         $data[0]['eges'] = (new Ege)->getVal($userId);
 		return $data[0];
     }
 	public  function saveUserInfo($todo){
         $this->where('id',Auth::user()->id )
-            ->update(['FirstName' => $todo['firstName'], 'LastName' => $todo['lastName'], 'birth_date' => $todo['birthDate'], 'residence_city' => $todo['residenceCity'], 'Bio' => $todo['bio'] ]);
+            ->update(['FirstName' => $todo['firstName'], 'LastName' => $todo['lastName'], 'birthDate' => $todo['birthDate'],'birthCity' => $todo['birthCity'], 'residenceCity' => $todo['residenceCity'], 'bio' => $todo['bio'] ]);
     }
 	public  function saveFavorits($data){
         $this->where('id',Auth::user()->id )

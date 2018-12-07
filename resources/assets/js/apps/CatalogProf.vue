@@ -1,8 +1,7 @@
 <template>
-	<c-app :curentSystem="$vuetify.t('$vuetify.texts.catalogPage.HeadTxt')" :panelLeft="{show:true}">
+	<c-app :curentSystem="$vuetify.t(getHeader)" :panelLeft="{show:true}">
 		<v-container grid-list-md>
 			<v-layout row wrap>
-
 				<v-flex v-for="(prof,key) in profs" xs12 md6 lg4 :key="key">
 					<v-card class="pa-2 ma-2">
 						<v-img class="white--text" height="160px" src="http://bezformata.ru/content/Images/000/005/855/image5855940.jpg"
@@ -22,12 +21,10 @@
 							</div>
 						</v-card-title>
 						<v-card-actions>
-							<v-btn flat color="orange">Специальности по профессии</v-btn>
+							<v-btn flat color="orange">{{$vuetify.t('$vuetify.texts.catalogPage.specBuProf') }}</v-btn>
 						</v-card-actions>
 					</v-card>
 				</v-flex>
-
-
 			</v-layout>
 		</v-container>
 	</c-app>
@@ -40,26 +37,28 @@
 		data: () => ({
             profs:[]
 		}),
+		computed: {
+			getHeader(){return top.location.pathname=="/topProf"?'$vuetify.texts.main.links.demandProf.name':'$vuetify.texts.main.links.catalogProf.name' },
+		},
 		mixins: [
 			XApp,
 		],
 		methods: {
 		    getData(){
-                this.getProfInfo();
+                this.getProfInfo()
        		},
             getProfInfo(){
-                let vm=this;
-                let href=((top.location.pathname=="/top_prof")?'getProfs2':'getProfs');
-                axios.get(href)
-                    .then(response => {
-                        vm.profs = response.data
-                    }).catch(e => {
-                    	console.log(e);
-                    });
+                let vm=this
+                let href=top.location.pathname=="/topProf"?'getProfs2':'getProfs'
+                axios.get(href).then(response => {
+					vm.profs = response.data
+				}).catch(e => {
+					console.log(e)
+				})
             },
 		},
 		created: function (){
-			this.getData();
+			this.getData()
 		},
 	}
 </script>

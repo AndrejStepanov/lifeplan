@@ -14,11 +14,11 @@
 						<c-loading v-if="dataLoading" />
 						<v-form v-else v-model="inputsValid" :ref="paramForm"  > 
 							<c-input-cols v-if="['aboutMe', 'howEge', 'wantStady'].indexOf(paramForm)!=-1" :inputs="inputs" :dialogId="dialogId"  :paramsForm="paramForm" :maxInputCountInCol="getMaxColumn"  />
-							<c-input-cols v-if="['aboutMe'].indexOf(paramForm)!=-1"  :inputs="inputsBio" :dialogId="dialogId"  :paramsForm="paramForm" :maxInputCountInCol="1"  />
+							<c-input-cols v-if="['aboutMe'].indexOf(paramForm)!=-1"  :inputs="inputsBio" :dialogId="dialogId+100"  :paramsForm="paramForm+'Bio'" :maxInputCountInCol="1"  />
 							<div  v-if="['whereStudy'].indexOf(paramForm)!=-1">
 								<v-layout row v-for="(sch,idx) in user.data.schls" :key="sch.id"  >
 									<v-container :class="getClassForRow">
-										<c-input-cols :inputs="getInputsForSch(sch)" :dialogId="dialogId"  :paramsForm="paramForm+'_'+sch.id" :maxInputCountInCol="1"  />
+										<c-input-cols :inputs="getInputsForSch(sch)" :dialogId="dialogId"  :paramsForm="paramForm+sch.id" :maxInputCountInCol="1"  />
 									</v-container>
 									<v-container :class="getClassForRow+ ($vuetify.breakpoint.name=='xs'?' no-height':'')" style="flex: 0;">
 										<v-btn fab dark small class='primary' @click="delSch(idx)">
@@ -28,7 +28,7 @@
 								</v-layout>
 								<v-layout row  >
 									<v-container :class="getClassForRow">
-										<c-input-cols :inputs="getInputsForSch({})" :dialogId="dialogId"  :paramsForm="paramForm+'_'" :maxInputCountInCol="1"  />
+										<c-input-cols :inputs="getInputsForSch({})" :dialogId="dialogId"  :paramsForm="paramForm" :maxInputCountInCol="1"  />
 									</v-container>
 									<v-container :class="getClassForRow+ ($vuetify.breakpoint.name=='xs'?' no-height':'')" style="flex: 0;">
 										<v-btn fab dark small class='accent' @click="addSch()">
@@ -67,8 +67,8 @@
 				{id:4, title:'$vuetify.texts.userPage.links.wantStady', 		icon:'loyalty', 		},
 			],
 			colors:['white', 'white', 'white', 'white'],
-			forms:['aboutMe', 'whereStudy', 'howEge', 'wantStady'],
-			maxColumn:[2, 1, 6, 3],
+			forms:['aboutMe', 'whereStudy', 'howEge', 'wantStady','aboutMeBio',],
+			maxColumn:[3, 1, 6, 3],
 			saveFormTypes:['user.info.save', 'user.sch.save', 'user.ege.save', 'user.favorits.save', ],
 			user:{href:"/socet_command", event:"user.info.by.id", data:{}, loaded:false},
 			city:{href:"/socet_command", event:"city.list", data:[], loaded:false},
@@ -87,14 +87,16 @@
 			inputs() {
 				let vm=this
 				let data= [	
-					{id:1, form:'aboutMe', 		code:'firstName', 		name:'Имя', 						value:nvl(vm.user.data.firstName,null),																		type:'INPUT', 	nullable:0, column_size:30, sort_seq:1, mask_fin:'^[A-Za-zА-Яа-я]+$', error:'$vuetify.texts.errors.onlyLetters.text' },
-					{id:2, form:'aboutMe', 		code:'lastName', 		name:'Фамилия', 					value:nvl(vm.user.data.lastName,null),																		type:'INPUT', 	nullable:0, column_size:30, sort_seq:2, mask_fin:'^[A-Za-zА-Яа-я]+$', error:'$vuetify.texts.errors.onlyLetters.text' },
-					{id:3, form:'aboutMe', 		code:'birthDate', 		name:'Дата рождения', 				value:nvl(vm.user.data.birthDate,null),																		type:'DATE', 	nullable:0, column_size:30, sort_seq:3, max:(new Date().toISOString().substr(0, 10)),   min:"1950-01-01", isBirthDate:true,},
-					{id:4, form:'aboutMe', 		code:'residenceCity', 	name:'Проживаю в',	 				value_arr:nvl(vm.user.data.residenceCity,null)==null?null:[vm.user.data.residenceCity],						type:'LIST', 	nullable:0, column_size:30, sort_seq:4, table_values:vm.city.data, },
-					{id:5, form:'wantStady', 	code:'favoritCitys', 	name:'Предпочитаемые города',		value_arr:nvl(vm.user.data.favoritCitys,null)==null?null:vm.user.data.favoritCitys.split(',').map(val=> Number(val)),				type:'LIST',  	nullable:1, column_size:30, sort_seq:4, table_values:vm.city.data, multy:true,},
-					{id:6, form:'wantStady', 	code:'favoritUnivs', 	name:'Предпочитаемые ВУЗ-ы',		value_arr:nvl(vm.user.data.favoritUnivs,null)==null?null:vm.user.data.favoritUnivs.split(',').map(val=> Number(val)),				type:'LIST',  	nullable:1, column_size:30, sort_seq:5, table_values:vm.uni.data, multy:true,},
-					{id:7, form:'wantStady', 	code:'favoritDist', 	name:'Растояние от дома, км',	 	value:nvl(vm.user.data.favoritDist,0),																		type:'SLIDER',  nullable:1, column_size:30, sort_seq:6, min:0, max:500, step:50, },
-					{id:8, form:'wantStady', 	code:'favoritProfs', 	name:'Предпочитаемые профессии',	value_arr:nvl(vm.user.data.favoritProfs,null)==null?null:vm.user.data.favoritProfs.split(',').map(val=> Number(val)),				type:'LIST',  	nullable:1, column_size:30, sort_seq:7, table_values:vm.prof.data, multy:true,},
+					{id:1, form:'aboutMe', 		code:'firstName', 		name:'Имя', 						value:nvl(vm.user.data.firstName,null),																		type:'INPUT', 		nullable:0, column_size:30, sort_seq:1, mask_fin:'^[A-Za-zА-Яа-я]+$', error:'$vuetify.texts.errors.onlyLetters.text' },
+					{id:2, form:'aboutMe', 		code:'lastName', 		name:'Фамилия', 					value:nvl(vm.user.data.lastName,null),																		type:'INPUT', 		nullable:0, column_size:30, sort_seq:2, mask_fin:'^[A-Za-zА-Яа-я]+$', error:'$vuetify.texts.errors.onlyLetters.text' },
+					{id:3, form:'aboutMe', 		code:'residenceCity', 	name:'Проживаю в',	 				value_arr:nvl(vm.user.data.residenceCity,null)==null?null:[vm.user.data.residenceCity],						type:'LIST', 		nullable:0, column_size:30, sort_seq:3, table_values:vm.city.data, },
+					{id:4, form:'aboutMe', 		code:'birthDate', 		name:'Дата и время рождения', 		value:nvl(vm.user.data.birthDate,null),																		type:'DATETIME', 	nullable:0, column_size:30, sort_seq:4, max:(new Date().toISOString().substr(0, 10)),   min:"1950-01-01", isBirthDate:true,},
+					{id:5, form:'aboutMe', 		code:'birthCity', 		name:'Место рождения', 				value_arr:nvl(vm.user.data.birthCity,null)==null?null:[vm.user.data.birthCity],								type:'LIST', 		nullable:0, column_size:30, sort_seq:5, table_values:vm.city.data, },
+					
+					{id:6, form:'wantStady', 	code:'favoritCitys', 	name:'Предпочитаемые города',		value_arr:nvl(vm.user.data.favoritCitys,null)==null?null:vm.user.data.favoritCitys.split(',').map(val=> Number(val)),				type:'LIST',  	nullable:1, column_size:30, sort_seq:4, table_values:vm.city.data, multy:true,},
+					{id:7, form:'wantStady', 	code:'favoritUnivs', 	name:'Предпочитаемые ВУЗ-ы',		value_arr:nvl(vm.user.data.favoritUnivs,null)==null?null:vm.user.data.favoritUnivs.split(',').map(val=> Number(val)),				type:'LIST',  	nullable:1, column_size:30, sort_seq:5, table_values:vm.uni.data, multy:true,},
+					{id:8, form:'wantStady', 	code:'favoritDist', 	name:'Растояние от дома, км',	 	value:nvl(vm.user.data.favoritDist,0),																		type:'SLIDER',  	nullable:1, column_size:30, sort_seq:6, min:0, max:500, step:50, },
+					{id:9, form:'wantStady', 	code:'favoritProfs', 	name:'Предпочитаемые профессии',	value_arr:nvl(vm.user.data.favoritProfs,null)==null?null:vm.user.data.favoritProfs.split(',').map(val=> Number(val)),				type:'LIST',  	nullable:1, column_size:30, sort_seq:7, table_values:vm.prof.data, multy:true,},
 				]
 				if(vm.paramForm=='howEge')
 					vm.pr.data.forEach((pr,idx)=>{
@@ -127,7 +129,7 @@
 					todo=vm.paramTodo(vm.paramForm)
 				else
 					todo=vm.user.data.schls.map((row)=>{
-						return vm.paramTodo(vm.paramForm+'_'+row.id)
+						return vm.paramTodo(vm.paramForm+row.id)
 					})
 				if(['howEge'].indexOf(vm.paramForm)!=-1){
 					for (name in todo)
@@ -141,6 +143,7 @@
 					todo=tmp1
 				}
 				if(vm.paramForm=='aboutMe'){
+					todo={...todo, ...vm.paramTodo(vm.paramForm+'Bio')}
 					vm.user.data.firstName = todo.firstName.value
 					vm.user.data.lastName = todo.lastName.value
 					vm.user.data.birthDate = todo.birthDate.value
@@ -215,7 +218,7 @@
 			addSch(){
 				let vm=this
 				vm.user.data.schls.push({id:vm.schCnt, schId:null, dateSt:null, dateFn:null})
-				vm.paramInit( {num: vm.paramForm+'_'+vm.schCnt })
+				vm.paramInit( {num: vm.paramForm+vm.schCnt })
 				vm.schCnt++
 			},
 			delSch(idx){
@@ -225,13 +228,13 @@
 		},
 		created: function (){
 			let vm=this
-			vm.paramInit( {num: 'aboutMe' })
-			vm.paramInit( {num: 'howEge' })
-			vm.paramInit( {num: 'whereStudy_' })
-			vm.paramInit( {num: 'wantStady' })
-			vm.$root.$on('dialog'+vm.paramsForm+'Send', ()=>{
-				vm.formSave()
-			});
+			vm.forms.forEach((row,idx)=>{
+				vm.paramInit( {num: row })
+				if (idx <4)
+					vm.$root.$on('dialog'+row+'Send', ()=>{
+						vm.formSave()
+					});
+			})
 			setTimeout(vm.getData,100);//что бы параметры успели подгрузится			
 		},
 		mounted(){

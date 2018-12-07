@@ -1,5 +1,5 @@
 <template>
-	<c-app :curentSystem="$vuetify.t('$vuetify.texts.testPage.HeadTxt')" :panelLeft="{show:true}">
+	<c-app :curentSystem="$vuetify.t('$vuetify.texts.main.links.psyhTests.name')" :panelLeft="{show:true}">
 		<v-layout align-space-between justify-center column fill-height ml-1>
 			<v-flex>
 				<v-tabs

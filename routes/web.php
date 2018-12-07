@@ -16,8 +16,9 @@ Route::get('/auth', ['as' => 'Авторизация', function () { return view
 Route::get('/user', function () { return view('simple')->with('app_js', 'User');})->middleware('auth');// О себе
 Route::get('/test', function () { return view('simple')->with('app_js', 'Test');})->middleware('auth'); // Психотесты
 Route::get('/search', function () { return view('simple')->with('app_js', 'Search');})->middleware('auth'); // Поиск ВУЗов
-Route::get('/catalog_prof', function () { return view('simple')->with('app_js', 'Catalog_prof');}); // Каталог профессий
-Route::get('/top_prof', function () { return view('simple')->with('app_js', 'Catalog_prof');}); // Каталог профессий
+Route::get('/catalogProf', function () { return view('simple')->with('app_js', 'CatalogProf');}); // Каталог профессий
+Route::get('/topProf', function () { return view('simple')->with('app_js', 'CatalogProf');}); // Каталог профессий
+Route::get('/topSpec', function () { return view('simple')->with('app_js', 'TopSpec');})->middleware('auth'); // Топ специальностей
 
 Route::get('getEges', 'Main\EgeController@show')->middleware('auth');
 Route::get('getProfs', 'Main\ProfController@show');

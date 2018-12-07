@@ -11,14 +11,13 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
  |
  */
 
-mix.js('resources/assets/js/main/Main.js', 'public/js/Main.js')
-	/*.js('resources/assets/js/main/About.js', 'public/js/About.js')
-	.js('resources/assets/js/main/Search.js', 'public/js/Search.js')
-	.js('resources/assets/js/main/Test.js', 'public/js/Test.js')*/
+mix.js('resources/assets/js/main/Main', 'public/js')
 	.js('resources/assets/js/main/Auth.js', 'public/js')
 	.js('resources/assets/js/main/User.js', 'public/js')
-    .js('resources/assets/js/main/Test.js', 'public/js')
-    .js('resources/assets/js/main/Catalog_prof.js', 'public/js')
+	.js('resources/assets/js/main/Test.js', 'public/js')
+	.js('resources/assets/js/main/Search.js', 'public/js')
+	.js('resources/assets/js/main/topSpec.js', 'public/js')
+    .js('resources/assets/js/main/CatalogProf.js', 'public/js')
 	.webpackConfig({
 		resolve: {
 			alias: {
