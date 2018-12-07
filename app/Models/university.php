@@ -14,6 +14,6 @@ class University extends Model{
 		return  $this->select('uni_id as value','uniName as text')->orderBy('city_id')->orderBy('uniName')->get()->toArray();
 	}
     public  function getUniversitysForSearch(){
-		return  $this->select('uni_id','webSite','uniName','uniImg')->get()->toArray();
+		return  convertToAssArr ( $this->select('uni_id','webSite','uniName','uniImg', 'rate')->get()->toArray(),$this->primaryKey);
 	}
 }

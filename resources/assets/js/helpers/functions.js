@@ -95,6 +95,12 @@ function numberFormat(value,mask){
 	mask=mask||'0,0.000'
 	return sysNumeral(value).format(mask)
 }
+function createDictionary(obj, keyVal, keyText){
+	let tmp = [];
+	for(row in obj)
+		tmp.push({value: row[keyVal], text: row[keyText]})
+	return tmp
+}
 
 function dateFormat(str){//2018-10-03 12:52 в 03.10.2018 12:52
 	return nvl(str,'').replace(/(\d\d\d\d)-(\d\d)-(\d\d)/g, dateFormatStr )

@@ -10,6 +10,7 @@ use App\Models\Predmets;
 use App\Models\University;
 use App\Models\Profession;
 use App\Models\Specialty;
+use App\Models\Uni2Spec;
 use Illuminate\Http\Request;
 
 class SocetCommandController extends Controller{
@@ -22,8 +23,10 @@ class SocetCommandController extends Controller{
 			case('predmets.list'):{  return json_encode( ( new Predmets() )->getPredmetsList() ); };
 			case('universitys.list'):{  return json_encode( ( new University() )->getUniversitysList() ); };
 			case('profs.list'):{  return json_encode( ( new Profession() )->getProfessionsList() ); };
-			case('universitys.search.list'):{  return json_encode( ( new University() )->getUniversitysForSearch() ); };
-			case('specialtys.search.list'):{  return json_encode( ( new Specialty() )->geSpecialtysForSearch() ); };
+			case('search.universitys.list'):{  return json_encode( ( new University() )->getUniversitysForSearch() ); };
+			case('search.specialtys.list'):{  return json_encode( ( new Specialty() )->getSpecialtysForSearch() ); };
+			case('search.programs.list'):{  return json_encode( ( new Uni2Spec() )->getProgramsForSearch() ); };
+			case('search.results'):{  return json_encode( ( new Uni2Spec() )->getSearchResult(createTodo($data) ) ); };
 			default:{ throw new \App\Exceptions\KonsomException( 'Ошибка доступа','Нет доступа!'); };
 		}
 		return;

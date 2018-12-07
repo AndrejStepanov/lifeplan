@@ -15,6 +15,7 @@
 				paramByCode: "param/getByCode",
 				paramGroup: "param/getGroup",
 				paramTodo: "param/getTodo",
+				paramTodoChecked: "param/getTodoChecked",
 				profileIsRoot: "profile/getIsRoot",
 				profileAvatar: "profile/getAvatar",
 				profileUserId: "profile/getUserId",

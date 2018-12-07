@@ -80,3 +80,10 @@ function createArrTodo($data){
 		$tmp[]=parseTodo($row);
 	return $tmp;
 }
+
+function convertToAssArr($arr,$key){
+	$tmp=[];
+	foreach($arr as $row)
+		$tmp[ $row[$key] ] = $row;
+	return $tmp;
+}

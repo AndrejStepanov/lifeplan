@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,8 +10,8 @@ class Specialty extends Model{
     protected $dates = [  'created_at', 'updated_at'];
     protected $fillable = ['updated_at', 'created_at', 'rate', 'specDesc', 'whoWork', 'specName', 'specGroup', 'specCode'];
 
-    public  function geSpecialtysForSearch(){
-		return  $this->select('spec_id','specDesc','specCode', 'specGroup')->get()->toArray();
+    public  function getSpecialtysForSearch(){
+		return  convertToAssArr ($this->select('spec_id','specDesc','specCode', 'specGroup', 'specName')->get()->toArray(),$this->primaryKey);
 	}
 
 }

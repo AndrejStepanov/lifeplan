@@ -22,6 +22,7 @@
 			paramsForm: {type: String, defuault:''},
 			maxCols: {type: Number, defuault:4},
 			maxInputCountInCol:{type: Number, defuault:0},
+			fixColCnt:{type: Number, defuault:0},
 			needCheckBox:{type:  Boolean, default:false},
 			needSign:{type:  Boolean, default:false},
 			listItemMin:{type:  Boolean, default:false},
@@ -44,8 +45,14 @@
 					col=0,
 					checkRow=[],
 					colsData=[]
-				vm.colsCnt=Math.ceil(len/vm.maxInputInCol)
-				vm.colsCnt=vm.colsCnt>vm.maxCols?vm.maxCols:vm.colsCnt;
+				if(vm.fixColCnt>0)
+					vm.colsCnt=vm.fixColCnt
+				else{
+					vm.colsCnt=Math.ceil(len/vm.maxInputInCol)
+					vm.colsCnt=vm.colsCnt>vm.maxCols?vm.maxCols:vm.colsCnt;
+				}
+				if(vm.colsCnt>len)
+					vm.colsCnt=len
 				rowInColA=Math.ceil(len/vm.colsCnt)
 				for(let i=1; i<=vm.colsCnt;i++){
 					colsData.push([]);

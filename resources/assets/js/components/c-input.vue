@@ -683,8 +683,9 @@ time-with-seconds	##:##:##
 			vm.isBirthDate=vm.data.isBirthDate||vm.isBirthDate
 			if(vm.data.table_values!=undefined && vm.data.table_values.length>0)
 				vm.data.table_values.forEach(element => {
+					let text = nvl(element.text,element.value)
 					vm.tableValues.push(
-						{value:element.value, textFull:element.text, text:(['LIST'].indexOf(vm.type)==-1?element.text : element.text.length>vm.listItemLenght? element.text.substring(0,vm.listItemLenght)+'...':element.text ),}
+						{value:element.value, textFull:text, text:(['LIST'].indexOf(vm.type)==-1?text : text.length>vm.listItemLenght? text.substring(0,vm.listItemLenght)+'...':text ),}
 					);
 					if(isNaN(element.value))
 						vm.isNumeric=false
@@ -845,7 +846,7 @@ time-with-seconds	##:##:##
 	.main-contaner 											{display: block !important;}
 	.slider-label 											{font-size: 11px;}
 	.slider-upper 											{margin-top: -12px;}
-	.disabled-label 										{color: hsla(0,0%,100%,.5);}
+	.disabled-label 										{color: rgba(0,0,0,.38);}
 	.v-slider__ticks-container>.v-slider__ticks>span		{font-size: 12px;}
 	.theme--dark.v-chip.v-chip--disabled					{background: #737373;}
 	.v-date-picker-more-height								{height: 392px;}
