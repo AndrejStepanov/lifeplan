@@ -82,8 +82,8 @@
 			colorForm () {return this.colors[this.tabSelected]},
 			paramForm () {return this.dataLoading?'':this.forms[this.tabSelected]},
 			saveFormType () {return this.saveFormTypes[this.tabSelected]},
-			getMaxColumn(){return  this.$vuetify.breakpoint.name=='xs'?100: this.maxColumn[this.tabSelected]},
-			getClassForRow(){return  this.$vuetify.breakpoint.name=='xs'? 'no-padding': 'fix-padding'},
+			getMaxColumn(){return  ['xs','sm'].indexOf(this.$vuetify.breakpoint.name)!=-1 ?100: this.maxColumn[this.tabSelected]},
+			getClassForRow(){return   ['xs','sm'].indexOf(this.$vuetify.breakpoint.name)!=-1 ? 'no-padding': 'fix-padding'},
 			inputs() {
 				let vm=this
 				let data= [	
