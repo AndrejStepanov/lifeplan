@@ -20,4 +20,12 @@ class Profession extends Model{
     {
         return  $this->select('prof_group')->groupBy('prof_group')->orderBy('prof_group')->get()->toArray();
     }
+    public function spec2profs()
+    {
+        return $this->hasMany('spec2prof', 'prof_id','prof_id');
+    }
+    public function matches()
+    {
+        return $this->hasMany('App\Models\match', 'prof_id','prof_id');
+    }
 }

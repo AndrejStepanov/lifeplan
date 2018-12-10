@@ -16,4 +16,8 @@ class University extends Model{
     public  function getUniversitysForSearch(){
 		return  convertToAssArr ( $this->select('uni_id','webSite','uniName','uniImg', 'rate')->get()->toArray(),$this->primaryKey);
 	}
+    public function Uni2Specs()
+    {
+        return $this->hasMany('App\Models\Uni2Spec', 'uni_id','uni_id');
+    }
 }

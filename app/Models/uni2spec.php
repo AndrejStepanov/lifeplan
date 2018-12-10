@@ -18,5 +18,12 @@ class Uni2Spec extends Model{
     public  function getSearchResult($todo){
 		return  DB::select("select rec_id, 0 psyTest,0 astroTest, 0 totalTest FROM _uni2spec");
 	}
-
+    public function Specialty()
+    {
+        return $this->belongsTo('App\Models\Specialty','spec_id');
+    }
+    public function University()
+    {
+        return $this->belongsTo('App\Models\university', 'uni_id');
+    }
 }

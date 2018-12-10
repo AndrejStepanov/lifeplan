@@ -1,58 +1,110 @@
 <template>
 	<c-app :curentSystem="$vuetify.t('$vuetify.texts.main.links.topProf.name')" :panelLeft="{show:true}">
-		
+		<v-card>
+			<v-card-title>
+				Специальности, которые Вам подходят:
+				<v-spacer></v-spacer>
+				<v-text-field
+						v-model="search"
+						append-icon="search"
+						label="Поиск"
+						single-line
+						hide-details
+				></v-text-field>
+			</v-card-title>
+			<v-data-table
+					:headers="headers"
+					:items="desserts"
+					:search="search"
+					:pagination.sync="confData"
+					:loading="isLoadTable"
+					:no-data-text="emptyTableText"
+					item-key="specID"
+			>
+				<template slot="items" slot-scope="props">
+					<tr @click="props.expanded = !props.expanded">
+						<td>{{ props.item.specName }}</td>
+						<td>{{ props.item.specGroup }}</td>
+						<td class="text-xs-right">{{ props.item.rate }}</td>
+						<td class="text-xs-right">{{ props.item.uniCnt }}</td>
+						<td class="text-xs-right">{{ props.item.prCnt }}</td>
+						<td class="text-xs-right">{{ props.item.proc }}</td>
+					</tr>
+				</template>
+				<v-alert slot="no-results" :value="true" color="error" icon="warning">
+					Your search for "{{ search }}" found no results.
+				</v-alert>
+				<template slot="expand" slot-scope="props">
+					<v-card flat>
+						<v-card-text>
+							<span class="grey--text">{{ props.item.specDesc }}</span>
+							</br><span class="grey--text"><i>Кем работать:</i></span></br>
+							<span class="grey--text">{{ props.item.whoWork }}</span>
+						</v-card-text>
+					</v-card>
+				</template>
+				<template slot="progress">
+					<v-progress-circular class="ma-4"
+							:size="80"
+							color="secondary"
+							indeterminate
+					></v-progress-circular>
+				</template>
+
+			</v-data-table>
+		</v-card>
 	</c-app>
 </template>
 
 <script>
+    import axios from 'axios'
 	import XApp from '../mixins/x-app'
-	import XStore from '../mixins/x-store'
-	import CInputCols from '../components/c-input-cols'
-	import CLoading from '../components/c-loading'
+
 	export default {
 		data: () => ({
-			inputsValid:false,
-			dialogId:getNewId(),
-			paramForm:'search',
+            search: '',
+            emptyTableText:'Идёт загрузка данных ...',
+            isLoadTable:true,
+            confData: {
+                page: 1,
+                rowsPerPage: 25
+            },
+            headers: [
+                { text: 'Название специальности', align: 'left', sortable:false, value: 'specName' },
+                { text: 'Категория', align: 'left', value: 'specGroup' },
+                { text: 'Рейтинг', value: 'rate', align: 'right' },
+                { text: 'ВУЗов', value: 'uniCnt', align: 'right' },
+                { text: 'Программ', value: 'prCnt', align: 'right' },
+                { text: 'Степень соответствия (%)', value: 'proc', align: 'right' }
+            ],
+            desserts: []
 		}),
 		computed: {
-			dataLoading(){return false},
-			inputs() {
-				let vm=this
-				let data= [	
-					{id:1, form:'aboutMe', 		code:'firstName', 		name:'Имя', 						type:'INPUT', 		nullable:0, column_size:30, sort_seq:1, },
-					{id:2, form:'aboutMe', 		code:'lastName', 		name:'Фамилия', 					type:'INPUT', 		nullable:0, column_size:30, sort_seq:2, },
-					{id:3, form:'aboutMe', 		code:'residenceCity', 	name:'Проживаю в',	 				type:'LIST', 		nullable:0, column_size:30, sort_seq:3, },
-					{id:4, form:'aboutMe', 		code:'birthDate', 		name:'Дата и время рождения', 		type:'DATETIME', 	nullable:0, column_size:30, sort_seq:4, },
-					{id:5, form:'aboutMe', 		code:'birthCity', 		name:'Место рождения', 				type:'LIST', 		nullable:0, column_size:30, sort_seq:5, },
-				]
-				return data.filter(row =>  row.form == vm.paramForm ).sort( (a, b) =>{return sort(a, b, 'sort_seq', 'sort_seq')})
-			},
-		},
-		components: {
-			CInputCols,CLoading,
+
 		},
 		mixins: [
-			XApp,XStore
+			XApp
 		],
 		methods: {
-			formSave(){
-				let vm=this,tmp=[],tmp1={},todo={}
-				if (!vm.$refs[vm.paramForm].validate())
-					return;
-				todo=vm.paramTodo(vm.paramForm)
-				sendRequest({href:"/data_command", type:vm.saveFormType, data:{ todo, }, default: getErrDesc('requestFaild'), handler:()=>showMsg({...getMsgDesc('saveDoing')}),  })
-			},
+            getData(){
+                this.getSpecInfo()
+            },
+            getSpecInfo(){
+                let vm=this;
+                axios.get('getSpec').then(response => {
+                    vm.desserts = response.data;
+					vm.isLoadTable=false;
+                    vm.emptyTableText="Отсутствуют данные";
+                }).catch(e => {
+                    console.log(e)
+                })
+            },
 		},
 		created: function (){
-			let vm=this
-			vm.paramInit( {num: vm.paramForm })
-			vm.$root.$on('dialog'+vm.paramForm+'Send', ()=>{
-				vm.formSave()
-			});
+            this.getData()
 		},
 		mounted(){
-			let vm=this
+
     	},
 	}
 </script>
@@ -62,4 +114,5 @@
 .no-height {width:50px;}
 .no-padding,
 .no-padding>div {padding: 0px;}
+div.v-content__wrap{margin:10px;}
 </style>
