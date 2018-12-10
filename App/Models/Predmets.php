@@ -9,10 +9,13 @@ class Predmets extends Model
     protected $table = '_predmets';
     protected $primaryKey = 'pr_id';
 
-    protected $fillable = ['pr_name', 'is_spec','min_val', ];
+    protected $fillable = ['prName', 'isSpec','minVal', ];
 
     public  function getPredmetsList(){
-		return  $this->select('pr_id as value','pr_name as text')->orderBy('is_spec')->orderBy('pr_name')->get()->toArray();
-	}
+		  return  $this->select('pr_id as value','prName as text')->orderBy('isSpec')->orderBy('prName')->get()->toArray();
+    }
+    public  function getPredmetsListAss(){
+		  return   convertToAssArr ($this->getPredmetsList(),'value');
+	  }
     
 }

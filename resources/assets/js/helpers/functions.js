@@ -1,6 +1,6 @@
 const MAX_ID= 9999999,
 	MAX_INPUT_IN_COL= 6,
-	appTheme={  primary: '#0d47a1', secondary: '#0d47a1', accent: '#FF9900', error: '#f44336', warning: '#ffeb3b', info: '#2196f3', success: '#4caf50', checkBox:"#fd0000"},//https://colorscheme.ru/#0M32fw0w0w0w0
+	appTheme={  primary: '#0d47a1', secondary: '#f44336', accent: '#FF9900', error: '#f44336', warning: '#ffeb3b', info: '#2196f3', success: '#4caf50', checkBox:"#fd0000"},//https://colorscheme.ru/#0M32fw0w0w0w0
 	authButtons= [ {id:1, title:'$vuetify.texts.simple.actions.logIn', icon:'input', allig:'right', click:'dialogSave' , needCheck:true} ],
 	dateFormatStr = '$3.$2.$1' //2018-10-03 - 1, 2 и 3 цифры
 
@@ -143,6 +143,15 @@ function sort(a, b, aFild, bFild){
 		return -1
 	// a должно быть равным b
 	return 0
+}
+
+function list(arr=[], sep=','){
+	let tmp = ''
+	arr.forEach(row=>{
+		if(nvl(row)!='')
+			tmp+=', '+row
+	})
+	return tmp.slice(2)
 }
 
 function isInteger(num){

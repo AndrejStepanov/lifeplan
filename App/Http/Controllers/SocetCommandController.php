@@ -26,6 +26,7 @@ class SocetCommandController extends Controller{
 			case('search.universitys.list'):{  return json_encode( ( new University() )->getUniversitysForSearch() ); };
 			case('search.specialtys.list'):{  return json_encode( ( new Specialty() )->getSpecialtysForSearch() ); };
 			case('search.programs.list'):{  return json_encode( ( new Uni2Spec() )->getProgramsForSearch() ); };
+			case('search.predmets.list'):{  return json_encode( ( new Predmets() )->getPredmetsListAss() ); };
 			case('search.results'):{  return json_encode( ( new Uni2Spec() )->getSearchResult(createTodo($data) ) ); };
 			default:{ throw new \App\Exceptions\KonsomException( 'Ошибка доступа','Нет доступа!'); };
 		}

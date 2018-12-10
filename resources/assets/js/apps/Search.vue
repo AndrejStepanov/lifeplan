@@ -2,21 +2,40 @@
 	<c-app :curentSystem="$vuetify.t('$vuetify.texts.main.links.search.name')" :panelLeft="{show:true}">
 		<c-table tableTitle="$vuetify.texts.searchPage.mainTableTitle"  :headers="tabHeader" :items="tabValues" ref="table" :noRowNum="true" :hide-actions="false" :dataLoading="dataLoading" :fiterButtonhNeed="true" :manBody="true" @fiterButtonClick="showFilter = true" >
 			<tr  slot="items" slot-scope="props" @click="propsLog(props)" >
-				<td class=" pt-4 text-nobr" style="align-items: center;"	>	
-										<v-img :src="props.item.uniImg==''?'https://cdn.vuetifyjs.com/images/parallax/material.jpg':props.item.uniImg" height="125" width="125" :aspect-ratio="16/9" /><br>
-										<v-rating	:value="props.item.rate/200" readonly	background-color="lighten-3"	small color="red"	/>															</td>
-				<td					>	
-										<b>{{props.item.programmName}}</b><br>
-										&nbsp;&nbsp;&nbsp;&nbsp;Учебная степень: <u><i>{{props.item.specGroup}}</i></u>,
-										лет обучения: <u><i>{{props.item.qtyYears}}</i></u>, 
-										проходной бал:<u><i>{{props.item.totalBall}}</i></u>,
-										бюджетных мест:<u><i>{{props.item.qtyBudgets}}</i></u>, <br>
-										&nbsp;&nbsp;&nbsp;&nbsp;стоимость обучения за год:<u><i>{{props.item.priceYear}}</i></u>, <br>
-										&nbsp;&nbsp;&nbsp;&nbsp;{{props.item.faculty}} - {{props.item.specName}}<br>
-										&nbsp;&nbsp;&nbsp;&nbsp;<a :href="props.item.webSite" :title="props.item.uniName">{{props.item.uniName}}</a>																					</td>
-				<td					>{{props.item.psyTest}}																																						</td>
-				<td					>{{props.item.astroTest}}																																					</td>
-				<td					>{{props.item.totalTest}}																																					</td>
+				<template v-if="['xs','sm'].indexOf($vuetify.breakpoint.name)==-1">
+					<td class=" pt-4 text-nobr" style="align-items: center;"	>	
+											<v-img :src="props.item.uniImg==''?'https://cdn.vuetifyjs.com/images/parallax/material.jpg':props.item.uniImg" height="125" width="125" :aspect-ratio="16/9" /><br>
+											<v-rating	:value="props.item.rate/200" readonly	background-color="lighten-3"	small color="red"	/>															</td>
+					<td					>	
+											<b>{{props.item.programmName}}</b><br>
+											&nbsp;&nbsp;&nbsp;&nbsp;Учебная степень: <u><i>{{props.item.specGroup}}</i></u>,
+											лет обучения: <u><i>{{props.item.qtyYears}}</i></u>, 
+											стоимость обучения за год:<u><i>{{props.item.priceYear}}</i></u>,
+											бюджетных мест:<u><i>{{props.item.qtyBudgets}}</i></u>, <br>
+											&nbsp;&nbsp;&nbsp;&nbsp;проходной бал:<u><i>{{props.item.totalBall}} ( {{listPrdemts(props.item)}} )</i></u>, <br>
+											&nbsp;&nbsp;&nbsp;&nbsp;{{props.item.faculty}} - {{props.item.specName}}<br>
+											&nbsp;&nbsp;&nbsp;&nbsp;<a :href="props.item.webSite" :title="props.item.uniName">{{props.item.uniName}}</a>														</td>
+					<td					>	{{props.item.psyTest}}																																				</td>
+					<td					>	{{props.item.astroTest}}																																			</td>
+					<td					>	{{props.item.totalTest}}																																			</td>
+				</template>
+				<template v-else>
+					<td class=" pt-4" style="align-items: center;"	>	
+											<a :href="props.item.webSite" :title="props.item.uniName">
+											<v-img :src="props.item.uniImg==''?'https://cdn.vuetifyjs.com/images/parallax/material.jpg':props.item.uniImg" height="125" width="125" :aspect-ratio="16/9" />
+											</a><br>
+											<v-rating	:value="props.item.rate/200" readonly	background-color="lighten-3"	small color="red"	/><br><br>															
+											<b>{{props.item.programmName}}</b><br>
+											Учебная степень: <u><i>{{props.item.specGroup}}</i></u>,
+											лет обучения: <u><i>{{props.item.qtyYears}}</i></u>, 
+											стоимость обучения за год:<u><i>{{props.item.priceYear}}</i></u>,
+											бюджетных мест:<u><i>{{props.item.qtyBudgets}}</i></u>, <br>
+											проходной бал:<u><i>{{props.item.totalBall}} ( {{listPrdemts(props.item)}} )</i></u>, <br>
+											{{props.item.faculty}} - {{props.item.specName}}<br>
+											Психотест: <u><i>{{props.item.psyTest}}</i></u>,
+											Астропрогноз: <u><i>{{props.item.astroTest}}</i></u>,
+											Совместимость: <u><i>{{props.item.totalTest}}</i></u>																												</td>
+				</template>
 			</tr>	
 		</c-table>
 		<v-dialog v-model="showFilter" fullscreen hide-overlay transition="dialog-bottom-transition">
@@ -76,31 +95,34 @@
 			dialogId:getNewId(),
 			paramForm:'search',
 			dataSearchLoaded:false,
-			tabHeader:[
-				{code:'ava',			text:'',					type:'img', 	 		},
-				{code:'program',		text:'Программа',			type:'text', 	 		},
-				/*{code:'totalBall',		text:'Проходной балл',		type:'numeric', 	 	},
-				{code:'qtyBudgets',		text:'Бюджетных мест',		type:'numeric', 	 	},
-				{code:'priceYear',		text:'Стоимость за год',	type:'numeric', 	 	},
-				{code:'qtyYears',		text:'Срок обучения',		type:'numeric', 	 	},*/
-				{code:'psyTest',		text:'Психотест',			type:'numeric', 	 	},
-				{code:'astroTest',		text:'Астропрогноз',		type:'numeric', 	 	},
-				{code:'totalTest',		text:'Совместимость',		type:'numeric', 	 	},
-			],
 			tabData:[],
-			uni:{href:"/socet_command", event:"search.universitys.list", data:{}, loaded:false},
+			uni:{href:"/socet_command",  event:"search.universitys.list", data:{}, loaded:false},
 			spec:{href:"/socet_command", event:"search.specialtys.list", data:{}, loaded:false},
 			prog:{href:"/socet_command", event:"search.programs.list", data:{}, loaded:false},
+			pred:{href:"/socet_command", event:"search.predmets.list", data:{}, loaded:false},
 			city:{href:"/socet_command", event:"city.list", data:[], loaded:false},
 		}),
 		computed: {
-			dataLoading(){return !( this.dataSearchLoaded && this.uni.loaded && this.spec.loaded && this.prog.loaded && this.city.loaded )},
+			dataLoading(){return !( this.dataSearchLoaded && this.uni.loaded && this.spec.loaded && this.prog.loaded && this.city.loaded && this.pred.loaded )},
 			tabValues(){
 				let vm=this
 				return vm.tabData.map(res=>{
 					let prog = vm.prog.data[res.rec_id]
 					return	{...res, ...prog, ...vm.uni.data[prog.uni_id], ...vm.spec.data[prog.spec_id]	}
 				})
+			},
+			tabHeader(){
+				let vm = this
+				if(['xs','sm'].indexOf(vm.$vuetify.breakpoint.name)!=-1)
+					return [{code:'ava',			text:'',					type:'img', 	 		},]
+				else
+					return [
+						{code:'ava',			text:'',					type:'img', 	 		},
+						{code:'program',		text:'Программа',			type:'text', 	 		},
+						{code:'psyTest',		text:'Психотест',			type:'numeric', 	 	},
+						{code:'astroTest',		text:'Астропрогноз',		type:'numeric', 	 	},
+						{code:'totalTest',		text:'Совместимость',		type:'numeric', 	 	},
+					]
 			},
 			specDic(){return createDictionary(this.spec.data,'spec_id', 'specName'  )},
 		},
@@ -111,12 +133,17 @@
 			XApp,XStore
 		],
 		methods: {
+			listPrdemts(item){
+				let vm=this
+				return list([nvlo(vm.pred.data[item.req1]).text,nvlo(vm.pred.data[item.req2]).text,nvlo(vm.pred.data[item.req3]).text,nvlo(vm.pred.data[item.req4]).text,nvlo(vm.pred.data[item.req5]).text ])
+			},
 			propsLog(prop){console.log(prop);},
 			formSave(){
 				let vm=this,tmp=[],tmp1={},todo={}
 				if (!vm.$refs[vm.paramForm].validate())
 					return;
 				vm.showFilter = false;
+				vm.dataSearchLoaded=false;
 				todo=vm.paramTodoChecked(vm.paramForm)
 				sendRequest({href:"/socet_command", type:'search.results', data:{ todo, }, default: getErrDesc('requestFaild'), handler:(response) => {
 					vm.tabData=response.data
@@ -128,6 +155,7 @@
 				vm.getUniInfo()
 				vm.getSpecInfo()
 				vm.getProgInfo()
+				vm.getPredInfo()
 				vm.getCityInfo()
 				
 				vm.formSave()
@@ -151,6 +179,13 @@
 				sendRequest({href:vm.prog.href, type:vm.prog.event, handler:(response) => {
 					vm.prog = Object.assign({}, vm.prog, {data:response.data})
 					vm.prog.loaded=true
+				}})
+			},
+			getPredInfo(){
+				let vm=this
+				sendRequest({href:vm.pred.href, type:vm.pred.event, handler:(response) => {
+					vm.pred = Object.assign({}, vm.pred, {data:response.data})
+					vm.pred.loaded=true
 				}})
 			},
 			getCityInfo(){
