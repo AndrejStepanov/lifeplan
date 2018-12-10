@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class spec2prof extends Model
-{
+class spec2prof extends Model{
     protected $table = '_spec2prof';
     protected $primaryKey = 'rec_id';
     protected $dates = [  'created_at', 'updated_at'];

@@ -129,7 +129,6 @@
 					todo=vm.paramTodo(vm.paramForm)
 				else
 					todo=vm.user.data.schls.map((row)=>{
-						console.log(vm.paramForm+row.id)
 						return vm.paramTodo(vm.paramForm+row.id)
 					})
 				if(['howEge'].indexOf(vm.paramForm)!=-1){

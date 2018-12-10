@@ -1,6 +1,6 @@
 <template>
     <v-app light >
-		<c-head ref="head" :curentSystem='curentSystem' :showLeft="panelLeftDrawer" :showRight="panelRightDrawer"/>
+		<c-head ref="head" :curentSystem='curentSystem' :showLeft="panelLeftDrawer" :showRight="panelRightDrawer" :needLabel="needLabel"/>
 		<v-navigation-drawer dark v-if="panelLeftDrawer" fixed app v-model="panelLeftShowen" left   :class="panelLeft.class" :width="panelLeftWidth">
 			<slot name="panelLeft">
 				<v-list dense>
@@ -46,7 +46,8 @@
 		<v-navigation-drawer dark v-if="panelRightDrawer" fixed app v-model="panelRightShowen" right   :class="panelRight.class" :width="panelRightWidth">
 			<slot name="panelRight"/>
 		</v-navigation-drawer>
-		<v-content ref='content' :style="getContentStyles">
+		<v-content ref='content' :style="getContentStyles" >
+			<div ref='scrollArea'/>
 			<slot v-if="!mainPanelReq" />
 			<c-layouts v-else :config="mainPanelConfig">
 				<div  v-for="(slotName, index) in slotNames" :key="index"   :slot="slotName" >
@@ -75,13 +76,13 @@
 			},
 			panelLeftShowen: false,
 			panelRightShowen: false,
+			needLabel: true,
 			slotNamesCalc:[],
             items: [
                 { link: '$vuetify.texts.main.links.headPage', 			icon: 'home', 				href:'\\' },
 				{ link: '$vuetify.texts.main.links.demandProf', 		icon: 'trending_up', 		href:'\\topProf' },
                 { link: '$vuetify.texts.main.links.topProf', 			icon: 'favorite', 			href:'\\topSpec'  },
                 { link: '$vuetify.texts.main.links.catalogProf', 		icon: 'view_module', 		href:'\\catalogProf'  },
-				{ link: '$vuetify.texts.main.links.search', 			icon: 'search', 			href:'\\search'  }
             ], 
 		}),
 		props:{
@@ -111,7 +112,11 @@
 			},
 			getContentStyles(){
 				let vm=this//финт ушами, что бы основная область не прокручивалась
-				return {height: vm.oneScreen?'100px':null, background:vm.needBgIm?"url('storage/bg.jpg')":null , backgroundAttachment: 'fixed'}
+				return {
+					height: vm.oneScreen?'100px':null, 
+					background:vm.needBgIm?"url('storage/bg.jpg')":null , 
+					backgroundAttachment: 'fixed',
+				}
 			},
 			panelLeftDrawer(){ return this.panelLeft.drawer || this.panelLeft.show || this.panelLeft.filter	},
 			panelRightDrawer(){ return this.panelRight.drawer || this.panelRight.show || this.panelLeft.filter	},
@@ -123,6 +128,7 @@
 					return this.profileUserName()==''?null: [
 					{ link: '$vuetify.texts.main.links.mainPage', 			icon: 'home', 				href:'\\user' },
 					{ link: '$vuetify.texts.main.links.psyhTests', 			icon: 'library_books', 		href:'\\test'  },
+					{ link: '$vuetify.texts.main.links.search', 			icon: 'search', 			href:'\\search'  }
 				]
 			},
 		},
@@ -153,8 +159,8 @@
 		},
 		created: function (){
 			let vm=this
-			vm.panelLeftShowen=nvl(vm.panelLeft.show,false)
-			vm.panelRightShowen=nvl(vm.panelRight.show,false)
+			vm.panelLeftShowen= ['xs','sm'].indexOf(vm.$vuetify.breakpoint.name)!=-1? false: nvl(vm.panelLeft.show,false)
+			vm.panelRightShowen=['xs','sm'].indexOf(vm.$vuetify.breakpoint.name)!=-1? false: nvl(vm.panelRight.show,false)
 			vm.$root.$on('headDrawerLeftClick', (obj)=>{
 				vm.panelLeftShowen=!vm.panelLeftShowen
 			}); 
@@ -164,8 +170,12 @@
 			vm.$root.$on('openAuthDialog', (obj)=>{
 				vm.dialogSelect(vm.dialogsConfig.auth.id)
 				vm.dialogShowChange({name:"auth-login", isShow:true})
-			});	
-			
+			});				
+		},
+		mounted() {
+			let vm=this
+			vm.observer =  new IntersectionObserver(entries=>vm.needLabel= entries[0].intersectionRatio > 0);
+			vm.observer.observe(vm.$refs.scrollArea);
 		},
     }
 </script>

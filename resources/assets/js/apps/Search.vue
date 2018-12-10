@@ -1,7 +1,7 @@
 <template>
 	<c-app :curentSystem="$vuetify.t('$vuetify.texts.main.links.search.name')" :panelLeft="{show:true}">
 		<c-table tableTitle="$vuetify.texts.searchPage.mainTableTitle"  :headers="tabHeader" :items="tabValues" ref="table" :noRowNum="true" :hide-actions="false" :dataLoading="dataLoading" :fiterButtonhNeed="true" :manBody="true" @fiterButtonClick="showFilter = true" >
-			<tr  slot="items" slot-scope="props" @click="propsLog(props)" >
+			<tr  slot="items" slot-scope="props" >
 				<template v-if="['xs','sm'].indexOf($vuetify.breakpoint.name)==-1">
 					<td class=" pt-4 text-nobr" style="align-items: center;"	>	
 											<v-img :src="props.item.uniImg==''?'https://cdn.vuetifyjs.com/images/parallax/material.jpg':props.item.uniImg" height="125" width="125" :aspect-ratio="16/9" /><br>
@@ -55,7 +55,7 @@
 						<v-subheader>{{$vuetify.t('$vuetify.texts.searchPage.education')}}</v-subheader>
 						<v-list-tile avatar>
 							<v-list-tile-content  >
-								<c-input-cols :inputs="inputs('edu')" :dialogId="dialogId"  :paramsForm="paramForm"  :fixColCnt="3" :needCheckBox="true" />
+								<c-input-cols :inputs="inputs('edu')" :dialogId="dialogId"  :paramsForm="paramForm"  :fixColCnt="getFilColCnt" :needCheckBox="true" />
 							</v-list-tile-content>
 						</v-list-tile>
 					</v-list>
@@ -64,7 +64,7 @@
 						<v-subheader>{{$vuetify.t('$vuetify.texts.searchPage.locate')}}</v-subheader>
 						<v-list-tile avatar>
 							<v-list-tile-content >
-								<c-input-cols :inputs="inputs('locate')" :dialogId="dialogId"  :paramsForm="paramForm" :fixColCnt="3" :needCheckBox="true" />
+								<c-input-cols :inputs="inputs('locate')" :dialogId="dialogId"  :paramsForm="paramForm" :fixColCnt="getFilColCnt" :needCheckBox="true" />
 							</v-list-tile-content>
 						</v-list-tile>
 					</v-list>
@@ -73,7 +73,7 @@
 						<v-subheader>{{$vuetify.t('$vuetify.texts.searchPage.vuz')}}</v-subheader>
 						<v-list-tile avatar>
 							<v-list-tile-content>
-								<c-input-cols :inputs="inputs('vuz')" :dialogId="dialogId"  :paramsForm="paramForm" :fixColCnt="3" :needCheckBox="true" />
+								<c-input-cols :inputs="inputs('vuz')" :dialogId="dialogId"  :paramsForm="paramForm" :fixColCnt="getFilColCnt" :needCheckBox="true" />
 							</v-list-tile-content>
 						</v-list-tile>
 					</v-list>
@@ -103,6 +103,11 @@
 			city:{href:"/socet_command", event:"city.list", data:[], loaded:false},
 		}),
 		computed: {
+			getFilColCnt(){
+				let vm=this
+				return ['xs'].indexOf(vm.$vuetify.breakpoint.name)!=-1 ? 1 :
+					['sm'].indexOf(vm.$vuetify.breakpoint.name)!=-1 ? 2 : 3
+			},
 			dataLoading(){return !( this.dataSearchLoaded && this.uni.loaded && this.spec.loaded && this.prog.loaded && this.city.loaded && this.pred.loaded )},
 			tabValues(){
 				let vm=this
@@ -137,7 +142,6 @@
 				let vm=this
 				return list([nvlo(vm.pred.data[item.req1]).text,nvlo(vm.pred.data[item.req2]).text,nvlo(vm.pred.data[item.req3]).text,nvlo(vm.pred.data[item.req4]).text,nvlo(vm.pred.data[item.req5]).text ])
 			},
-			propsLog(prop){console.log(prop);},
 			formSave(){
 				let vm=this,tmp=[],tmp1={},todo={}
 				if (!vm.$refs[vm.paramForm].validate())
@@ -234,4 +238,5 @@
 <style>
 .height-auto,
 .height-auto>div>div.v-list__tile {height:auto;}
+div.v-content__wrap{margin:10px;}
 </style>
