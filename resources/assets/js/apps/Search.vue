@@ -55,7 +55,7 @@
 						<v-subheader>{{$vuetify.t('$vuetify.texts.searchPage.education')}}</v-subheader>
 						<v-list-tile avatar>
 							<v-list-tile-content  >
-								<c-input-cols :inputs="inputs('edu')" :dialogId="dialogId"  :paramsForm="paramForm"  :fixColCnt="3" :needCheckBox="true" />
+								<c-input-cols :inputs="inputs('edu')" :dialogId="dialogId"  :paramsForm="paramForm"  :fixColCnt="getFilColCnt" :needCheckBox="true" />
 							</v-list-tile-content>
 						</v-list-tile>
 					</v-list>
@@ -64,7 +64,7 @@
 						<v-subheader>{{$vuetify.t('$vuetify.texts.searchPage.locate')}}</v-subheader>
 						<v-list-tile avatar>
 							<v-list-tile-content >
-								<c-input-cols :inputs="inputs('locate')" :dialogId="dialogId"  :paramsForm="paramForm" :fixColCnt="3" :needCheckBox="true" />
+								<c-input-cols :inputs="inputs('locate')" :dialogId="dialogId"  :paramsForm="paramForm" :fixColCnt="getFilColCnt" :needCheckBox="true" />
 							</v-list-tile-content>
 						</v-list-tile>
 					</v-list>
@@ -73,7 +73,7 @@
 						<v-subheader>{{$vuetify.t('$vuetify.texts.searchPage.vuz')}}</v-subheader>
 						<v-list-tile avatar>
 							<v-list-tile-content>
-								<c-input-cols :inputs="inputs('vuz')" :dialogId="dialogId"  :paramsForm="paramForm" :fixColCnt="3" :needCheckBox="true" />
+								<c-input-cols :inputs="inputs('vuz')" :dialogId="dialogId"  :paramsForm="paramForm" :fixColCnt="getFilColCnt" :needCheckBox="true" />
 							</v-list-tile-content>
 						</v-list-tile>
 					</v-list>
@@ -103,6 +103,11 @@
 			city:{href:"/socet_command", event:"city.list", data:[], loaded:false},
 		}),
 		computed: {
+			getFilColCnt(){
+				let vm=this
+				return ['xs'].indexOf(vm.$vuetify.breakpoint.name)!=-1 ? 1 :
+					['sm'].indexOf(vm.$vuetify.breakpoint.name)!=-1 ? 2 : 3
+			},
 			dataLoading(){return !( this.dataSearchLoaded && this.uni.loaded && this.spec.loaded && this.prog.loaded && this.city.loaded && this.pred.loaded )},
 			tabValues(){
 				let vm=this
@@ -234,4 +239,5 @@
 <style>
 .height-auto,
 .height-auto>div>div.v-list__tile {height:auto;}
+div.v-content__wrap{margin:10px;}
 </style>
