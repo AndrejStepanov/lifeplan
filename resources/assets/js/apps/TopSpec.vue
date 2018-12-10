@@ -29,6 +29,7 @@
 						<td class="text-xs-right">{{ props.item.uniCnt }}</td>
 						<td class="text-xs-right">{{ props.item.prCnt }}</td>
 						<td class="text-xs-right">{{ props.item.proc }}</td>
+						<td class="text-xs-center"><v-rating v-model="props.item.userRate"></v-rating></td>
 					</tr>
 				</template>
 				<v-alert slot="no-results" :value="true" color="error" icon="warning">
@@ -77,7 +78,8 @@
                 { text: 'Рейтинг', value: 'rate', align: 'right' },
                 { text: 'ВУЗов', value: 'uniCnt', align: 'right' },
                 { text: 'Программ', value: 'prCnt', align: 'right' },
-                { text: 'Степень соответствия (%)', value: 'proc', align: 'right' }
+                { text: 'Степень соответствия (%)', value: 'proc', align: 'right' },
+                { text: 'Оценка пользователя', value: 'userRate', align: 'center' }
             ],
             desserts: []
 		}),

@@ -34,6 +34,7 @@ class Specialty extends Model{
             $result[$i]['prCnt']=$spec->uni2specs()->count();
             $result[$i]['uniCnt']=$spec->uni2specs()->distinct('unit_id')->count();
             $result[$i]['proc']=$rate;
+            $result[$i]['userRate']=$SysRate['user'];
             if ($result[$i]['proc']>$max_rate) $max_rate=$result[$i]['proc'];
             $i++;
         }
