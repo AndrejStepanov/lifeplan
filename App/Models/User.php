@@ -43,5 +43,21 @@ class User extends Authenticatable{
         $this->where('id',Auth::user()->id )
             ->update(['favoritCitys' => $data['todo']['favoritCitys'], 'favoritUnivs' => $data['todo']['favoritUnivs'], 'favoritDist' => $data['todo']['favoritDist'], 'favoritProfs' => $data['todo']['favoritProfs'] ]);
     }
+
+    public  function isFavorite($spec_id){
+        $is_my=false;
+        if ($spec_id > 0){
+	        $tmp=$this->where('id',Auth::user()->id )->select('favoritProfs')->get();
+            $Profs=explode(",",$tmp[0]->favoritProfs);
+            $specs=(new spec2prof())->getMySpec($Profs);
+            foreach($specs as $spec){
+                if ($spec_id == $spec->spec_id){
+                    $is_my = true;
+                    break;
+                }
+            }
+        }
+        return $is_my;
+    }
     
 }

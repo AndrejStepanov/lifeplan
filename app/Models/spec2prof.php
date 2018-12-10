@@ -18,4 +18,8 @@ class spec2prof extends Model{
     {
         return $this->belongsTo('App\Models\Profession','prof_id','prof_id');
     }
+    public function getMySpec($profs_arr){
+        return $this->whereIn('prof_id',$profs_arr)->select('spec_id')->distinct()->get();
+    }
+
 }

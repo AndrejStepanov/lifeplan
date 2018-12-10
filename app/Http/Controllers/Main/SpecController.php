@@ -14,9 +14,4 @@ class SpecController extends Controller
         $data = (new Specialty())->getSpecialtyList();
         return json_encode($data);
     }
-    public function show2()
-    {
-        $data = (new match())->getSpecs();
-        return $data;
-    }
 }

@@ -67,6 +67,8 @@
             isLoadTable:true,
             confData: {
                 page: 1,
+				sortBy: 'proc',
+				descending: true,
                 rowsPerPage: 25
             },
             headers: [
