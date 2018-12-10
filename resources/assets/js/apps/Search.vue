@@ -1,7 +1,7 @@
 <template>
 	<c-app :curentSystem="$vuetify.t('$vuetify.texts.main.links.search.name')" :panelLeft="{show:true}">
 		<c-table tableTitle="$vuetify.texts.searchPage.mainTableTitle"  :headers="tabHeader" :items="tabValues" ref="table" :noRowNum="true" :hide-actions="false" :dataLoading="dataLoading" :fiterButtonhNeed="true" :manBody="true" @fiterButtonClick="showFilter = true" >
-			<tr  slot="items" slot-scope="props" @click="propsLog(props)" >
+			<tr  slot="items" slot-scope="props" >
 				<template v-if="['xs','sm'].indexOf($vuetify.breakpoint.name)==-1">
 					<td class=" pt-4 text-nobr" style="align-items: center;"	>	
 											<v-img :src="props.item.uniImg==''?'https://cdn.vuetifyjs.com/images/parallax/material.jpg':props.item.uniImg" height="125" width="125" :aspect-ratio="16/9" /><br>
@@ -142,7 +142,6 @@
 				let vm=this
 				return list([nvlo(vm.pred.data[item.req1]).text,nvlo(vm.pred.data[item.req2]).text,nvlo(vm.pred.data[item.req3]).text,nvlo(vm.pred.data[item.req4]).text,nvlo(vm.pred.data[item.req5]).text ])
 			},
-			propsLog(prop){console.log(prop);},
 			formSave(){
 				let vm=this,tmp=[],tmp1={},todo={}
 				if (!vm.$refs[vm.paramForm].validate())

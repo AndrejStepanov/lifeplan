@@ -67,7 +67,7 @@
 				<v-layout column align-center justify-center>
 					<div class="headline white--text mb-3 text-xs-center">{{$vuetify.t('$vuetify.texts.mainPage.header2Txt') }}</div>
 					<em>{{$vuetify.t('$vuetify.texts.mainPage.header2Txt2') }} </em>
-					<v-btn	class="mt-5"	dark	large	color="accent" >{{$vuetify.t('$vuetify.texts.mainPage.buttonTxt2') }} <v-icon right>search</v-icon> </v-btn>
+					<v-btn	class="mt-5"	dark	large	color="accent" href="\search" >{{$vuetify.t('$vuetify.texts.mainPage.buttonTxt2') }} <v-icon right>search</v-icon> </v-btn>
 				</v-layout>
 			</v-parallax>
 		</section>

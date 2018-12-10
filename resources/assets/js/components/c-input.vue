@@ -79,6 +79,11 @@
 										<div  :style="getDialogMainDivStyle">
 											<v-date-picker v-if="dialogWithDate  && type!='TIME_RANGE'"  v-model="valueArrPairs[0][0]" scrollable locale="ru" class='v-date-picker-more-height higher-z-index' :max="max" :min="min" ref="date1"/>
 											<v-time-picker v-else-if="type=='TIME_RANGE'"  v-model="valueArrPairs[0][0]" scrollable locale="ru" class='higher-z-index' format="24hr" ref="time1"/>
+											<div v-if="type=='DATETIME_RANGE' && $vuetify.breakpoint.name=='sm' ||  ['DATETIME','TIME_RANGE','DATE_RANGE'].indexOf(type)!=-1 && ['sm','xs'].indexOf($vuetify.breakpoint.name)!=-1" :class="getDialogSeparatorClass" >
+												<v-icon :class="getDialogSeparatorArrowClass">fast_forward</v-icon>							
+												<v-icon :class="getDialogSeparatorArrowClass">fast_forward</v-icon>																		
+												<v-icon :class="getDialogSeparatorArrowClass">fast_forward</v-icon>										
+											</div>
 											<v-time-picker v-if="dialogWithTime && type!='DATE_RANGE'"  v-model="valueArrPairs[0][1]" scrollable locale="ru" class='higher-z-index' format="24hr" ref="date2"/>
 											<v-date-picker v-else-if="type=='DATE_RANGE'"  v-model="valueArrPairs[0][1]" scrollable locale="ru" class='v-date-picker-more-height higher-z-index'  ref="time2"/>
 
@@ -89,6 +94,11 @@
 													<v-icon :class="getDialogSeparatorArrowClass">fast_forward</v-icon>										
 												</div>
 												<v-date-picker v-model="valueArrPairs[1][0]" scrollable locale="ru" class='v-date-picker-more-height higher-z-index' />
+												<div v-if="['sm'].indexOf($vuetify.breakpoint.name)!=-1" :class="getDialogSeparatorClass" >
+													<v-icon :class="getDialogSeparatorArrowClass">fast_forward</v-icon>							
+													<v-icon :class="getDialogSeparatorArrowClass">fast_forward</v-icon>																		
+													<v-icon :class="getDialogSeparatorArrowClass">fast_forward</v-icon>										
+												</div>
 												<v-time-picker v-model="valueArrPairs[1][1]" scrollable locale="ru" class='higher-z-index' format="24hr"/>
 											</template>
 										</div>
@@ -301,7 +311,8 @@ time-with-seconds	##:##:##
 				let vm=this,
 					width= vm.type=='DATE'? 290 : 
 						vm.type=='TIME'? 290 : 
-						['DATETIME', 'TIME_RANGE','DATE_RANGE'].indexOf(vm.type)!=-1 ? 584: 
+						['TIME_RANGE','DATE_RANGE','DATETIME'].indexOf(vm.type)!=-1 && ['sm','xs'].indexOf(vm.$vuetify.breakpoint.name)!=-1 ? 300 :
+						['DATETIME', 'TIME_RANGE','DATE_RANGE'].indexOf(vm.type)!=-1 ? 590: 
 						['DATETIME_RANGE'].indexOf(vm.type)!=-1 && !vm.isNarrowDialog? 1200 :
 						['DATETIME_RANGE'].indexOf(vm.type)!=-1 && vm.isNarrowDialog? 584 :
 						null
@@ -316,19 +327,22 @@ time-with-seconds	##:##:##
 			getDialogMainDivHeight(){
 				let vm=this,
 					height=392/*стандартная высота одного элемента управления*/
-				return vm.type=='TEXT' || vm.isNeedTab ||vm.$vuetify.breakpoint.height *0.9/*отступы*/ -48 /*кнопки*/ < height*2+ 28/*разделитель */ + 48?   vm.$vuetify.breakpoint.height *0.9 -48:	height*2+ 28 + 48
+				return vm.type=='TEXT' || ['TIME_RANGE','DATE_RANGE'].indexOf(vm.type)!=-1 && ['sm','xs'].indexOf(vm.$vuetify.breakpoint.name)!=-1 || 
+					vm.isNeedTab ||vm.$vuetify.breakpoint.height *0.9/*отступы*/ -48 /*кнопки*/ < height*2+ 28/*разделитель */ + 48?   vm.$vuetify.breakpoint.height *0.9 -48:	height*2+ 28 + 48
 			},
 			getDialogMainDivStyle(){
 				let vm=this,
 					height=392/*стандартная высота одного элемента управления*/,
 					overflowY='hidden'
-				if(vm.type=='DATETIME_RANGE' && vm.isNarrowDialog || height+48>vm.$vuetify.breakpoint.height *0.9 || vm.type=='TEXT' || vm.isNeedTab){
+				if(vm.type=='DATETIME_RANGE' && vm.isNarrowDialog || height+48>vm.$vuetify.breakpoint.height *0.9 ||  vm.isNeedTab ||  
+					vm.type=='TEXT' || ['TIME_RANGE','DATE_RANGE','DATETIME'].indexOf(vm.type)!=-1 && ['sm','xs'].indexOf(vm.$vuetify.breakpoint.name)!=-1){
 					height = vm.getDialogMainDivHeight
-					overflowY=vm.type=='TEXT'|| vm.isNeedTab?'auto':'scroll'
+					overflowY=['TEXT','TIME_RANGE','DATE_RANGE','DATETIME'].indexOf(vm.type)!=-1 || vm.isNeedTab?'auto':'scroll'
 				}
 				return {
 					height: height + 'px' ,
 					overflowY: overflowY,
+					overflowX: 'hidden',
 				}
 			},
 			getDialogSeparatorClass(){
@@ -345,7 +359,9 @@ time-with-seconds	##:##:##
 				let vm=this
 				return {
 					"rotate-90": vm.isNarrowDialog,					  
-					"dialog-narrow-display-arrow-width": vm.isNarrowDialog,					  
+					"dialog-narrow-display-arrow-width": vm.isNarrowDialog && ['TIME_RANGE','DATE_RANGE'].indexOf(vm.type)==-1,					  
+					"dialog-narrow-display-arrow-width-min": vm.isNarrowDialog &&	['TIME_RANGE','DATE_RANGE','DATETIME'].indexOf(vm.type)!=-1,		
+					'accent-color':true,	  
 				}
 			},			
 			isNarrowDialog(){
@@ -854,6 +870,7 @@ time-with-seconds	##:##:##
 	.dialog-display-inline-grid								{display: inline-grid;}
 	.dialog-narrow-display-div-arrow						{clear: right; display: inherit; width: 100%; height: 28px;}
 	.dialog-narrow-display-arrow-width						{width: 190px;}
+	.dialog-narrow-display-arrow-width-min					{width: 85px;}
 	.theme--dark.v-table tbody tr[active]>td:first-child	{background: #7d7979;}		
 	/*i    border-bottom-color: #2c353f;
 	border-bottom-style: groove;
