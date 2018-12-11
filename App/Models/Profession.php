@@ -16,16 +16,13 @@ class Profession extends Model{
     public  function getProfessionsList2(){
         return  $this->select('prof_id as value','prof_name as text', 'prof_group as profGroup','about')->orderBy('prof_rate', 'desc')->take(6)->get()->toArray();
     }
-    public function getGroupProfessionsList()
-    {
+    public function getGroupProfessionsList()    {
         return  $this->select('prof_group')->groupBy('prof_group')->orderBy('prof_group')->get()->toArray();
     }
-    public function spec2profs()
-    {
+    public function spec2profs()    {
         return $this->hasMany('spec2prof', 'prof_id','prof_id');
     }
-    public function matches()
-    {
+    public function matches()    {
         return $this->hasMany('App\Models\match', 'prof_id','prof_id');
     }
 }

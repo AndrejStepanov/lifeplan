@@ -15,6 +15,5 @@ class Schools extends Model{
 	public  function getSchoolsList(){
 		return  $this->select('sch_id as value','school_name as text', 'city_id as cityId' )->orderBy('school_name')->get()->toArray();
 	}													
-
 }
 ?>
