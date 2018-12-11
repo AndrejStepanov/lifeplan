@@ -29,7 +29,14 @@
 						<td class="text-xs-right">{{ props.item.uniCnt }}</td>
 						<td class="text-xs-right">{{ props.item.prCnt }}</td>
 						<td class="text-xs-right">{{ props.item.proc }}</td>
-						<td class="text-xs-center"><v-rating v-model="props.item.userRate"></v-rating></td>
+						<td class="text-xs-center">
+							<v-rating color="orange"
+									  clearable
+									  background-color="grey"
+									  v-model="props.item.userRate"
+									  @input="saveRate(props.item)">
+							</v-rating>
+						</td>
 					</tr>
 				</template>
 				<v-alert slot="no-results" :value="true" color="error" icon="warning">
@@ -90,6 +97,12 @@
 			XApp
 		],
 		methods: {
+            saveRate(obj){
+                axios.post('setUserRate', {spec_id:obj.spec_id, userRate:obj.userRate}).then(response => {
+                }).catch(e => {
+                    console.log(e)
+                })
+			},
             getData(){
                 this.getSpecInfo()
             },

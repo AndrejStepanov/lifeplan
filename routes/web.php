@@ -24,6 +24,8 @@ Route::get('getEges', 'Main\EgeController@show')->middleware('auth');
 Route::get('getProfs', 'Main\ProfController@show');
 Route::get('getProfs2', 'Main\ProfController@show2');
 Route::get('getSpec', 'Main\SpecController@show');
+Route::post('setUserRate', 'Main\MatchController@setUserRate');
+
 
 Route::get('/sucsess', function () { echo 'sucsess';} );
 Route::post('/socet_command', 'SocetCommandController@reciveCommand')->middleware('auth');//сюда стучатся для получения данных компоненты

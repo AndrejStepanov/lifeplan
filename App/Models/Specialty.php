@@ -21,20 +21,27 @@ class Specialty extends Model{
     public  function getSpecialtysForSearch(){
 		return  convertToAssArr ($this->select('spec_id','specDesc','specCode', 'specGroup', 'specName')->get()->toArray(),$this->primaryKey);
 	}
+
     public  function getSpecialtyList(){
         $result = array();
-        $specs = $this->select('spec_id', 'spec_id as specID', 'specGroup', 'specCode', 'specName', 'specDesc', 'whoWork', 'rate')->orderBy('rate', 'desc')->orderBy('specGroup')->get();
+        $specs = $this->select('spec_id', 'spec_id as specID', 'specGroup', 'specCode', 'specName', 'specDesc', 'whoWork', 'rate')
+                      ->where('specGroup','Бакалавриат')
+                      ->orderBy('rate', 'desc')->orderBy('specGroup')
+                      ->get();
         $i=0;
         $max_rate=100;
+        $SysRate=(new match())->getSpecs();
+        $UniSpecs=(new Uni2Spec())->getProgramToSpec();
         foreach ($specs as $spec) {
-            $SysRate=(new match())->getSpecs($spec->spec_id);
-            $rate=$SysRate['astro']*2 + $SysRate['test']*5 + (((new User())->isFavorite($spec->spec_id))?100:0);
+            $rate=((isset($SysRate[$spec->spec_id]['astro']) && $SysRate[$spec->spec_id]['astro']!="")?$SysRate[$spec->spec_id]['astro']*2:0)
+                + ((isset($SysRate[$spec->spec_id]['test']) && $SysRate[$spec->spec_id]['test']!="")?$SysRate[$spec->spec_id]['test']*4:0);
+                //+ ((isset($SysRate[$spec->spec_id]['user']) && $SysRate[$spec->spec_id]['user']!="")?$SysRate[$spec->spec_id]['user']*20:0) ;
 
             $result[$i] = $spec->toArray();
-            $result[$i]['prCnt']=$spec->uni2specs()->count();
-            $result[$i]['uniCnt']=$spec->uni2specs()->distinct('unit_id')->count();
+            $result[$i]['prCnt']=((isset($UniSpecs[$spec->spec_id]['qty']))?$UniSpecs[$spec->spec_id]['qty']:0);
+            $result[$i]['uniCnt']=((isset($UniSpecs[$spec->spec_id]['qtyUni']))?$UniSpecs[$spec->spec_id]['qtyUni']:0);
             $result[$i]['proc']=$rate;
-            $result[$i]['userRate']=$SysRate['user'];
+            $result[$i]['userRate']=((isset($SysRate[$spec->spec_id]['user']) && $SysRate[$spec->spec_id]['user']!="")?$SysRate[$spec->spec_id]['user']:0);
             if ($result[$i]['proc']>$max_rate) $max_rate=$result[$i]['proc'];
             $i++;
         }
