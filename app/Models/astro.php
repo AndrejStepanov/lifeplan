@@ -17,8 +17,7 @@ class astro extends Model
      * @param  mixed $type
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeOfDate($query, $date)
-    {
+    public function scopeOfDate($query, $date)    {
         return $query->where('on_date_utc', $date);
     }
 }

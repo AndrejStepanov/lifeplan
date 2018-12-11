@@ -35,14 +35,48 @@ class Uni2Spec extends Model{
     }
 
     public  function getSearchResult($todo){
-		return  DB::select("select rec_id, 0 psyTest,0 astroTest, 0 totalTest FROM _uni2spec");
+		//dd($todo);
+		$query=$this::whereHas('University', function($q) use ($todo) {
+				if(isset($todo['vuzStudentQty']))
+					$q->whereBetween('qtyStudents', [$todo['vuzStudentQty'][0][0]*1000, $todo['vuzStudentQty'][0][1]*1000]);
+				if(isset($todo['vuzIsFilial']))
+					$q->where('isSub', $todo['vuzIsFilial']);
+				if(isset($todo['vuzAccrTime']))
+					$q->whereBetween('dateAccreditation', [date('Y-m-d', strtotime('+'.$todo['vuzAccrTime'][0][0].' years')), date('Y-m-d', strtotime('+'.$todo['vuzAccrTime'][0][1].' years'))]);
+				if(isset($todo['vuzIsGos']))
+					$q->where('isState', $todo['vuzIsGos']);
+				if(isset($todo['vuzMyl']))
+					$q->where('isMilitary', $todo['vuzMyl']);
+				if(isset($todo['vuzHotel']))
+					$q->where('isHostel', $todo['vuzHotel']);
+				if(isset($todo['vusPlace']))
+					$q->whereBetween('ratePlace', $todo['vusPlace'][0]);
+				if(isset($todo['vusRating']))
+					$q->whereBetween('rate', $todo['vusRating'][0]);			
+			})->whereHas('University.city', function($q) use ($todo) {
+				if(isset($todo['locCity']))
+					$q->where('city_id', $todo['locCity']);	
+			})->whereHas('Specialty', function($q) use ($todo) {
+				if(isset($todo['edSpecalisation']))
+					$q->whereIn('specGroup', $todo['edSpecalisation']);	
+			});
+			if(isset($todo['edSpecialty']))
+				 $query->whereIn('spec_id', $todo['edSpecialty']);	
+			if(isset($todo['edForm']))
+				 $query->whereIn('formStudy', $todo['edForm']);	
+			if(isset($todo['edCost']))
+				 $query->whereBetween('priceYear', [$todo['edCost'][0][0]*1000, $todo['edCost'][0][1]*1000] );	
+			if(isset($todo['eduIsBudget']))
+				if($todo['eduIsBudget']>0)
+				 	$query->where('qtyBudgets','>','0');	
+				else
+					$query->whereNull('qtyBudgets');
+			return $query->select('rec_id')->selectRaw('0 as psyTest, 0 as  astroTest, 0 as  totalTest')->orderBy('totalTest')->get()->toArray();
 	}
-    public function Specialty()
-    {
+    public function Specialty(){
         return $this->belongsTo('App\Models\Specialty','spec_id');
     }
-    public function University()
-    {
+    public function University(){
         return $this->belongsTo('App\Models\university', 'uni_id');
     }
 }

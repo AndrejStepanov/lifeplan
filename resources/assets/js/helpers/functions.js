@@ -98,7 +98,7 @@ function numberFormat(value,mask){
 function createDictionary(obj, keyVal, keyText){
 	let tmp = [];
 	for(row in obj)
-		tmp.push({value: row[keyVal], text: row[keyText]})
+		tmp.push({value: obj[row][keyVal], text: obj[row][keyText]})
 	return tmp
 }
 

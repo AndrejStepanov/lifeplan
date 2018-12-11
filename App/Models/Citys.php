@@ -15,5 +15,8 @@ class Citys extends Model{
 	public  function getCitysList(){
 		return  $this->select('city_id as value','city_name as text' )->orderBy('city_name')->get()->toArray();
 	}
+    public function matches()    {
+        return $this->hasMany('App\Models\University', 'city_id','city_id');
+    }
 }
 ?>

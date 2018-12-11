@@ -19,7 +19,7 @@ class Specialty extends Model{
         return $this->hasMany('App\Models\spec2prof', 'spec_id','spec_id');
     }
     public  function getSpecialtysForSearch(){
-		return  convertToAssArr ($this->select('spec_id','specDesc','specCode', 'specGroup', 'specName')->get()->toArray(),$this->primaryKey);
+		return  convertToAssArr ($this->select('spec_id','specDesc','specCode', 'specGroup', 'specName')->orderBy('specName')->get()->toArray(),$this->primaryKey);
 	}
 
     public  function getSpecialtyList(){

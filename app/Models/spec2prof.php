@@ -10,12 +10,10 @@ class spec2prof extends Model{
     protected $dates = [  'created_at', 'updated_at'];
     protected $fillable = ['rec_id', 'spec_id','prof_id', 'updated_at', 'created_at'];
 
-    public function Specialty()
-    {
+    public function Specialty()    {
         return $this->belongsTo('App\Models\Specialty','spec_id','spec_id');
     }
-    public function Profession()
-    {
+    public function Profession()    {
         return $this->belongsTo('App\Models\Profession','prof_id','prof_id');
     }
     public function getMySpec($profs_arr){

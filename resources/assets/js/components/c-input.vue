@@ -697,6 +697,7 @@ time-with-seconds	##:##:##
 			vm.tickSize=vm.data.tick_size||vm.tickSize
 			vm.thumbLabelNeed=vm.data.thumb_label_need||vm.thumbLabelNeed
 			vm.isBirthDate=vm.data.isBirthDate||vm.isBirthDate
+			
 			if(vm.data.table_values!=undefined && vm.data.table_values.length>0)
 				vm.data.table_values.forEach(element => {
 					let text = nvl(element.text,element.value)
@@ -706,7 +707,6 @@ time-with-seconds	##:##:##
 					if(isNaN(element.value))
 						vm.isNumeric=false
 				});
-
 			if(vm.data.tab_header!=undefined && vm.data.tab_header.length>0)
 				vm.tabHeader=vm.data.tab_header.slice()
 
