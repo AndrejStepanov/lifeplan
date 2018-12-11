@@ -1,11 +1,11 @@
 {
     "/js/Auth.js": "/js/Auth.js",
     "/js/vendor.js": "/js/vendor.js",
-    "/js/topSpec.js": "/js/topSpec.js",
-    "/js/User.js": "/js/User.js",
     "/js/Search.js": "/js/Search.js",
+    "/js/User.js": "/js/User.js",
     "/js/Main.js": "/js/Main.js",
     "/css/app.css": "/css/app.css",
+    "/js/topSpec.js": "/js/topSpec.js",
     "/js/Test.js": "/js/Test.js",
     "/js/CatalogProf.js": "/js/CatalogProf.js",
     "/js/manifest.js": "/js/manifest.js"
