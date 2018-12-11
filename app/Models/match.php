@@ -15,13 +15,8 @@ class match extends Model
     public function Profession()    {
         return $this->belongsTo('App\Models\Profession', 'prof_id', 'prof_id');
     }
-<<<<<<< HEAD
-
-    public function spec2profs()    {
-=======
     public function spec2profs()
     {
->>>>>>> Заключительная версия по специальностям
         return $this->hasMany('App\Models\spec2prof', 'prof_id', 'prof_id');
     }
     public function getProfAstro()    {
@@ -31,14 +26,9 @@ class match extends Model
         return $this->where('user_id',Auth::user()->id)->where('type','test')->get();
     }
     /*Получить оценку по подходяшей специальности*/
-<<<<<<< HEAD
-    public function getSpecs($spec_id)    {
-        $result= array("astro"=>0, "test"=>0, "user"=>0);
-=======
     public function getSpecs()
     {
         $result=array();
->>>>>>> Заключительная версия по специальностям
         $data=$this->Join('_spec2prof', '_spec2prof.prof_id', '=', '_match.prof_id')
             ->where('_match.user_id',Auth::user()->id)
             ->select('_spec2prof.spec_id','_match.type','_match.rate')
@@ -47,7 +37,6 @@ class match extends Model
         foreach ($data as $d) {
             $result[$d->spec_id][$d->type]=$d->rate;
         }
-
         $data=$this->where('user_id',Auth::user()->id)->whereNotNull('spec_id')->select('spec_id','rate')->get();
         foreach ($data as $d) {
             $result[$d->spec_id]['user']=$d->rate;
