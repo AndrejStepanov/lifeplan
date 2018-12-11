@@ -12,26 +12,21 @@ class match extends Model
     protected $dates = [  'created_at', 'updated_at'];
     protected $fillable = ['updated_at', 'created_at', 'user_id', 'prof_id', 'rate', 'type'];
 
-    public function Profession()
-    {
+    public function Profession()    {
         return $this->belongsTo('App\Models\Profession', 'prof_id', 'prof_id');
     }
 
-    public function spec2profs()
-    {
+    public function spec2profs()    {
         return $this->hasMany('App\Models\spec2prof', 'prof_id', 'prof_id');
     }
-    public function getProfAstro()
-    {
+    public function getProfAstro()    {
         return $this->where('user_id',Auth::user()->id)->where('type','astro')->get();
     }
-    public function getProfTest()
-    {
+    public function getProfTest()    {
         return $this->where('user_id',Auth::user()->id)->where('type','test')->get();
     }
     /*Получить оценку по подходяшей специальности*/
-    public function getSpecs($spec_id)
-    {
+    public function getSpecs($spec_id)    {
         $result= array("astro"=>0, "test"=>0, "user"=>0);
         $data=$this->Join('_spec2prof', '_spec2prof.prof_id', '=', '_match.prof_id')
             ->where('_match.user_id',Auth::user()->id)

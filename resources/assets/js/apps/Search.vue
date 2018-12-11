@@ -4,14 +4,14 @@
 			<tr  slot="items" slot-scope="props" >
 				<template v-if="['xs','sm'].indexOf($vuetify.breakpoint.name)==-1">
 					<td class=" pt-4 text-nobr" style="align-items: center;"	>	
-											<v-img :src="props.item.uniImg==''?'https://cdn.vuetifyjs.com/images/parallax/material.jpg':props.item.uniImg" height="125" width="125" :aspect-ratio="16/9" /><br>
+											<v-img :src="props.item.uniImg==''||props.item.uniImg==null?'https://cdn.vuetifyjs.com/images/parallax/material.jpg':props.item.uniImg" height="125" width="125" :aspect-ratio="16/9" /><br>
 											<v-rating	:value="props.item.rate/200" readonly	background-color="lighten-3"	small color="red"	/>															</td>
 					<td					>	
 											<b>{{props.item.programmName}}</b><br>
 											&nbsp;&nbsp;&nbsp;&nbsp;Учебная степень: <u><i>{{props.item.specGroup}}</i></u>,
 											лет обучения: <u><i>{{props.item.qtyYears}}</i></u>, 
 											стоимость обучения за год:<u><i>{{props.item.priceYear}}</i></u>,
-											бюджетных мест:<u><i>{{props.item.qtyBudgets}}</i></u>, <br>
+											бюджетных мест:<u><i>{{props.item.qtyBudgets||'нет'}}</i></u>, <br>
 											&nbsp;&nbsp;&nbsp;&nbsp;проходной бал:<u><i>{{props.item.totalBall}} ( {{listPrdemts(props.item)}} )</i></u>, <br>
 											&nbsp;&nbsp;&nbsp;&nbsp;{{props.item.faculty}} - {{props.item.specName}}<br>
 											&nbsp;&nbsp;&nbsp;&nbsp;<a :href="props.item.webSite" :title="props.item.uniName">{{props.item.uniName}}</a>														</td>
@@ -22,14 +22,14 @@
 				<template v-else>
 					<td class=" pt-4" style="align-items: center;"	>	
 											<a :href="props.item.webSite" :title="props.item.uniName">
-											<v-img :src="props.item.uniImg==''?'https://cdn.vuetifyjs.com/images/parallax/material.jpg':props.item.uniImg" height="125" width="125" :aspect-ratio="16/9" />
+											<v-img :src="props.item.uniImg==''||props.item.uniImg==null?'https://cdn.vuetifyjs.com/images/parallax/material.jpg':props.item.uniImg" height="125" width="125" :aspect-ratio="16/9" />
 											</a><br>
 											<v-rating	:value="props.item.rate/200" readonly	background-color="lighten-3"	small color="red"	/><br><br>															
 											<b>{{props.item.programmName}}</b><br>
 											Учебная степень: <u><i>{{props.item.specGroup}}</i></u>,
 											лет обучения: <u><i>{{props.item.qtyYears}}</i></u>, 
 											стоимость обучения за год:<u><i>{{props.item.priceYear}}</i></u>,
-											бюджетных мест:<u><i>{{props.item.qtyBudgets}}</i></u>, <br>
+											бюджетных мест:<u><i>{{props.item.qtyBudgets||'нет'}}</i></u>, <br>
 											проходной бал:<u><i>{{props.item.totalBall}} ( {{listPrdemts(props.item)}} )</i></u>, <br>
 											{{props.item.faculty}} - {{props.item.specName}}<br>
 											Психотест: <u><i>{{props.item.psyTest}}</i></u>,
@@ -38,7 +38,7 @@
 				</template>
 			</tr>	
 		</c-table>
-		<v-dialog v-model="showFilter" fullscreen hide-overlay transition="dialog-bottom-transition">
+		<v-dialog v-model="showFilter" fullscreen hide-overlay transition="dialog-bottom-transition" v-if="formInited">
 			<v-card>
 				<v-toolbar dark color="primary">
 					<v-btn icon dark @click="showFilter = false">
@@ -94,6 +94,7 @@
 			showFilter:false,
 			dialogId:getNewId(),
 			paramForm:'search',
+			formInited:false,
 			dataSearchLoaded:false,
 			tabData:[],
 			uni:{href:"/socet_command",  event:"search.universitys.list", data:{}, loaded:false},
@@ -111,6 +112,8 @@
 			dataLoading(){return !( this.dataSearchLoaded && this.uni.loaded && this.spec.loaded && this.prog.loaded && this.city.loaded && this.pred.loaded )},
 			tabValues(){
 				let vm=this
+				if(!vm.dataSearchLoaded)
+					return[]
 				return vm.tabData.map(res=>{
 					let prog = vm.prog.data[res.rec_id]
 					return	{...res, ...prog, ...vm.uni.data[prog.uni_id], ...vm.spec.data[prog.spec_id]	}
@@ -142,9 +145,10 @@
 				let vm=this
 				return list([nvlo(vm.pred.data[item.req1]).text,nvlo(vm.pred.data[item.req2]).text,nvlo(vm.pred.data[item.req3]).text,nvlo(vm.pred.data[item.req4]).text,nvlo(vm.pred.data[item.req5]).text ])
 			},
-			formSave(){
+			formSave({noCheck}){
 				let vm=this,tmp=[],tmp1={},todo={}
-				if (!vm.$refs[vm.paramForm].validate())
+				noCheck=noCheck||false
+				if (!noCheck && !vm.$refs[vm.paramForm].validate())
 					return;
 				vm.showFilter = false;
 				vm.dataSearchLoaded=false;
@@ -152,6 +156,7 @@
 				sendRequest({href:"/socet_command", type:'search.results', data:{ todo, }, default: getErrDesc('requestFaild'), handler:(response) => {
 					vm.tabData=response.data
 					vm.dataSearchLoaded=true;
+					vm.formInited=true
 				}})
 			},
 			getData(){
@@ -162,7 +167,7 @@
 				vm.getPredInfo()
 				vm.getCityInfo()
 				
-				vm.formSave()
+				vm.formSave({noCheck:true})
 			},
 			getUniInfo(){
 				let vm=this
@@ -204,20 +209,20 @@
 				let data= [	
 					{id:1, form:'edu', 		code:'edSpecialty', 	name:'Специальности', 							type:'LIST', 		nullable:1, sort_seq:1, table_values:vm.specDic, multy:true},
 					{id:2, form:'edu', 		code:'edForm', 			name:'Форма обучения', 							type:'LIST', 		nullable:1, sort_seq:2, table_values:[{value:'Очная'},{value:'Заочная'},{value:'Очно-заочная'},{value:'Дистанционная'},], multy:true},
+					{id:8, form:'edu', 		code:'eduIsBudget', 	name:'Наличие бюджетных мест', 					type:'LIST', 		nullable:1, sort_seq:8, table_values:[{value:'1',text:'Да'},{value:'0',text:'Нет'},]},
 					{id:3, form:'edu', 		code:'edCost', 			name:'Стоимость обучения, тыс. руб', 			type:'RANGE', 		nullable:1, sort_seq:3, min:50, max:250, step:10 },
-					{id:4, form:'edu', 		code:'edSpecalisation', name:'Специализация', 							type:'LIST', 		nullable:1, sort_seq:4, table_values:[{value:'Бакалавр'},{value:'Специалист'},{value:'Магистр'},], multy:true},
-					{id:5, form:'edu', 		code:'edTender', 		name:'Конкурс, чел. место',						type:'RANGE', 		nullable:1, sort_seq:5, min:1, max:100, step:5 },
+					{id:4, form:'edu', 		code:'edSpecalisation', name:'Специализация', 							type:'LIST', 		nullable:1, sort_seq:4, table_values:[{value:'Бакалавриат'},{value:'Магистратура'},{value:'Специалитет'},], multy:true},
+					//{id:5, form:'edu', 		code:'edTender', 		name:'Конкурс, чел. место',						type:'RANGE', 		nullable:1, sort_seq:5, min:1, max:100, step:5 },
 					{id:6, form:'locate', 	code:'locCity', 		name:'Город', 									type:'LIST', 		nullable:1, sort_seq:6, table_values:vm.city.data,},
 					{id:7, form:'locate', 	code:'locDist', 		name:'Радиус поиска, км', 						type:'SLIDER',  	nullable:1, sort_seq:7, min:0, max:500, step:50,},
-					{id:8, form:'vuz', 		code:'vuzIsBudget', 	name:'Наличие бюджетных мест', 					type:'LIST', 		nullable:1, sort_seq:8, table_values:[{value:'1',text:'Да'},{value:'0',text:'Нет'},]},
 					{id:9, form:'vuz', 		code:'vuzStudentQty', 	name:'Количество студентов в ВУЗе, тыс. чел.', 	type:'RANGE', 		nullable:1, sort_seq:9, min:10, max:70, step:5 },
-					{id:10, form:'vuz', 	code:'vuzIsFilial', 	name:'Филиал', 									type:'LIST', 		nullable:1, sort_seq:10, table_values:[{value:'1Y',text:'Да'},{value:'0',text:'Нет'},]},
+					{id:10, form:'vuz', 	code:'vuzIsFilial', 	name:'Филиал', 									type:'LIST', 		nullable:1, sort_seq:10, table_values:[{value:'1',text:'Да'},{value:'0',text:'Нет'},]},
 					{id:11, form:'vuz', 	code:'vuzAccrTime', 	name:'Срок аккредитации, лет', 					type:'RANGE', 		nullable:1, sort_seq:11, min:1, max:10, step:1 },
 					{id:12, form:'vuz', 	code:'vuzIsGos', 		name:'Государственный', 						type:'LIST', 		nullable:1, sort_seq:12, table_values:[{value:'1',text:'Да'},{value:'0',text:'Нет'},]},
 					{id:13, form:'vuz', 	code:'vuzMyl', 			name:'Военная кафедра', 						type:'LIST', 		nullable:1, sort_seq:13, table_values:[{value:'1',text:'Да'},{value:'0',text:'Нет'},]},
 					{id:14, form:'vuz', 	code:'vuzHotel',		name:'Общежитие', 								type:'LIST', 		nullable:1, sort_seq:14, table_values:[{value:'1',text:'Да'},{value:'0',text:'Нет'},]},
 					{id:16, form:'vuz', 	code:'vusPlace', 		name:'Место ВУЗа в рейтинге, топ ',				type:'RANGE', 		nullable:1, sort_seq:16, min:1, max:1000, step:100 },
-					{id:17, form:'vuz', 	code:'vusRating', 		name:'Рейтинг ВУЗа по отзывам',					type:'RANGE', 		nullable:1, sort_seq:17, min:1, max:1000, step:100 },
+					{id:17, form:'vuz', 	code:'vusRating', 		name:'Рейтинг ВУЗа по отзывам, баллы',			type:'RANGE', 		nullable:1, sort_seq:17, min:0, max:100, step:5 },
 				]
 				return data.filter(row =>  row.form == paramForm ).sort( (a, b) =>{return sort(a, b, 'sort_seq', 'sort_seq')})
 			},
