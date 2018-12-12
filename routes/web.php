@@ -27,6 +27,7 @@ Route::get('getProfs', 'Main\ProfController@show');
 Route::get('getProfs2', 'Main\ProfController@show2');
 Route::get('getSpec', 'Main\SpecController@show');
 Route::post('setUserRate', 'Main\MatchController@setUserRate');
+Route::post('setTestRate', 'Main\MatchController@setTestRate');
 
 
 Route::get('/sucsess', function () { echo 'sucsess';} );
