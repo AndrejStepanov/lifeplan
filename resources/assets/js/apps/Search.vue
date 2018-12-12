@@ -1,6 +1,6 @@
 <template>
 	<c-app :curentSystem="$vuetify.t('$vuetify.texts.main.links.search.name')" :panelLeft="{show:true}">
-		<c-table tableTitle="$vuetify.texts.searchPage.mainTableTitle"  :headers="tabHeader" :items="tabValues" ref="table" :noRowNum="true" :hide-actions="false" :dataLoading="dataLoading" :fiterButtonhNeed="true" :manBody="true" @fiterButtonClick="showFilter = true" >
+		<c-table tableTitle="$vuetify.texts.searchPage.mainTableTitle"  :headers="tabHeader" :items="tabValues" ref="table" :noRowNum="true" :hide-actions="false" :dataLoading="dataLoading" :fiterButtonhNeed="true" :manBody="true" @fiterButtonClick="showFilter = true"  :rowsPerPageItems="[100, 50, 25, 2]" >
 			<tr  slot="items" slot-scope="props" >
 				<template v-if="['xs','sm'].indexOf($vuetify.breakpoint.name)==-1">
 					<td class=" pt-4 text-nobr" style="align-items: center;"	>	
@@ -110,9 +110,10 @@
 					['sm'].indexOf(vm.$vuetify.breakpoint.name)!=-1 ? 2 : 3
 			},
 			dataLoading(){return !( this.dataSearchLoaded && this.uni.loaded && this.spec.loaded && this.prog.loaded && this.city.loaded && this.pred.loaded )},
+			dicLoading(){return !( this.uni.loaded && this.spec.loaded && this.prog.loaded && this.city.loaded && this.pred.loaded )},
 			tabValues(){
 				let vm=this
-				if(!vm.dataSearchLoaded)
+				if(vm.dataLoading)
 					return[]
 				return vm.tabData.map(res=>{
 					let prog = vm.prog.data[res.rec_id]
@@ -206,6 +207,8 @@
 			},
 			inputs(paramForm) {
 				let vm=this
+				if(vm.dicLoading)
+					return[]
 				let data= [	
 					{id:1, form:'edu', 		code:'edSpecialty', 	name:'Специальности', 							type:'LIST', 		nullable:1, sort_seq:1, table_values:vm.specDic, multy:true},
 					{id:2, form:'edu', 		code:'edForm', 			name:'Форма обучения', 							type:'LIST', 		nullable:1, sort_seq:2, table_values:[{value:'Очная'},{value:'Заочная'},{value:'Очно-заочная'},{value:'Дистанционная'},], multy:true},
