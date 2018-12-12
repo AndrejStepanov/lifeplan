@@ -38,6 +38,15 @@ class User extends Authenticatable{
 	public  function saveUserInfo($todo){
         $this->where('id',Auth::user()->id )
             ->update(['FirstName' => $todo['firstName'], 'LastName' => $todo['lastName'], 'birthDate' => $todo['birthDate'],'birthCity' => $todo['birthCity'], 'residenceCity' => $todo['residenceCity'], 'bio' => $todo['bio'] ]);
+		$match= new match;
+		$match->where('user_id',Auth::user()->id )->where('type','astro')->delete();
+		srand(date('z',strtotime( $todo['birthDate']." GMT"))+$todo['birthCity']+date('H',strtotime( $todo['birthDate']." GMT")));
+		$rates= array();
+		for( $i=1; $i<10000; $i++)
+			$rates[]=rand(-10,10);
+		$specs=(new Specialty)->select('spec_id')->get()->toArray();
+		foreach($specs as $spec)
+			$match->insert(['user_id'=>Auth::user()->id, 'spec_id'=>$spec['spec_id'], 'rate'=>$rates[$spec['spec_id']], 'type'=>'astro']);
     }
 	public  function saveFavorits($data){
         $this->where('id',Auth::user()->id )
@@ -45,19 +54,16 @@ class User extends Authenticatable{
     }
 
     public  function isFavorite($spec_id){
-        $is_my=false;
-        if ($spec_id > 0){
-	        $tmp=$this->where('id',Auth::user()->id )->select('favoritProfs')->get();
-            $Profs=explode(",",$tmp[0]->favoritProfs);
-            $specs=(new spec2prof())->getMySpec($Profs);
-            foreach($specs as $spec){
-                if ($spec_id == $spec->spec_id){
-                    $is_my = true;
-                    break;
-                }
-            }
-        }
-        return $is_my;
+        if (nvl($spec_id)<= 0)
+			return false;
+		$tmp=$this->where('id',Auth::user()->id )->select('favoritProfs')->get();
+		$Profs=explode(",",$tmp[0]->favoritProfs);
+		$specs=(new spec2prof())->getMySpec($Profs);
+		foreach($specs as $spec)
+			if ($spec_id == $spec->spec_id)
+				return true;
+		return false;
+		
     }
     
 }

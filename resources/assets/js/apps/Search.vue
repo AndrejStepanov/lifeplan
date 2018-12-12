@@ -133,7 +133,7 @@
 						{code:'totalTest',		text:'Совместимость',		type:'numeric', 	 	},
 					]
 			},
-			specDic(){return createDictionary(this.spec.data,'spec_id', 'specName'  )},
+			specDic(){return createDictionary(this.spec.data,'spec_id', 'specName', true  )},
 		},
 		components: {
 			CInputCols,CTable,

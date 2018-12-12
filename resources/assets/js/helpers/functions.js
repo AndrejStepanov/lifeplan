@@ -95,10 +95,12 @@ function numberFormat(value,mask){
 	mask=mask||'0,0.000'
 	return sysNumeral(value).format(mask)
 }
-function createDictionary(obj, keyVal, keyText){
+function createDictionary(obj, keyVal, keyText, needSort=false){
 	let tmp = [];
 	for(row in obj)
 		tmp.push({value: obj[row][keyVal], text: obj[row][keyText]})
+	if(needSort)
+		tmp.sort(  function (a, b) {return sort(a, b, 'text', 'text')} )
 	return tmp
 }
 
