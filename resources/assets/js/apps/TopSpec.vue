@@ -108,7 +108,8 @@
             },
             getSpecInfo(){
                 let vm=this;
-                axios.get('getSpec').then(response => {
+                let pr=((window.profID)?window.profID:"");
+                axios.get('/getSpec', {params:{ profID: pr }}).then(response => {
                     vm.desserts = response.data;
 					vm.isLoadTable=false;
                     vm.emptyTableText="Отсутствуют данные";

@@ -22,12 +22,22 @@ class Specialty extends Model{
 		return  convertToAssArr ($this->select('spec_id','specDesc','specCode', 'specGroup', 'specName')->get()->toArray(),$this->primaryKey);
 	}
 
-    public  function getSpecialtyList(){
+    public  function getSpecialtyList($profID){
         $result = array();
-        $specs = $this->select('spec_id', 'spec_id as specID', 'specGroup', 'specCode', 'specName', 'specDesc', 'whoWork', 'rate')
-                      ->where('specGroup','Бакалавриат')
-                      ->orderBy('rate', 'desc')->orderBy('specGroup')
-                      ->get();
+        if ($profID && $profID!="") {
+            $specs = $this->select('_specialty.spec_id', '_specialty.spec_id as specID', 'specGroup', 'specCode', 'specName', 'specDesc', 'whoWork', 'rate')
+                ->join('_spec2prof', '_spec2prof.spec_id', '=', '_specialty.spec_id')
+                ->where('_specialty.specGroup', 'Бакалавриат')
+                ->where('_spec2prof.prof_id', $profID)
+                ->orderBy('rate', 'desc')->orderBy('specGroup')
+                ->get();
+        }else {
+            $specs = $this->select('spec_id', 'spec_id as specID', 'specGroup', 'specCode', 'specName', 'specDesc', 'whoWork', 'rate')
+                ->where('specGroup', 'Бакалавриат')
+                ->orderBy('rate', 'desc')->orderBy('specGroup')
+                ->get();
+        }
+
         $i=0;
         $max_rate=100;
         $SysRate=(new match())->getSpecs();

@@ -12,6 +12,7 @@
     <body>
         <div id="app"></div>
         <script>
+            window.profID ='{{(isset($profID)?$profID:"")}}';
             window.laravel = { 'csrfToken': "{{ csrf_token() }}", 'ticket': "{{ getTicket() }}", }
             window.userInfo ={ 
                 @if (Auth::check())
