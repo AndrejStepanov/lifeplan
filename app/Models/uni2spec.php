@@ -30,7 +30,6 @@ class Uni2Spec extends Model{
                 $is_uni[$spec->spec_id][]=$spec->uni_id;
             }
         }
-
         return $result;
     }
 
@@ -55,7 +54,7 @@ class Uni2Spec extends Model{
 					$q->whereBetween('rate', $todo['vusRating'][0]);			
 			})->whereHas('University.city', function($q) use ($todo) {
 				if(isset($todo['locCity']))
-					$q->where('city_id', $todo['locCity']);	
+					$q->whereIn('city_id', $todo['locCity']);		
 			})->whereHas('Specialty', function($q) use ($todo) {
 				if(isset($todo['edSpecalisation']))
 					$q->whereIn('specGroup', $todo['edSpecalisation']);	
@@ -68,7 +67,7 @@ class Uni2Spec extends Model{
 				 $query->whereBetween('priceYear', [$todo['edCost'][0][0]*1000, $todo['edCost'][0][1]*1000] );	
 			if(isset($todo['eduIsBudget']))
 				if($todo['eduIsBudget']>0)
-				 	$query->where('qtyBudgets','>','0');	
+				 	$query->where('qtyBudgets','>','0');
 				else
 					$query->whereNull('qtyBudgets');
 			return $query->select(DB::raw('_uni2spec.rec_id, cast(IFNULL(AVG(astro.rate*2),0) as signed) AS astroTest, IFNULL(MAX(psy.rate*4),0)+IFNULL(MAX(usPrior.rate*20),0) as psyTest,  

@@ -218,7 +218,7 @@
 					{id:3, form:'edu', 		code:'edCost', 			name:'Стоимость обучения, тыс. руб', 			type:'RANGE', 		nullable:1, sort_seq:3, min:50, max:250, step:10 },
 					{id:4, form:'edu', 		code:'edSpecalisation', name:'Специализация', 							type:'LIST', 		nullable:1, sort_seq:4, table_values:[{value:'Бакалавриат'},{value:'Магистратура'},{value:'Специалитет'},], multy:true},
 					//{id:5, form:'edu', 		code:'edTender', 		name:'Конкурс, чел. место',						type:'RANGE', 		nullable:1, sort_seq:5, min:1, max:100, step:5 },
-					{id:6, form:'locate', 	code:'locCity', 		name:'Город', 									type:'LIST', 		nullable:1, sort_seq:6, table_values:vm.city.data,},
+					{id:6, form:'locate', 	code:'locCity', 		name:'Город', 									type:'LIST', 		nullable:1, sort_seq:6, table_values:vm.city.data, multy:true,},
 					{id:7, form:'locate', 	code:'locDist', 		name:'Радиус поиска, км', 						type:'SLIDER',  	nullable:1, sort_seq:7, min:0, max:500, step:50,},
 					{id:9, form:'vuz', 		code:'vuzStudentQty', 	name:'Количество студентов в ВУЗе, тыс. чел.', 	type:'RANGE', 		nullable:1, sort_seq:9, min:10, max:70, step:5 },
 					{id:10, form:'vuz', 	code:'vuzIsFilial', 	name:'Филиал', 									type:'LIST', 		nullable:1, sort_seq:10, table_values:[{value:'1',text:'Да'},{value:'0',text:'Нет'},]},
