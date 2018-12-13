@@ -72,11 +72,11 @@
 			inputs() {
 				let vm=this
 				let data= [		
-					{id:1, form:'auth-login', 			code:'_login', 		name:'Электронный адресс', 		placeholder:'Электронный адресс', 				type:'INPUT', 		nullable:0, column_size:30, sort_seq:1, mask_fin:'^.+@.+$', error:'$vuetify.texts.errors.withMailFormat.text' },
+					{id:1, form:'auth-login', 			code:'_login', 		name:'Электронный адрес', 		placeholder:'Электронный адрес', 				type:'INPUT', 		nullable:0, column_size:30, sort_seq:1, mask_fin:'^.+@.+$', error:'$vuetify.texts.errors.withMailFormat.text' },
 					{id:2, form:'auth-login', 			code:'_password',	name:'Пароль', 					placeholder:'Пароль пользователя', 				type:'PASSWORD', 	nullable:0, column_size:30, sort_seq:2,  },
 					{id:3, form:'auth-login', 			code:'remember',	name:'Запомнить мои данные', 	placeholder:'Запомнить данные пользователя', 	type:'BOOL',		nullable:1, column_size:30, sort_seq:3,  },	
 					
-					{id:21, form:'auth-registration', 	code:'login', 		name:'Электронный адресс', 		placeholder:'Электронный адресс пользователя', 	type:'INPUT', 		nullable:0, column_size:30, sort_seq:1, mask_fin:'^.+@.+\\..+$', error:'$vuetify.texts.errors.withMailFormat.text'  },
+					{id:21, form:'auth-registration', 	code:'login', 		name:'Электронный адрес', 		placeholder:'Электронный адрес пользователя', 	type:'INPUT', 		nullable:0, column_size:30, sort_seq:1, mask_fin:'^.+@.+\\..+$', error:'$vuetify.texts.errors.withMailFormat.text'  },
 					{id:22, form:'auth-registration', 	code:'firstname', 	name:'Имя', 					placeholder:'Имя пользователя', 				type:'INPUT', 		nullable:0, column_size:30, sort_seq:1,  },
 					{id:23, form:'auth-registration', 	code:'lastname', 	name:'Фамилия', 				placeholder:'Фамилия пользователя', 			type:'INPUT', 		nullable:0, column_size:30, sort_seq:1,  },
 					{id:25, form:'auth-registration', 	code:'password',	name:'Пароль пользователя', 	placeholder:'Пароль пользователя', 				type:'PASSWORD', 	nullable:0, column_size:30, sort_seq:2,  mask_fin:'^......+$', error:'$vuetify.texts.errors.withPasswordLen.text', 
