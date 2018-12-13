@@ -71,7 +71,10 @@ class Uni2Spec extends Model{
 				 	$query->where('qtyBudgets','>','0');	
 				else
 					$query->whereNull('qtyBudgets');
-			return $query->select('rec_id')->selectRaw('0 as psyTest, 0 as  astroTest, 0 as  totalTest')->orderBy('totalTest')->get()->toArray();
+			return $query->select(DB::raw('_uni2spec.rec_id, MAX(astro.rate) AS astroTest, 0 as psyTest,  MAX(astro.rate) as  totalTest'))
+				->leftJoin('_spec2prof', '_uni2spec.spec_id', '=', '_spec2prof.spec_id')
+				->leftJoin('_match as astro', function ($join) {	$join->on('_spec2prof.prof_id', '=', 'astro.prof_id')->on('astro.type','=',DB::raw("'astro'") ); })
+				->groupBy('_uni2spec.rec_id')->get()->toArray();
 	}
     public function Specialty(){
         return $this->belongsTo('App\Models\Specialty','spec_id');

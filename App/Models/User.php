@@ -44,9 +44,9 @@ class User extends Authenticatable{
 		$rates= array();
 		for( $i=1; $i<10000; $i++)
 			$rates[]=rand(-10,10);
-		$specs=(new Specialty)->select('spec_id')->get()->toArray();
-		foreach($specs as $spec)
-			$match->insert(['user_id'=>Auth::user()->id, 'spec_id'=>$spec['spec_id'], 'rate'=>$rates[$spec['spec_id']], 'type'=>'astro']);
+		$profs=(new Profession)->select('prof_id')->get()->toArray();
+		foreach($profs as $prof)
+			$match->insert(['user_id'=>Auth::user()->id, 'prof_id'=>$prof['prof_id'], 'rate'=>$rates[$prof['prof_id']], 'type'=>'astro']);
     }
 	public  function saveFavorits($data){
         $this->where('id',Auth::user()->id )

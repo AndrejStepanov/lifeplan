@@ -14,13 +14,13 @@
 		<v-data-table	:value="selectedValues" :headers ="tabHeads" :items ="tabRows" :headersLength ="headersLength" :headerText ="headerText" :headerKey ="headerKey" :hideHeaders ="hideHeaders" :rowsPerPageText ="rowsPerPageText" :expand ="expand" 
 				:hideActions ="hideActions"  :noResultsText ="noResultsText" :nextIcon ="nextIcon" :prevIcon ="prevIcon" :rowsPerPageItems ="rowsPerPageItems"  :loading="dataLoading"
 				:selectAll ="selectAll" :search ="search"   :itemKey ="itemKey" ref="table"	 :customFilter="searchInTable" 
-				:class="getMainTableClass" :style="getMainTableStyle"
+				:class="getMainTableClass" :style="getMainTableStyle" :pagination="pagination"
 				@update:pagination='updateTabFirstNum'>
-			<template slot="headers" slot-scope="props">
-				<template v-if="manHead" >
+			<template  v-if='noVuetifyHead' slot-scope="props" >
+				<template v-if="manHead" slot="headers"  >
 					<slot name="headers" :headers="props.headers" :indeterminate="props.indeterminate" :all="props.all"/>
 				</template>
-				<template v-else >			
+				<template v-else slot="headers" >			
 					<tr>
 						<th v-if="!noRowNum" class='column active width-one-percent'>
 							<v-checkbox v-if="selecttableTypes.indexOf(typeSelect)!=-1 && selectAll"	:input-value="typeSelect=='one'?selectedValues.length: props.all"	:indeterminate="typeSelect=='one'?false:props.indeterminate"	 
@@ -75,13 +75,15 @@
 			manHead:false,
 			manBody:false,
 			manProgress:false,
+			noVuetifyHead: {type:Boolean,	default: true	},
 			searchNeed:false,
 			fiterButtonhNeed:false,
 			dataLoading:false,
 			tableTitle:'',
 			noRowNum:false,
-			height:{type: Number	},
+			height:{type: Number},
 			//взято из v-data-table
+			pagination: {type: Object,  default: () => {} },
 			headers: {type: Array,	default: () => []	},
 			items: {type: Array,		default: () => []	},
 			headersLength: {type: Number	},
@@ -170,6 +172,7 @@
 			},
 			updateTabFirstNum(obj){
 				let vm = this
+      			vm.$emit('update:pagination', obj)
 				vm.tabFirstNum= (!vm.isMounted ||  vm.$refs.table==undefined || obj.page==1?0:(obj.page-1)*obj.rowsPerPage) +1
 			},
 			selectRow (props) {

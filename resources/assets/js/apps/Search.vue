@@ -1,6 +1,7 @@
 <template>
 	<c-app :curentSystem="$vuetify.t('$vuetify.texts.main.links.search.name')" :panelLeft="{show:true}">
-		<c-table tableTitle="$vuetify.texts.searchPage.mainTableTitle"  :headers="tabHeader" :items="tabValues" ref="table" :noRowNum="true" :hide-actions="false" :dataLoading="dataLoading" :fiterButtonhNeed="true" :manBody="true" @fiterButtonClick="showFilter = true"  :rowsPerPageItems="[100, 50, 25, 2]" >
+		<c-table tableTitle="$vuetify.texts.searchPage.mainTableTitle"  :headers="tabHeader"  :items="tabValues" ref="table" :noVuetifyHead="false" :headerKey="'code'" :noRowNum="true" :hide-actions="false" 
+				:dataLoading="dataLoading" :fiterButtonhNeed="true" :searchNeed="true" :manBody="true" @fiterButtonClick="showFilter = true"  :rowsPerPageItems="[50, 25, 2]" :pagination.sync="pagination" >
 			<tr  slot="items" slot-scope="props" >
 				<template v-if="['xs','sm'].indexOf($vuetify.breakpoint.name)==-1">
 					<td class=" pt-4 text-nobr" style="align-items: center;"	>	
@@ -102,6 +103,7 @@
 			prog:{href:"/socet_command", event:"search.programs.list", data:{}, loaded:false},
 			pred:{href:"/socet_command", event:"search.predmets.list", data:{}, loaded:false},
 			city:{href:"/socet_command", event:"city.list", data:[], loaded:false},
+			pagination: {descending:true, sortBy: 'totalTest'},
 		}),
 		computed: {
 			getFilColCnt(){
@@ -126,11 +128,11 @@
 					return [{code:'ava',			text:'',					type:'img', 	 		},]
 				else
 					return [
-						{code:'ava',			text:'',					type:'img', 	 		},
-						{code:'program',		text:'Программа',			type:'text', 	 		},
-						{code:'psyTest',		text:'Психотест',			type:'numeric', 	 	},
-						{code:'astroTest',		text:'Астропрогноз',		type:'numeric', 	 	},
-						{code:'totalTest',		text:'Совместимость',		type:'numeric', 	 	},
+						{code:'ava',			text:'',					type:'img', 	 		value: 'ava', 				sortable:false,},
+						{code:'programmName',	text:'Программа',			type:'text', 	 		value: 'programmName',		sortable:true,},
+						{code:'psyTest',		text:'Психотест',			type:'numeric', 	 	value: 'psyTest',			sortable:true,},
+						{code:'astroTest',		text:'Астропрогноз',		type:'numeric', 	 	value: 'astroTest',			sortable:true,},
+						{code:'totalTest',		text:'Совместимость',		type:'numeric', 	 	value: 'totalTest',			sortable:true,},
 					]
 			},
 			specDic(){return createDictionary(this.spec.data,'spec_id', 'specName', true  )},
