@@ -44,8 +44,8 @@
 													<br><br>
 													<b>1Б.</b> {{ item.b }}
 												</v-card>
-												<v-btn color="primary" @click="test1=key+3">1а</v-btn>
-												<v-btn color="primary" @click="test1=key+3">1б</v-btn>
+												<v-btn color="primary" @click="saveAnsw(item.res_a);test1=key+3">1а</v-btn>
+												<v-btn color="primary" @click="saveAnsw(item.res_b);test1=key+3">1б</v-btn>
 
 												<v-btn color="primary" @click="test1=key+3">Пропустить</v-btn>
 												<v-btn color="primary" @click="test1=key+1">Назад</v-btn>
@@ -114,6 +114,8 @@
 
 <script>
 	import XApp from '../mixins/x-app'
+    import axios from 'axios'
+
 	export default {
 		data: () => ({
             tabs:[
@@ -150,6 +152,14 @@
 			XApp,
 		],
 		methods: {
+            saveAnsw(res){
+                if (res!=""){
+                    axios.post('setTestRate', {todo:res}).then(response => {
+                    }).catch(e => {
+                        console.log(e)
+                    })
+				}
+			}
 		},
 		created: function (){
 			let vm=this

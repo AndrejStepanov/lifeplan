@@ -21,7 +21,7 @@
 							</div>
 						</v-card-title>
 						<v-card-actions>
-							<v-btn flat color="accent">{{$vuetify.t('$vuetify.texts.catalogPage.specBuProf') }}</v-btn>
+							<v-btn flat color="accent" :href="'/profSpec/' + prof.value" >{{$vuetify.t('$vuetify.texts.catalogPage.specBuProf') }}</v-btn>
 						</v-card-actions>
 					</v-card>
 				</v-flex>

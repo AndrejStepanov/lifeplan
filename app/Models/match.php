@@ -43,7 +43,7 @@ class match extends Model
         }
         return $result;
     }
-    /*Сохранить оценку*/
+    /*Сохранить оценку пользователя по специальности*/
     public function setUserRate($specID, $Rate)
     {
         $match = $this->firstOrNew(array('spec_id' => $specID, 'user_id' => Auth::user()->id));
@@ -51,6 +51,22 @@ class match extends Model
         $match->spec_id = $specID;
         $match->user_id = Auth::user()->id;
         $match->type = 'user';
+        $match->save();
+    }
+    /*Сохранить результат психотеста по профессии*/
+    public function setTestRate($profID, $Rate)
+    {
+        $match = $this->firstOrNew(array('prof_id' => $profID, 'user_id' => Auth::user()->id));
+        /*Усредняем оценку, если ранее уже была*/
+        $prev_rate = $match->rate;
+        if ($prev_rate!=""){
+            $Rate = round(($Rate+$prev_rate)/2,0);
+        }
+        /**/
+        $match->rate = $Rate;
+        $match->prof_id = $profID;
+        $match->user_id = Auth::user()->id;
+        $match->type = 'test';
         $match->save();
     }
 }
