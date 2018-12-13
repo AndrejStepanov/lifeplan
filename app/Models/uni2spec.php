@@ -71,8 +71,8 @@ class Uni2Spec extends Model{
 				 	$query->where('qtyBudgets','>','0');	
 				else
 					$query->whereNull('qtyBudgets');
-			return $query->select(DB::raw('_uni2spec.rec_id, IFNULL(MAX(astro.rate*2),0) AS astroTest, IFNULL(MAX(psy.rate*4),0)+IFNULL(MAX(usPrior.rate*20),0) as psyTest,  
-					IFNULL(MAX(astro.rate*2),0)+IFNULL(MAX(psy.rate*4),0)+IFNULL(MAX(usPrior.rate*20),0) as  totalTest'))
+			return $query->select(DB::raw('_uni2spec.rec_id, cast(IFNULL(AVG(astro.rate*2),0) as signed) AS astroTest, IFNULL(MAX(psy.rate*4),0)+IFNULL(MAX(usPrior.rate*20),0) as psyTest,  
+					cast(IFNULL(AVG(astro.rate*2),0)as signed)+IFNULL(MAX(psy.rate*4),0)+IFNULL(MAX(usPrior.rate*20),0) as  totalTest'))
 				->leftJoin('_spec2prof', '_uni2spec.spec_id', '=', '_spec2prof.spec_id')
 				->leftJoin('_match as astro', function ($join) {	$join->on('_spec2prof.prof_id', '=', 'astro.prof_id')->on('astro.type','=',DB::raw("'astro'") ); })
 				->leftJoin('_match as psy', function ($join) {	$join->on('_spec2prof.prof_id', '=', 'psy.prof_id')->on('psy.type','=',DB::raw("'test'") ); })
