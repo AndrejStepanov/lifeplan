@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Uni2Spec extends Model{
     protected $table = '_uni2spec';
@@ -73,9 +74,9 @@ class Uni2Spec extends Model{
 			return $query->select(DB::raw('_uni2spec.rec_id, cast(IFNULL(AVG(astro.rate*2),0) as signed) AS astroTest, IFNULL(MAX(psy.rate*4),0)+IFNULL(MAX(usPrior.rate*20),0) as psyTest,  
 					cast(IFNULL(AVG(astro.rate*2),0)as signed)+IFNULL(MAX(psy.rate*4),0)+IFNULL(MAX(usPrior.rate*20),0) as  totalTest'))
 				->leftJoin('_spec2prof', '_uni2spec.spec_id', '=', '_spec2prof.spec_id')
-				->leftJoin('_match as astro', function ($join) {	$join->on('_spec2prof.prof_id', '=', 'astro.prof_id')->on('astro.type','=',DB::raw("'astro'") ); })
-				->leftJoin('_match as psy', function ($join) {	$join->on('_spec2prof.prof_id', '=', 'psy.prof_id')->on('psy.type','=',DB::raw("'test'") ); })
-				->leftJoin('_match as usPrior', function ($join) {	$join->on('_uni2spec.spec_id', '=', 'usPrior.spec_id')->on('usPrior.type','=',DB::raw("'user'") ); })
+				->leftJoin('_match as astro', function ($join) {	$join->on('astro.user_id', '=', DB::raw(Auth::user()->id))->on('_spec2prof.prof_id', '=', 'astro.prof_id')->on('astro.type','=',DB::raw("'astro'") ); })
+				->leftJoin('_match as psy', function ($join) {	$join->on('psy.user_id', '=', DB::raw(Auth::user()->id))->on('_spec2prof.prof_id', '=', 'psy.prof_id')->on('psy.type','=',DB::raw("'test'") ); })
+				->leftJoin('_match as usPrior', function ($join) {	$join->on('usPrior.user_id', '=',DB::raw( Auth::user()->id))->on('_uni2spec.spec_id', '=', 'usPrior.spec_id')->on('usPrior.type','=',DB::raw("'user'") ); })
 				->groupBy('_uni2spec.rec_id')->get()->toArray();
 	}
     public function Specialty(){
