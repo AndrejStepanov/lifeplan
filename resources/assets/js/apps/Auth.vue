@@ -76,24 +76,24 @@
 					{id:2, form:'auth-login', 			code:'_password',	name:'Пароль', 					placeholder:'Пароль пользователя', 				type:'PASSWORD', 	nullable:0, column_size:30, sort_seq:2,  },
 					{id:3, form:'auth-login', 			code:'remember',	name:'Запомнить мои данные', 	placeholder:'Запомнить данные пользователя', 	type:'BOOL',		nullable:1, column_size:30, sort_seq:3,  },	
 					
-					{id:21, form:'auth-registration', 	code:'login', 		value:'root@root.ru',	name:'Электронный адресс', 		placeholder:'Электронный адресс пользователя', 	type:'INPUT', 		nullable:0, column_size:30, sort_seq:1, mask_fin:'^.+@.+\\..+$', error:'$vuetify.texts.errors.withMailFormat.text'  },
-					{id:22, form:'auth-registration', 	code:'firstname', 	value:'root',			name:'Имя', 					placeholder:'Имя пользователя', 				type:'INPUT', 		nullable:0, column_size:30, sort_seq:1,  },
-					{id:23, form:'auth-registration', 	code:'lastname', 	value:'root',			name:'Фамилия', 				placeholder:'Фамилия пользователя', 			type:'INPUT', 		nullable:0, column_size:30, sort_seq:1,  },
-					{id:25, form:'auth-registration', 	code:'password',	value:'!rootpwd',		name:'Пароль пользователя', 	placeholder:'Пароль пользователя', 				type:'PASSWORD', 	nullable:0, column_size:30, sort_seq:2,  mask_fin:'^......+$', error:'$vuetify.texts.errors.withPasswordLen.text', 
+					{id:21, form:'auth-registration', 	code:'login', 		name:'Электронный адресс', 		placeholder:'Электронный адресс пользователя', 	type:'INPUT', 		nullable:0, column_size:30, sort_seq:1, mask_fin:'^.+@.+\\..+$', error:'$vuetify.texts.errors.withMailFormat.text'  },
+					{id:22, form:'auth-registration', 	code:'firstname', 	name:'Имя', 					placeholder:'Имя пользователя', 				type:'INPUT', 		nullable:0, column_size:30, sort_seq:1,  },
+					{id:23, form:'auth-registration', 	code:'lastname', 	name:'Фамилия', 				placeholder:'Фамилия пользователя', 			type:'INPUT', 		nullable:0, column_size:30, sort_seq:1,  },
+					{id:25, form:'auth-registration', 	code:'password',	name:'Пароль пользователя', 	placeholder:'Пароль пользователя', 				type:'PASSWORD', 	nullable:0, column_size:30, sort_seq:2,  mask_fin:'^......+$', error:'$vuetify.texts.errors.withPasswordLen.text', 
 						after_edit_script:""+
 							"if(nvlo(nvlo(vm.$parent.$refs.password_confirmation)[0]).value!=undefined)if( vm.$parent.$refs.password_confirmation[0].value!=vm.value){"+
 								"vm.$parent.$refs.password_confirmation[0].inputErrorState=true;vm.$parent.$refs.password_confirmation[0].inputErrorText='"+vm.$vuetify.t('$vuetify.texts.errors.withPasswordConf.text') +"';"+
 							"} else{ "+
 								"vm.$parent.$refs.password_confirmation[0].inputErrorState=false;vm.$parent.$refs.password_confirmation[0].inputErrorText='';"+
 							"}", }, 
-					{id:26, form:'auth-registration', 	code:'password_confirmation', value:'!rootpwd',	 name:'Повторите пароль', 		placeholder:'Повторите пароль пользователя', 	type:'PASSWORD', 	nullable:0, column_size:30, sort_seq:2,  
+					{id:26, form:'auth-registration', 	code:'password_confirmation', name:'Повторите пароль', 		placeholder:'Повторите пароль пользователя', 	type:'PASSWORD', 	nullable:0, column_size:30, sort_seq:2,  
 						after_edit_script:""+
 							"if(nvlo(nvlo(vm.$parent.$refs.password)[0]).value!=undefined )if(  vm.$parent.$refs.password[0].value!=vm.value){"+
 								"vm.inputErrorState=true;vm.inputErrorText='"+vm.$vuetify.t('$vuetify.texts.errors.withPasswordConf.text') +"';"+
 							"} else{ "+
 								"vm.inputErrorState=false;vm.inputErrorText='';"+
 							"}",},
-					{id:27, form:'auth-registration', 	code:'accept',	value:'true',		name:'Я подтверждаю согласие на обработку персональных данных', 				placeholder:'Запомнить данные пользователя', 	type:'BOOL',		nullable:0, column_size:30, sort_seq:3,  },
+					{id:27, form:'auth-registration', 	code:'accept',		name:'Я подтверждаю согласие на обработку персональных данных', 				placeholder:'Запомнить данные пользователя', 	type:'BOOL',		nullable:0, column_size:30, sort_seq:3,  },
 				]
 				return data.filter(row =>  row.form == vm.paramForm ).sort( (a, b) =>{return sort(a, b, 'sort_seq', 'sort_seq')})
 			},
