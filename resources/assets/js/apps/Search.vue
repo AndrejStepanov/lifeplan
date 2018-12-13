@@ -1,7 +1,7 @@
 <template>
 	<c-app :curentSystem="$vuetify.t('$vuetify.texts.main.links.search.name')" :panelLeft="{show:true}">
 		<c-table tableTitle="$vuetify.texts.searchPage.mainTableTitle"  :headers="tabHeader"  :items="tabValues" ref="table" :noVuetifyHead="false" :headerKey="'code'" :noRowNum="true" :hide-actions="false" 
-				:dataLoading="dataLoading" :fiterButtonhNeed="true" :searchNeed="true" :manBody="true" @fiterButtonClick="showFilter = true"  :rowsPerPageItems="[50, 25, 2]" :pagination.sync="pagination" >
+				:dataLoading="dataLoading" :fiterButtonhNeed="true" :searchNeed="true" :manBody="true" @fiterButtonClick="showFilter = true"  :rowsPerPageItems="[ 15, 10, 5, 2]" :pagination.sync="pagination" >
 			<tr  slot="items" slot-scope="props" >
 				<template v-if="['xs','sm'].indexOf($vuetify.breakpoint.name)==-1">
 					<td class=" pt-4 text-nobr" style="align-items: center;"	>	
