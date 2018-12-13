@@ -40,7 +40,7 @@ function appThemeInit({numeral}){
 		'.dispContent 								{display: contents;} '+
 		'.underline 								{text-decoration: underline;} '+
 		'.noPadding 								{padding: 0px !important;} '+
-		'DIV#block_message							{position: fixed;z-index: 800;right: 0px;bottom: 15px;padding: 10px;width: 450px;/*overflow: auto;*/vertical-align: middle;text-valign: middle;} '+
+		'DIV#block_message							{position: fixed;z-index: 800;right: 0px;bottom: 15px;padding: 10px;/*overflow: auto;*/vertical-align: middle;text-valign: middle;} '+
 		'DIV#block_message>Div,'+
 		'DIV#block_message>Div>Div					{display: block;position: relative;height: auto;margin-bottom: 5px;  background-color: transparent;} '+
 		'DIV#block_message>Div>Div>Div				{border-radius: 20px;} '+

@@ -74,7 +74,7 @@
 										@update:returnValue="setNewVal" class="max-width" :content-class="getDialogClass">
 									<v-combobox slot="activator" v-model="valueView" :label="name" :hint="placeholder" :rules="rules" :disabled="getDisable"  :required="!!nullable"  readonly ref="input"  append-icon=""
 										:tabindex="sortSeq"  :clearable="getClearable"   :min="min" :max="max" 
-										@keyup.enter="submit" @blur="onBlur" @click:append="changeShow" class=" body-1" />
+										@keyup.enter="submit"   class=" body-1" /><!-- //@click:append="changeShow" @blur="onBlur" --> 
 									<template>
 										<div  :style="getDialogMainDivStyle">
 											<v-date-picker v-if="dialogWithDate  && type!='TIME_RANGE'"  v-model="valueArrPairs[0][0]" scrollable locale="ru" class='v-date-picker-more-height higher-z-index' :max="max" :min="min" ref="date1"/>

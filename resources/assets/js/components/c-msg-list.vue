@@ -1,5 +1,5 @@
 <template>
-    <div id="block_message" style="sizeTotal">
+    <div id="block_message" :style="sizeTotal">
         <c-msg v-for="msg in msgAllMsg"  :key="msg.id" :msg="msg" @traceDialogShow="traceDialogShow"  />
         <component v-bind:is="dialogModule" v-if="dialogIsShowen(dialogIdOpened)" :dialogId="dialogIdOpened"/>  
     </div>
@@ -17,8 +17,12 @@
 			},	
         }),
         computed: {
-            sizeTotal:()=>{
-                return "height:"+this.msgAllMsg.length*25+"px"
+            sizeTotal(){
+				console.log(this)
+                return {
+					//height:this.msgAllMsg.length*25+"px",
+					width: (this.$vuetify.breakpoint.width>450? 450:this.$vuetify.breakpoint.width)+'px'
+				}
             },
         },
         components: {
