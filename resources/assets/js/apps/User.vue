@@ -147,6 +147,7 @@
 					vm.user.data.firstName = todo.firstName.value
 					vm.user.data.lastName = todo.lastName.value
 					vm.user.data.birthDate = todo.birthDate.value
+					vm.user.data.birthCity = todo.birthCity.value
 					vm.user.data.residenceCity = todo.residenceCity.value
 				}
 				sendRequest({href:"/data_command", type:vm.saveFormType, data:{ todo, }, default: getErrDesc('requestFaild'), handler:()=>showMsg({...getMsgDesc('saveDoing')}),  })
