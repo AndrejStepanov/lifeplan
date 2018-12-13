@@ -42,7 +42,7 @@
 				</v-card>
 				<v-toolbar slot='header' dense  >		
 					<v-spacer/>
-					<v-btn class='accent' @click="formSave"  :disabled="!inputsValid"><v-icon>done</v-icon>&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.save')}}</v-btn>
+					<v-btn class='accent' @click="formSave"  ><v-icon>done</v-icon>&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.save')}}</v-btn>
 				</v-toolbar>
 			</v-flex>
 		</v-layout>
