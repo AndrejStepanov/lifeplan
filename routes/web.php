@@ -15,6 +15,8 @@ Route::get('/', function () { return view('simple')->with('app_js', 'Main');}); 
 Route::get('/auth', ['as' => 'Авторизация', function () { return view('simple')->with('app_js', 'Auth'); }]);
 Route::get('/user', function () { return view('simple')->with('app_js', 'User');})->middleware('auth');// О себе
 Route::get('/test', function () { return view('simple')->with('app_js', 'Test');})->middleware('auth'); // Психотесты
+Route::get('/astroRes', function () { return view('simple')->with('app_js', 'AstroRes');})->middleware('auth'); // Результат астрологи
+Route::get('/humanDesign', function () { return view('simple')->with('app_js', 'HumanDesign');})->middleware('auth'); // Human design
 Route::get('/search', function () { return view('simple')->with('app_js', 'Search');})->middleware('auth'); // Поиск ВУЗов
 Route::get('/catalogProf', function () { return view('simple')->with('app_js', 'CatalogProf');}); // Каталог профессий
 Route::get('/topProf', function () { return view('simple')->with('app_js', 'CatalogProf');}); // Каталог профессий

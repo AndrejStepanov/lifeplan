@@ -29,6 +29,8 @@ export default {
 				topProf:{name:'Топ специальностей',	title:'Топ специальностей',	}, 
 				catalogProf:{name:'Каталог профессий',	title:'Каталог профессий',	}, 
 				psyhTests:{name:'Психологические тесты',	title:'Психологические тесты',	},
+				astroRes:{name:'Астрологические аспекты',	title:'Астрологические аспекты',	},
+				humanDesign:{name:'Human design',	title:'Human design',	},
 				search:{name:'Поиск',	title:'Поиск',	}, 				
 			},
 		},

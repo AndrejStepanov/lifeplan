@@ -18,6 +18,8 @@ mix.js('resources/assets/js/main/Main', 'public/js')
 	.js('resources/assets/js/main/Search.js', 'public/js')
 	.js('resources/assets/js/main/topSpec.js', 'public/js')
     .js('resources/assets/js/main/CatalogProf.js', 'public/js')
+    .js('resources/assets/js/main/HumanDesign.js', 'public/js')
+    .js('resources/assets/js/main/AstroRes.js', 'public/js')
 	.webpackConfig({
 		resolve: {
 			alias: {
