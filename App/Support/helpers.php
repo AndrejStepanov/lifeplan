@@ -41,7 +41,7 @@ function makeErrResponse($params, $code){
 	if(config('app.debug'))
 		return response()->json(array('title'=>$params['title'], 'message'  => $params['message'], 'file'=>$params['file'], 'line'=>$params['line'], 'trace'=> $params['trace'],   ), $code);
 	else
-		return response()->json(array('title'=>$params['title'], 'message'  => $params['message']), $code );
+		return response()->json(array('title'=>$params['title'], 'message'  => (preg_match("/^[а-я]/", $params['message'])?$params['message']:'Системная ошибка, обратитесь к администратору!'  ) ), $code );
 }
 
 function getTicket(){

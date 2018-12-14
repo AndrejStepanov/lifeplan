@@ -208,12 +208,16 @@ function sendRequest  (params){
 				window.location.href = decodeURIComponent(_hrefBackAuth)
 			if(params.handler )
 				params.handler(response)
+			if(params.mustHandler )
+				params.mustHandler()
 		}).catch(
 			(error) =>{
 				console.log(error)
 				let r = nvlo(error.response)
 				showMsg({ title: nvlo(r.data).title||nvlo(params.default).title||'$vuetify.texts.errors.requestFaild.title'  , text:nvlo(r.data).message||nvlo(params.default).text||'$vuetify.texts.errors.requestFaild.text',
 					'params': {status:r.status, trace:nvlo(r.data).trace, file:nvlo(nvl(error.response).data).file, line:nvlo(r.data).line}, })
+				if(params.mustHandler )
+					params.mustHandler()
 			}
 		);
 	return true

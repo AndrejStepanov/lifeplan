@@ -33,7 +33,7 @@
 							<v-flex xs12>
 								<v-toolbar slot='header' dense  :color="colorForm" >		
 									<v-spacer/>
-									<v-btn :class="classForm" @click="dialogSave"  :disabled="!inputsValid"><v-icon>input</v-icon>&nbsp;{{$vuetify.t(acceptFormTitle)}}</v-btn>
+									<v-btn :class="classForm" @click="dialogSave"  :loading="sendingData"><v-icon>input</v-icon>&nbsp;{{$vuetify.t(acceptFormTitle)}}</v-btn>
 								</v-toolbar>
 							</v-flex>
 						</v-layout>
@@ -61,6 +61,7 @@
         data: () => ({
 			 bottomNav: 0,
 			 inputsValid: false,
+			 sendingData:false,
 			 dialogId:getNewId(),
 		}),
 		computed: {
@@ -116,10 +117,11 @@
 					else 
 						tmp[name]= todo[name].value
 				todo=tmp
+				vm.sendingData=true
 				if(!vm.bottomNav)
-					sendRequest({href:"/login", type:"auth.login", data:todo, default: getErrDesc('withLogIn') })
+					sendRequest({href:"/login", type:"auth.login", data:todo, default: getErrDesc('withLogIn'), mustHandler:() => {vm.sendingData=false} })
 				else
-					sendRequest({href:"/register", type:"register", needSucess:"Y", data:todo, default: getErrDesc('withRegistration') })
+					sendRequest({href:"/register", type:"register", needSucess:"Y", data:todo, default: getErrDesc('withRegistration'), mustHandler:() => {vm.sendingData=false} })
 			},
 		},
 		created: function (){

@@ -156,7 +156,8 @@
 				vm.showFilter = false;
 				vm.dataSearchLoaded=false;
 				todo=vm.paramTodoChecked(vm.paramForm)
-				sendRequest({href:"/socet_command", type:'search.results', data:{ todo, }, default: getErrDesc('requestFaild'), handler:(response) => {
+				vm.sendingData=true
+				sendRequest({href:"/socet_command", type:'search.results', data:{ todo, }, default: getErrDesc('requestFaild'),  handler:(response) => {
 					vm.tabData=response.data
 					vm.dataSearchLoaded=true;
 					vm.formInited=true

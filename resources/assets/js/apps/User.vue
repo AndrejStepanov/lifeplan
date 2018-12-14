@@ -42,7 +42,7 @@
 				</v-card>
 				<v-toolbar slot='header' dense  >		
 					<v-spacer/>
-					<v-btn class='accent' @click="formSave"  ><v-icon>done</v-icon>&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.save')}}</v-btn>
+					<v-btn class='accent' @click="formSave"  :loading="sendingData"><v-icon>done</v-icon>&nbsp;{{$vuetify.t('$vuetify.texts.simple.actions.save')}}</v-btn>
 				</v-toolbar>
 			</v-flex>
 		</v-layout>
@@ -59,6 +59,7 @@
 			tabSelected: 0,
 			schCnt:1000,
 			inputsValid:false,
+			sendingData:false,
 			dialogId:getNewId(),
 			links:[
 				{id:1, title:'$vuetify.texts.userPage.links.aboutMe', 			icon:'info', 			},
@@ -150,7 +151,8 @@
 					vm.user.data.birthCity = todo.birthCity.value
 					vm.user.data.residenceCity = todo.residenceCity.value
 				}
-				sendRequest({href:"/data_command", type:vm.saveFormType, data:{ todo, }, default: getErrDesc('requestFaild'), handler:()=>showMsg({...getMsgDesc('saveDoing')}),  })
+				vm.sendingData=true
+				sendRequest({href:"/data_command", type:vm.saveFormType, data:{ todo, }, default: getErrDesc('requestFaild'), mustHandler:() => {vm.sendingData=false},handler:()=>showMsg({...getMsgDesc('saveDoing')}),  })
 			},
 			getData(){
 				let vm=this
