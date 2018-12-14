@@ -18,6 +18,7 @@ class SocetCommandController extends Controller{
 		$data=$request->all();
 		switch($data['type']){
 			case('user.info.by.id'):{  return json_encode( (new User() )->getUserInfo(nvl($data['userId'],null)) ); };
+			case('user.info.astro'):{  return json_encode( (new User() )->getUserAstroInfo() ); };
 			case('city.list'):{  return json_encode( ( new Citys() )->getCitysList() ); };
 			case('school.list'):{  return json_encode( ( new Schools() )->getSchoolsList() ); };
 			case('predmets.list'):{  return json_encode( ( new Predmets() )->getPredmetsList() ); };
