@@ -129,7 +129,7 @@
 					{ link: '$vuetify.texts.main.links.mainPage', 			icon: 'home', 					href:'\\user' },
 					{ link: '$vuetify.texts.main.links.psyhTests', 			icon: 'library_books', 			href:'\\test'  },
 					{ link: '$vuetify.texts.main.links.astroRes', 			icon: 'insert_invitation', 		href:'\\astroRes'  },
-					{ link: '$vuetify.texts.main.links.humanDesign', 		icon: 'accessibility', 			href:'\\humanDesign'  },
+					{ link: '$vuetify.texts.main.links.humanDesign', 		icon: 'account_box', 			href:'\\humanDesign'  },
 					{ link: '$vuetify.texts.main.links.search', 			icon: 'search', 				href:'\\search'  }
 				]
 			},
