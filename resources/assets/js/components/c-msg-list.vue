@@ -18,7 +18,6 @@
         }),
         computed: {
             sizeTotal(){
-				console.log(this)
                 return {
 					//height:this.msgAllMsg.length*25+"px",
 					width: (this.$vuetify.breakpoint.width>450? 450:this.$vuetify.breakpoint.width)+'px'

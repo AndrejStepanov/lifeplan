@@ -13,4 +13,9 @@ class Astro2Prof extends Model
 
 	protected $fillable = ['astro_id','prof_id'];
 
+  	public  function getLinkList(){
+		return $this->select('astro_id','prof_id')->get()->toArray();
+	}
+	
+
 }

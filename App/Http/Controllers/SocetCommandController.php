@@ -11,6 +11,8 @@ use App\Models\University;
 use App\Models\Profession;
 use App\Models\Specialty;
 use App\Models\Uni2Spec;
+use App\Models\Astro;
+use App\Models\Astro2Prof;
 use Illuminate\Http\Request;
 
 class SocetCommandController extends Controller{
@@ -24,11 +26,14 @@ class SocetCommandController extends Controller{
 			case('predmets.list'):{  return json_encode( ( new Predmets() )->getPredmetsList() ); };
 			case('universitys.list'):{  return json_encode( ( new University() )->getUniversitysList() ); };
 			case('profs.list'):{  return json_encode( ( new Profession() )->getProfessionsList() ); };
+			case('profs.list.obj'):{  return json_encode( ( new Profession() )->getProfessionsListObj() ); };
 			case('search.universitys.list'):{  return json_encode( ( new University() )->getUniversitysForSearch() ); };
 			case('search.specialtys.list'):{  return json_encode( ( new Specialty() )->getSpecialtysForSearch() ); };
 			case('search.programs.list'):{  return json_encode( ( new Uni2Spec() )->getProgramsForSearch() ); };
 			case('search.predmets.list'):{  return json_encode( ( new Predmets() )->getPredmetsListAss() ); };
 			case('search.results'):{  return json_encode( ( new Uni2Spec() )->getSearchResult(createTodo($data) ) ); };
+			case('astro.res.list'):{  return json_encode( ( new Astro() )->getResultForUser() ); };
+			case('astro.astro2prof.list'):{  return json_encode( ( new Astro2Prof() )->getLinkList() ); };
 			default:{ throw new \App\Exceptions\KonsomException( 'Ошибка доступа','Нет доступа!'); };
 		}
 		return;

@@ -13,6 +13,9 @@ class Profession extends Model{
     public  function getProfessionsList(){
 		return  $this->select('prof_id as value','prof_name as text', 'prof_group as profGroup','about')->orderBy('prof_group')->orderBy('prof_name')->get()->toArray();
 	}
+	public  function getProfessionsListObj(){
+		return convertToAssArr ($this->getProfessionsList(),'value');
+	}
     public  function getProfessionsList2(){
         return  $this->select('prof_id as value','prof_name as text', 'prof_group as profGroup','about')->orderBy('prof_rate', 'desc')->take(6)->get()->toArray();
     }
