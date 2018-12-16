@@ -88,7 +88,7 @@
 		}),
 		computed: {
 			dataLoading(){return !( this.data.loaded && this.astro2prof.loaded && this.prof.loaded)},
-			noDataForUser(){return this.data.data.lenght },
+			noDataForUser(){return this.data.data.length>0?false:true },
 			astro2ProfValues(){
 				let vm=this, res={}
 				if(vm.dataLoading)
