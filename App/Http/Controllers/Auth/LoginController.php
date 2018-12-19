@@ -24,7 +24,7 @@ class LoginController extends Controller{
     }
 
     public function handleProviderCallbackVKontakte(){
-        $userDex = Socialite::driver('vkontakte')->user();
+        $userDex = Socialite::driver('vkontakte')->stateless()->user();
         $data =[
             'firstname'=> $userDex->user['first_name'],
             'lastname'=> $userDex->user['last_name'],
