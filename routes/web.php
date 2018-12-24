@@ -21,7 +21,7 @@ Route::get('/search', function () { return view('simple')->with('app_js', 'Searc
 Route::get('/catalogProf', function () { return view('simple')->with('app_js', 'CatalogProf');}); // Каталог профессий
 Route::get('/topProf', function () { return view('simple')->with('app_js', 'CatalogProf');}); // Каталог профессий
 Route::get('/topSpec', function () { return view('simple')->with('app_js', 'TopSpec');})->middleware('auth'); // Топ специальностей
-Route::get('/profSpec/{profID}', function ($profID) { return view('simple')->with('app_js', 'TopSpec')->with('profID', $profID); })->where('profID', '[0-9]*'); // Топ специальностей
+Route::get('/profSpec/{profID}', function ($profID) { return view('simple')->with('app_js', 'TopSpec')->with('profID', $profID); })->where('profID', '[0-9]*')->middleware('auth'); // Топ специальностей
 
 
 Route::get('getEges', 'Main\EgeController@show')->middleware('auth');
